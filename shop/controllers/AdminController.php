@@ -11,17 +11,12 @@ use shop\models\User;
  */
 class AdminController extends BaseController
 {
-    public $enableCsrfValidation = false;
-    public $returnData = array();
-    public function init()
-    {
-        parent::init();
-    }
+    public $modelClass = 'shop\models\User';
 
     //用户列表
     public function actionIndex()
     {
-        
+        return ['msg' => 'ok'];
     }
 
     /** 
@@ -48,7 +43,7 @@ class AdminController extends BaseController
                     $this->returnData['code'] = 0;
                     $this->returnData['msg'] = 'add fail';
                 }
-                $this->ajaxReturn($this->returnData);
+                return $this->returnData;
             } else {
 
             }
@@ -66,6 +61,6 @@ class AdminController extends BaseController
             $this->returnData['msg'] = 'login fail';
         }
 
-        $this->ajaxReturn($this->returnData);
+        return $this->returnData;
     }
 }
