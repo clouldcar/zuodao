@@ -2,14 +2,17 @@
 
 namespace shop\controllers;
 
+use shop\models\LoginForm;
 use Yii;
-use shop\models\Admin;
+use shop\models\User;
 
 /**
  * 后台用户控制器
  */
 class AdminController extends BaseController
 {
+    public $enableCsrfValidation = false;
+    public $returnData = array();
     public function init()
     {
         parent::init();
@@ -26,7 +29,7 @@ class AdminController extends BaseController
      */
     public function actionAdd()
     {
-        $model = new Admin();
+        $model = new User();
         if (Yii::$app->request->isPost) {
             //表单验证是不是post方法
             $data = Yii::$app->request->post();
@@ -37,9 +40,32 @@ class AdminController extends BaseController
                 }
                 $model->setAttributes($data);
                 $model->setPassword($data['password']);
+                $model->id = createIncrementId();
+                if ($model->save()) {
+                    $this->returnData['code'] = 1;
+                    $this->returnData['msg'] = 'add success';
+                } else {
+                    $this->returnData['code'] = 0;
+                    $this->returnData['msg'] = 'add fail';
+                }
+                $this->ajaxReturn($this->returnData);
             } else {
 
             }
         }
+    }
+
+    public function actionLogin()
+    {
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post(), '') && $model->login()) {
+            $this->returnData['code'] = 1;
+            $this->returnData['msg'] = 'login success';
+        } else {
+            $this->returnData['code'] = 0;
+            $this->returnData['msg'] = 'login fail';
+        }
+
+        $this->ajaxReturn($this->returnData);
     }
 }
