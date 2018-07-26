@@ -43,7 +43,7 @@ class Student extends \yii\db\ActiveRecord
             [['stu_uid'], 'string', 'max' => 20],
             [['stu_name', 'stu_job', 'reference'], 'string', 'max' => 255],
             [['stu_email'], 'string', 'max' => 100],
-            [['stu_status', 'stu_prefix'], 'string', 'max' => 4],
+            [['stu_status', 'stu_prefix'], 'integer', 'max' => 4],
             [['stu_uid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['stu_uid' => 'id']],
         ];
     }

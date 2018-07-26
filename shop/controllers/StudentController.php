@@ -5,11 +5,25 @@ namespace shop\controllers;
 use shop\models\User;
 use Yii;
 use shop\models\Student;
+use yii\filters\VerbFilter;
 
 class StudentController extends BaseController
 {
 
     public $modelClass = 'shop\models\Student';
+
+    public function behaviors()
+    {
+        $behaviors =  parent::behaviors();
+        $behaviors['verb'] = [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'add' => ['post'],
+                'update' => ['put', 'patch'],
+            ],
+        ];
+        return $behaviors;
+    }
 
     public function actionIndex()
     {
@@ -62,13 +76,29 @@ class StudentController extends BaseController
     public function actionUpdate($stu_uid)
     {
         $model = Student::findOne(['stu_uid' => $stu_uid]);
-        if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
+        if (Yii::$app->request->isPut) {
+            $request = Yii::$app->request;
+            $data = $request->bodyParams;
             $data['updated_at'] = date('Y-m-d H:i:s');
             $model->setAttributes($data);
-
+//            var_dump($model);die();
+            if ($model->save()) {
+                $userModel = User::findOne(['id' => $stu_uid]);
+                $data['username'] = $data['stu_name'];
+                unset($data['stu_name']);
+//                var_dump($data);die;
+                $userModel->setAttributes($data);
+                $userModel->save();
+                $this->returnData['code'] = 1;
+                $this->returnData['msg'] = 'update student success';
+            } else {
+                $this->returnData['code'] = 0;
+                $this->returnData['msg'] = 'update student fail';
+            }
 
         }
+
+        return $this->returnData;
     }
 
 }
