@@ -28,7 +28,7 @@ class AdminController extends BaseController
         if (Yii::$app->request->isPost) {
             //表单验证是不是post方法
             $data = Yii::$app->request->post();
-            if ($data['type'] == 1) {
+            if ($data['type'] == User::SIGNSTATUS_BACKEND) {
                 //后台管理使用账号密码创建及登录
                 if (empty($data['password']) || strlen($data['password']) < 6) {
                     $this->error('密码为空或者小于6字符');
@@ -53,13 +53,17 @@ class AdminController extends BaseController
     public function actionLogin()
     {
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post(), '') && $model->login()) {
-            $this->returnData['code'] = 1;
-            $this->returnData['msg'] = 'login success';
-        } else {
-            $this->returnData['code'] = 0;
-            $this->returnData['msg'] = 'login fail';
+        $data = Yii::$app->request->post();
+        if ($data['type'] === User::SIGNSTATUS_BACKEND) {
+            if ($model->load($data, '') && $model->login()) {
+                $this->returnData['code'] = 1;
+                $this->returnData['msg'] = 'login success';
+            } else {
+                $this->returnData['code'] = 0;
+                $this->returnData['msg'] = 'login fail';
+            }
         }
+
 
         return $this->returnData;
     }

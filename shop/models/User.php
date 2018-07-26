@@ -6,6 +6,7 @@ use Yii;
 
 class User extends \common\models\User
 {
+
     //设置加密后的密码
     public function setPassword($password)
     {
