@@ -48,6 +48,11 @@ return [
                     'controller' => 'Student',
                     'pluralize'=> false,
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'CommunicationRecord',
+                    'pluralize'=> false,
+                ],
 
             ],
         ],
