@@ -78,12 +78,12 @@ class PlatformTeamController extends BaseController
 
     /*
      * @name 编辑平台下团队的信息
-     * @param platform_id name public start_date
+     * @param team_id name public start_date
      * @return mixed
      */
     public function actionEditorTeam(){
         $data = $this->request->post();
-        if(empty($data['platform_id'])){
+        if(empty($data['team_id'])){
             exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
         }
         $result = (new PlatformTeam())->teamEditor($data);
@@ -92,6 +92,31 @@ class PlatformTeamController extends BaseController
         }
         exit(json_encode(array('code'=>200,'data'=>'','message'=>'成功')));
     }
+
+    /*
+     * @name 平台下团队的删除 不只是删除团队 还有删除团队的成员
+     * @param  team_id
+     * @return mixed
+     */
+
+    public function actionDeleteTeam(){
+        $teamId = $this->request->post('team_id');
+        if(empty($data['team_id'])){
+            exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
+        }
+        $result = (new PlatformTeam())->teamDelete($data);
+        if(!$result){
+            exit(json_encode(array('code'=>100,'data'=>'','message'=>'失败')));
+        }
+        exit(json_encode(array('code'=>200,'data'=>'','message'=>'成功')));
+
+
+    }
+
+
+
+
+
 
     /*
      * @name 平台下的团队新增成员

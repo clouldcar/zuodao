@@ -49,6 +49,18 @@ class PlatformTeam extends  \yii\db\ActiveRecord
         }
     }
 
+    /*
+     * @name 删除团队
+     */
+    public function teamDelete($param){
+        $data = Yii::$app->db->createCommand()->update(self::tableName(), $param)->execute();
+        if($data){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 
 
