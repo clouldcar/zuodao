@@ -16,7 +16,8 @@ class UserController extends BaseController
     //用户列表
     public function actionIndex()
     {
-        return ['msg' => 'ok'];
+        $condition = ['status' => User::STATUS_ACTIVE];
+        return User::findAll($condition);
     }
 
     /** 
@@ -71,5 +72,18 @@ class UserController extends BaseController
         }
 
         return $this->returnData;
+    }
+
+    public function actionLogout()
+    {   
+        //移除所有session信息
+        Yii::$app->session->removeAll();
+        Yii::$app->session->destroy();
+
+        return $this->returnData = [
+            'code' => 1,
+            'msg' => 'logout success',
+        ];
+
     }
 }
