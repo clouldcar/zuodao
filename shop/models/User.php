@@ -37,6 +37,17 @@ class User extends \common\models\User
 
     }
 
+    /**
+    * 批量修改用户是否激活状态
+    * @param  [type] $where [description]
+    * @return [type]        [description]
+    */
+    public function updateUserStatus($where)
+    {
+        $sql = "UPDATE `shop_user` SET status = :status WHERE ".$where;
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED])->execute();
+    }
+
     /*
      * @name 获取user信息
      * @param $param 查询条件 $select 查询字段
