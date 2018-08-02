@@ -19,7 +19,8 @@ class StudentController extends BaseController
 
     public function actionIndex()
     {
-        return ['msg' => 'ok'];
+        $condition = ['status' => Student::STATUS_ACTIVE];
+        return User::findAll($condition);
     }
 
     /*
