@@ -44,17 +44,22 @@ class UserController extends BaseController
                     $this->returnData['code'] = 0;
                     $this->returnData['msg'] = 'add fail';
                 }
-                return $this->returnData;
-            } else {
-
-            }
+            } 
         }
+
+        return $this->returnData;
     }
 
     public function actionLogin()
     {
         $model = new LoginForm();
         $data = Yii::$app->request->post();
+        if ($model->isLogin($data['username'])) {
+            return $this->returnData = [
+                'code' => '801',
+                'msg' => 'already login',
+            ];
+        }
         if (intval($data['type']) === User::SIGNSTATUS_BACKEND) {
             if ($model->load($data, '') && $model->login()) {
                 //设置session
@@ -69,7 +74,7 @@ class UserController extends BaseController
                 $this->returnData['code'] = 0;
                 $this->returnData['msg'] = 'login fail';
             }
-        }
+        } 
 
         return $this->returnData;
     }

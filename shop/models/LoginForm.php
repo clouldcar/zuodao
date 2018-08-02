@@ -24,6 +24,20 @@ class LoginForm extends Model
         ];
     }
 
+    /**
+     * 判断是否登录
+     * @param  [type]  $username [用户名]
+     * @return boolean           
+     */
+    public function isLogin($username)
+    {
+        if (Yii::$app->session->get('username') == $username) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public function login()
     {
         if ($this->validate()) {
