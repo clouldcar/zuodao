@@ -13,6 +13,12 @@ class UserController extends BaseController
 {
     public $modelClass = 'shop\models\User';
 
+    public function behaviors()
+    {
+        $behaviors =  parent::behaviors();
+        return $behaviors;
+    }
+
     //用户列表
     public function actionIndex()
     {

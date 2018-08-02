@@ -74,4 +74,15 @@ class Student extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'stu_uid']);
     }
+
+    /**
+    * 批量修改学员是否激活状态  
+    * @param  [type] $where [description]
+    * @return [type]        [description]
+    */
+    public function updateStudentStatus($where)
+    {
+        $sql = "UPDATE `shop_student` SET status = :status WHERE ".$where;
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED])->execute();
+    }
 }

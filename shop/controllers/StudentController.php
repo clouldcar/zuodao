@@ -5,7 +5,6 @@ namespace shop\controllers;
 use shop\models\User;
 use Yii;
 use shop\models\Student;
-use yii\filters\VerbFilter;
 
 class StudentController extends BaseController
 {
@@ -15,13 +14,6 @@ class StudentController extends BaseController
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
-        $behaviors['verb'] = [
-            'class' => VerbFilter::className(),
-            'actions' => [
-                'add' => ['post'],
-                'update' => ['put', 'patch'],
-            ],
-        ];
         return $behaviors;
     }
 
@@ -53,15 +45,15 @@ class StudentController extends BaseController
                 if ($userModel->save()) {
                     if ($model->validate() && $model->save()) {
                         $this->returnData['code'] = 1;
-                        $this->returnData['msg'] = 'add student success';
+                        $this->returnData['msg'] = '添加学员成功';
                     } else {
                         $this->returnData['code'] = 0;
-                        $this->returnData['msg'] = 'add student fail';
+                        $this->returnData['msg'] = 'add 添加学员失败';
                     }
                 }
 
             } else {
-                $this->returnData['code'] = 0;
+                $this->returnData['code'] = 804;
                 $this->returnData['msg'] = $userModel->getErrors();
 
             }
@@ -73,32 +65,74 @@ class StudentController extends BaseController
     /*
      * 编辑学员
      */
-    public function actionUpdate($stu_uid)
+    public function actionEdit()
     {
-        $model = Student::findOne(['stu_uid' => $stu_uid]);
-        if (Yii::$app->request->isPut) {
+        if (Yii::$app->request->isPost) {
             $request = Yii::$app->request;
-            $data = $request->bodyParams;
-            $data['updated_at'] = date('Y-m-d H:i:s');
+            $data = $request->post();
+            $model = Student::findOne(['stu_uid' => $data['stu_uid']]);
+            if (!$model) {
+                return $this->returnData = [
+                    'code' => 805,
+                    'msg' => '学员不存在',
+                ];
+            }
+            $data['updated_at'] = date('Y-m-d H:i:s', time());
             $model->setAttributes($data);
-//            var_dump($model);die();
             if ($model->save()) {
-                $userModel = User::findOne(['id' => $stu_uid]);
+                $userModel = User::findOne(['id' => $data['stu_uid']]);
+                if (!$userModel || !$userModel->status) {
+                    return $this->returnData = [
+                        'code' => 805,
+                        'msg' => '学员不存在',
+                    ];
+                }
                 $data['username'] = $data['stu_name'];
                 unset($data['stu_name']);
-//                var_dump($data);die;
                 $userModel->setAttributes($data);
                 $userModel->save();
-                $this->returnData['code'] = 1;
-                $this->returnData['msg'] = 'update student success';
+                return $this->returnData = [
+                        'code' => 1,
+                        'msg' => '编辑学员成功',
+                ];                
             } else {
-                $this->returnData['code'] = 0;
-                $this->returnData['msg'] = 'update student fail';
+                return $this->returnData = [
+                        'code' => 0,
+                        'msg' => '编辑学员失败',
+                ];
             }
 
         }
 
-        return $this->returnData;
+    }
+
+    /**
+     * 删除学员
+     */
+    public function actionDelete()
+    {
+        //判断批量删除
+        $ids = Yii::$app->request->get('stu_uid', 0);
+        $ids = implode(',', array_unique((array)$ids));
+        if (empty($ids)) {
+            return $this->returnData = [
+                'code' => 802,
+                'msg' => '请选择要删除的数据',
+            ];
+        }
+        $_where = 'id in (' . $ids . ')';
+        $where = 'stu_uid in (' . $ids . ')';
+        if ((new User())->updateUserStatus($_where) && (new Student())->updateStudentStatus($where)) {
+            return $this->returnData = [
+                'code' => 1,
+                'msg' => '删除学员成功'
+            ];
+        } else {
+            return $this->returnData = [
+                'code' => 0,
+                'msg' => '删除学员失败',
+            ];
+        }
     }
 
 }
