@@ -10,7 +10,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const SIGNSTATUS_FRONTEND = 2;
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE  = 1;
-
+    public $auth_key;
+    
     public static function tableName()
     {
         return '{{%user}}';
@@ -70,5 +71,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         // TODO: Implement validateAuthKey() method.
+    }
+
+    public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
     }
 }

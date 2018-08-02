@@ -9,7 +9,7 @@ use shop\models\User;
 /**
  * 后台用户控制器
  */
-class AdminController extends BaseController
+class UserController extends BaseController
 {
     public $modelClass = 'shop\models\User';
 
@@ -54,8 +54,14 @@ class AdminController extends BaseController
     {
         $model = new LoginForm();
         $data = Yii::$app->request->post();
-        if ($data['type'] === User::SIGNSTATUS_BACKEND) {
+        if (intval($data['type']) === User::SIGNSTATUS_BACKEND) {
             if ($model->load($data, '') && $model->login()) {
+                //设置session
+                $userInfo = (new User())->getUserAllInfo($data['username']);
+                Yii::$app->session->set('user_id', $userInfo['id']);
+                Yii::$app->session->set('username', $userInfo['username']);
+                Yii::$app->session->set('platform_id', $userInfo['platform_id']);
+
                 $this->returnData['code'] = 1;
                 $this->returnData['msg'] = 'login success';
             } else {
@@ -63,7 +69,6 @@ class AdminController extends BaseController
                 $this->returnData['msg'] = 'login fail';
             }
         }
-
 
         return $this->returnData;
     }
