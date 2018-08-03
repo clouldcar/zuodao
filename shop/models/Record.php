@@ -14,7 +14,11 @@ use Yii;
  * @property int $recorder_id 创建人id
  */
 class Record extends \yii\db\ActiveRecord
-{   
+{      
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE  = 1;
+
+    const PAGESIZE  = 10;
     /**
      * @inheritdoc
      */
@@ -48,10 +52,11 @@ class Record extends \yii\db\ActiveRecord
     {
         return [
             [['created_at'], 'safe'],
-            [['content', 'recorder'], 'required'],
+            [['content', 'recorder', 'stu_uid'], 'required'],
             [['content'], 'string'],
             [['recorder_id'], 'integer'],
             [['recorder'], 'string', 'max' => 100],
+            [['stu_uid'], 'string', 'max' => 20],
         ];
     }
 
@@ -66,6 +71,40 @@ class Record extends \yii\db\ActiveRecord
             'content' => '记录内容',
             'recorder' => '创建人姓名',
             'recorder_id' => '创建人id',
+            'stu_uid' => '对应学员id',
+            'status' => '激活状态'
         ];
     }
+
+    /**
+     * 获取显示学生时间记录列表
+     * @param  [type] $condition [显示条件]
+     * @return [type]            [description]
+     */
+    public function recordList($condition)
+    {
+        return $data = static::find()
+                ->select('*')
+                ->where([
+                    'status' => static::STATUS_ACTIVE,
+                    'stu_uid' => $condition['stu_uid'],
+                ])
+                ->orderBy('updated_at '.$condition['order'])
+                ->offset(($condition['page']-1) * $condition['offset'])
+                ->limit($condition['offset'])
+                ->asArray()
+                ->all();
+    }
+
+    /**
+    * 批量修改事件记录是否激活状态  
+    * @param  [type] $where [description]
+    * @return [type]        [description]
+    */
+    public function updateRecordtStatus($where)
+    {
+        $sql = "UPDATE `shop_record` SET status = :status WHERE ".$where;
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED])->execute();
+    }
+
 }
