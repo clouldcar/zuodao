@@ -108,7 +108,7 @@ class CrecordController extends BaseController
     }
 
     /**
-     * 删除学员
+     * 删除沟通记录
      */
     public function actionDelete()
     {

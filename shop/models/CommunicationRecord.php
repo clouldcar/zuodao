@@ -136,7 +136,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
      */
     public function crecordList($order,$page,$offset)
     {   
-        $data = CommunicationRecord::find()
+        $data = static::find()
                 ->joinWith(['staffU', 'studentU'])
                 ->select('shop_communication_record.*,shop_user.username, shop_student.stu_name')
                 ->where(['shop_communication_record.status' => static::STATUS_ACTIVE])
