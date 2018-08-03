@@ -71,7 +71,10 @@ class StudentController extends BaseController
         if (Yii::$app->request->isPost) {
             $request = Yii::$app->request;
             $data = $request->post();
-            $model = Student::findOne(['stu_uid' => $data['stu_uid']]);
+            $model = Student::findOne([
+                'stu_uid' => $data['stu_uid'],
+                'status' => Student::STATUS_ACTIVE,
+            ]);
             if (!$model) {
                 return $this->returnData = [
                     'code' => 805,
@@ -79,28 +82,33 @@ class StudentController extends BaseController
                 ];
             }
             $data['updated_at'] = date('Y-m-d H:i:s', time());
-            $model->setAttributes($data);
-            if ($model->save()) {
-                $userModel = User::findOne(['id' => $data['stu_uid']]);
-                if (!$userModel || !$userModel->status) {
+            if ($model->load($data, '') && $model->validate()) {
+                $model->setAttributes($data);
+                if ($model->save()) {
+                    $userModel = User::findOne([
+                        'id' => $data['stu_uid'],
+                        'status' => User::STATUS_ACTIVE,
+                    ]);
+                    if (!$userModel) {
+                        return $this->returnData = [
+                            'code' => 805,
+                            'msg' => '学员不存在',
+                        ];
+                    }
+                    $data['username'] = $data['stu_name'];
+                    unset($data['stu_name']);
+                    $userModel->setAttributes($data);
+                    $userModel->save();
                     return $this->returnData = [
-                        'code' => 805,
-                        'msg' => '学员不存在',
+                            'code' => 1,
+                            'msg' => '编辑学员成功',
+                    ];                
+                } else {
+                    return $this->returnData = [
+                            'code' => 0,
+                            'msg' => '编辑学员失败',
                     ];
-                }
-                $data['username'] = $data['stu_name'];
-                unset($data['stu_name']);
-                $userModel->setAttributes($data);
-                $userModel->save();
-                return $this->returnData = [
-                        'code' => 1,
-                        'msg' => '编辑学员成功',
-                ];                
-            } else {
-                return $this->returnData = [
-                        'code' => 0,
-                        'msg' => '编辑学员失败',
-                ];
+                }   
             }
 
         }

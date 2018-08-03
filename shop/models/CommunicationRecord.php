@@ -3,7 +3,6 @@
 namespace shop\models;
 
 use Yii;
-
 /**
  * This is the model class for table "{{%communication_record}}".
  *
@@ -22,6 +21,10 @@ use Yii;
  */
 class CommunicationRecord extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE  = 1;    
+    
+    const PAGESIZE = 10;
 
     const TYPE_PHONE = 1;
     const TYPE_WECHAT = 2;
@@ -102,6 +105,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
             'target' => '沟通目标：报读（1）建立链接（2）答疑（3）其它（4）',
             'content' => '内容',
             'result' => '结果',
+            'status' => '状态',
             'created_at' => '创建时间',
             'updated_at' => '更新时间',
         ];
@@ -120,6 +124,47 @@ class CommunicationRecord extends \yii\db\ActiveRecord
      */
     public function getStudentU()
     {
-        return $this->hasOne(User::className(), ['id' => 'student_uid']);
+        return $this->hasOne(Student::className(), ['stu_uid' => 'student_uid']);
     }
+
+    /**
+     * 获取所有沟通列表
+     * @param  [type] $order  [排序]
+     * @param  [type] $limit  [页数]
+     * @param  [type] $offset [分页数]
+     * @return [type]         [数据]
+     */
+    public function crecordList($order,$page,$offset)
+    {   
+        $data = CommunicationRecord::find()
+                ->joinWith(['staffU', 'studentU'])
+                ->select('shop_communication_record.*,shop_user.username, shop_student.stu_name')
+                ->where(['shop_communication_record.status' => static::STATUS_ACTIVE])
+                ->orderBy('shop_communication_record.updated_at '.$order)
+                ->offset(($page-1)*$offset)
+                ->limit($offset)
+                ->asArray()
+                ->all();
+        foreach ($data as $key => $value) {
+            unset($value['staffU']);
+            unset($value['studentU']);
+            $value['communicate_type'] = static::$typeMap[$value['communicate_type']];
+            $value['target'] = static::$targetMap[$value['target']];
+            $result[] = $value;
+        }
+
+        return $result;
+    }
+
+    /**
+    * 批量修改沟通是否激活状态  
+    * @param  [type] $where [description]
+    * @return [type]        [description]
+    */
+    public function updateCreordStatus($where)
+    {
+        $sql = "UPDATE `shop_communication_record` SET status = :status WHERE ".$where;
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED])->execute();
+    }
+
 }
