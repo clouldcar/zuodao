@@ -26,8 +26,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['password'], 'string', 'min' => 6],
             [['phone'], 'string', 'max' => 15],
             [['phone','username'], 'unique'],
-            [['created_at', 'updated_at'], 'safe'],
-            // [['created_at','updated_at'], 'default', 'value' => date('Y-m-d H:i:s')],
+            // [['created_at', 'updated_at'], 'safe'],
+            [['created_at','updated_at'], 'default', 'value' => date('Y-m-d H:i:s')],
         ];
     }
 

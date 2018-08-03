@@ -49,10 +49,15 @@ class User extends \common\models\User
     public function getUserAllInfo($username)
     {
         $user = static::findOne(['username' => $username]);
+        
         $userInfo = $user->attributes;
-        $userWithPlatformInfo = \shop\models\PlatformUser::find()->select('platform_id')->where(['user_id'=> $userInfo['id']])->asArray()->all();
-        return array_merge($userInfo, $userWithPlatformInfo[0]);
-
+        $userWithPlatformInfo = PlatformUser::find()->select('platform_id')->where(['user_id'=> $userInfo['id']])->asArray()->one();
+        $userWithTeamInfo = TeamUser::find()->select('team_id')->where(['user_id'=> $userInfo['id']])->asArray()->one();
+        
+        $userWithPlatformInfo = empty($userWithPlatformInfo) ? [] : $userWithPlatformInfo;
+        $userWithTeamInfo = empty($userWithTeamInfo) ? [] : $userWithTeamInfo;
+        
+        return array_merge($userInfo, $userWithPlatformInfo, $userWithTeamInfo);
     }
 
     /**

@@ -61,13 +61,14 @@ class UserController extends BaseController
      * @return [type] [description]
      */
     public function actionLogin()
-    {
+    {    
+
         $model = new LoginForm();
         $data = Yii::$app->request->post();
         if ($model->isLogin($data['username'])) {
             return $this->returnData = [
                 'code' => '801',
-                'msg' => '已经登录过了',
+                'msg' => '您已经登录',
             ];
         }
         if (intval($data['type']) === User::SIGNSTATUS_BACKEND) {
@@ -76,7 +77,14 @@ class UserController extends BaseController
                 $userInfo = (new User())->getUserAllInfo($data['username']);
                 Yii::$app->session->set('user_id', $userInfo['id']);
                 Yii::$app->session->set('username', $userInfo['username']);
-                Yii::$app->session->set('platform_id', $userInfo['platform_id']);
+
+                if (isset($userInfo['platform_id'])) {
+                    Yii::$app->session->set('platform_id', $userInfo['platform_id']);
+                }
+                
+                if (isset($userInfo['team_id'])) {
+                    Yii::$app->session->set('team_id', $userInfo['team_id']);
+                }
 
                 $this->returnData['code'] = 1;
                 $this->returnData['msg'] = '登录成功';
@@ -84,8 +92,7 @@ class UserController extends BaseController
                 $this->returnData['code'] = 0;
                 $this->returnData['msg'] = '登录失败';
             }
-        } 
-
+        }
         return $this->returnData;
     }
 

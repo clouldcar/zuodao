@@ -11,16 +11,39 @@ class StudentController extends BaseController
 
     public $modelClass = 'shop\models\Student';
 
+    public $platform_id;
+    public $team_id;
+    public $session;
+
+    public function init()
+    {   
+        $this->session = Yii::$app->session;
+        $platform_id = $this->session->get('platform_id');
+        $this->platform_id = isset($platform_id) ?  $platform_id : null;
+        $team_id = $this->session->get('team_id');
+        $this->team_id = isset($team_id) ? $team_id : null;
+
+        parent::init();
+    }
+
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
         return $behaviors;
     }
 
+    /**
+     * 显示学员
+     * @return [type] [description]
+     */
     public function actionIndex()
-    {
-        $condition = ['status' => Student::STATUS_ACTIVE];
-        return User::findAll($condition);
+    {   
+        $condition['order'] = Yii::$app->request->get('order') ? Yii::$app->request->get('order') : 'desc';
+        $condition['page'] = Yii::$app->request->get('page') ? Yii::$app->request->get('page') : '1';
+        $condition['offset'] = Yii::$app->request->get('offset') ? Yii::$app->request->get('offset') : Student::PAGESIZE;
+        $condition['platform_id'] = $this->platform_id;
+        $condition['team_id'] = $this->team_id;
+        return (new Student())->studentList($condition);
     }
 
     /*
@@ -36,6 +59,9 @@ class StudentController extends BaseController
             $model->stu_qq = intval($data['stu_qq']);
             $stu_uid = createIncrementId();
             $model->stu_uid = (string)$stu_uid;
+
+            $model->team_id = $this->team_id;
+            $model->platform_id = $this->platform_id;
 
             $userModel->id = (string)$stu_uid;
             $userModel->type = 1;
