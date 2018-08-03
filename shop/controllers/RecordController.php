@@ -10,6 +10,12 @@ class RecordController extends BaseController
 {
     public $modelClass = 'shop\models\Record';
 
+    public function behaviors()
+    {
+        $behaviors =  parent::behaviors();
+        return $behaviors;
+    }
+
     public function actionIndex()
     {
         return ['msg' => 'ok'];
@@ -26,10 +32,10 @@ class RecordController extends BaseController
             if ($model->load(Yii::$app->request->post(), '')) {
                 if ($model->validate() && $model->save()) {
                     $this->returnData['code'] = 1;
-                    $this->returnData['msg'] = 'add record success';
+                    $this->returnData['msg'] = '添加事件记录成功';
                 } else {
                     $this->returnData['code'] = 0;
-                    $this->returnData['msg'] = 'add record fail';
+                    $this->returnData['msg'] = '添加事件记录失败';
                 }
             }
         }

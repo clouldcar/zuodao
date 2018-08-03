@@ -10,6 +10,12 @@ class CommunicationRecordController extends BaseController
 {
     public $modelClass = '\shop\models\CommunicationRecord';
 
+    public function behaviors()
+    {
+        $behaviors =  parent::behaviors();
+        return $behaviors;
+    }
+    
     public function actionIndex()
     {
         return ['msg' => 'ok'];

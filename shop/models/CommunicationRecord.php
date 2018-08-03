@@ -23,6 +23,29 @@ use Yii;
 class CommunicationRecord extends \yii\db\ActiveRecord
 {
 
+    const TYPE_PHONE = 1;
+    const TYPE_WECHAT = 2;
+    const TYPE_EMAIL = 3;
+
+    public static $typeMap = [
+        self::TYPE_PHONE => '电话',
+        self::TYPE_WECHAT => '微信',
+        self::TYPE_EMAIL => '邮箱',
+    ];
+
+    const TARGET_BAODU = 1;
+    const TARGET_JIANLILIANJIE = 2;
+    const TARGET_DAYI = 3;
+    const TARGET_OTHER = 4;
+
+    public static $targetMap = [
+        self::TARGET_BAODU => '报读',
+        self::TARGET_JIANLILIANJIE => '建立链接',
+        self::TARGET_DAYI => '答疑',
+        self::TARGET_OTHER => '其它',
+    ];
+
+
     /**
      * @inheritdoc
      */
