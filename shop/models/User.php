@@ -6,6 +6,7 @@ use Yii;
 
 class User extends \common\models\User
 {   
+
     /**
      * @inheritdoc
      */
@@ -42,7 +43,7 @@ class User extends \common\models\User
     }
 
     /**
-     * 获取用户的包括用户的基本信息以及平台权限的相关关系
+     * 获取用户的包括用户的基本信息以及平台权限及团队之间的相关关系
      * @param  [string] $username [用户名]
      * @return [array]           [description]
      */
@@ -60,7 +61,7 @@ class User extends \common\models\User
         return array_merge($userInfo, $userWithPlatformInfo, $userWithTeamInfo);
     }
 
-    /**
+   /**
     * 批量修改用户是否激活状态
     * @param  [type] $where [description]
     * @return [type]        [description]

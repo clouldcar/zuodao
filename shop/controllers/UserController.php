@@ -5,23 +5,38 @@ namespace shop\controllers;
 use shop\models\LoginForm;
 use Yii;
 use shop\models\User;
+use yii\filters\Cors;
+use yii\helpers\ArrayHelper;
+
 
 /**
  * 后台用户控制器
  */
 class UserController extends BaseController
 {
+
     public $modelClass = 'shop\models\User';
+
+   /* public $enableCsrfValidation = false;
+    public $returnData = array();
+    public function init()
+    {
+        parent::init();
+    }*/
 
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
-        return $behaviors;
+        return ArrayHelper::merge([
+            [
+                'class' => Cors::className(),
+            ],
+        ], $behaviors);
     }
 
     //用户列表
     public function actionIndex()
-    {
+    {   
         $condition = ['status' => User::STATUS_ACTIVE];
         return User::findAll($condition);
     }
@@ -45,21 +60,18 @@ class UserController extends BaseController
                 $model->id = createIncrementId();
                 if ($model->save()) {
                     $this->returnData['code'] = 1;
-                    $this->returnData['msg'] = '添加成功';
+                    $this->returnData['msg'] = 'add success';
                 } else {
                     $this->returnData['code'] = 0;
-                    $this->returnData['msg'] = '添加失败';
+                    $this->returnData['msg'] = 'add fail';
                 }
-            } 
-        }
+            } else {
 
+            }
+        }
         return $this->returnData;
     }
 
-    /**
-     * 登录
-     * @return [type] [description]
-     */
     public function actionLogin()
     {    
 
@@ -74,17 +86,7 @@ class UserController extends BaseController
         if (intval($data['type']) === User::SIGNSTATUS_BACKEND) {
             if ($model->load($data, '') && $model->login()) {
                 //设置session
-                $userInfo = (new User())->getUserAllInfo($data['username']);
-                Yii::$app->session->set('user_id', $userInfo['id']);
-                Yii::$app->session->set('username', $userInfo['username']);
-
-                if (isset($userInfo['platform_id'])) {
-                    Yii::$app->session->set('platform_id', $userInfo['platform_id']);
-                }
-                
-                if (isset($userInfo['team_id'])) {
-                    Yii::$app->session->set('team_id', $userInfo['team_id']);
-                }
+                $model->setSession($data['username']);
 
                 $this->returnData['code'] = 1;
                 $this->returnData['msg'] = '登录成功';
@@ -119,7 +121,6 @@ class UserController extends BaseController
             }
             unset($data['password']);
             $model->setAttributes($data);
-
             if ($model->save()) {
                 $this->returnData = [
                     'code' => 1,
@@ -132,13 +133,11 @@ class UserController extends BaseController
                 ];
             }
         }
-
+        var_dump($_SESSION);
         return $this->returnData;
     }
 
-    /**
-     * 删除用户
-     */
+
     public function actionDelete()
     {
         //判断批量删除
@@ -164,10 +163,6 @@ class UserController extends BaseController
         }
     }
 
-    /**
-     * 登出
-     * @return [type] [description]
-     */
     public function actionLogout()
     {   
         //移除所有session信息

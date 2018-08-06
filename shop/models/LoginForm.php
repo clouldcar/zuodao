@@ -23,7 +23,6 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
         ];
     }
-
     /**
      * 判断是否登录
      * @param  [type]  $username [用户名]
@@ -37,7 +36,7 @@ class LoginForm extends Model
             return false;
         }
     }
-    
+
     public function login()
     {
         if ($this->validate()) {
@@ -72,5 +71,24 @@ class LoginForm extends Model
     }
 
 
+    /**
+     * 设置登录成功后的session
+     * @param [type] $username [description]
+     */
+    public function setSession($username)
+    {
+        $userInfo = (new User())->getUserAllInfo($username);
+        Yii::$app->session->set('user_id', $userInfo['id']);
+        Yii::$app->session->set('username', $userInfo['username']);
 
+        if (isset($userInfo['platform_id'])) {
+            Yii::$app->session->set('platform_id', $userInfo['platform_id']);
+        }
+                
+        if (isset($userInfo['team_id'])) {
+            Yii::$app->session->set('team_id', $userInfo['team_id']);
+        }
+
+        return true;
+    }
 }
