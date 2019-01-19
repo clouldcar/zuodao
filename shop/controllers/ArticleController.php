@@ -7,6 +7,8 @@ use shop\models\Article;
 use shop\models\ArticleNotic;
 use shop\models\PlatformTeam;
 use shop\models\TeamUser;
+
+use shop\models\ArticleComments;
 use Yii;
 
 
@@ -40,6 +42,7 @@ class ArticleController extends BaseController
             exit(json_encode(array('code'=>0,'message'=>'请先登录账号')));
         }
         $isAuth = CheckAuth::isAuth();
+
         if(!$isAuth){
             exit(json_encode(array('code'=>0,'message'=>'此账号无权限')));
         }
@@ -152,5 +155,17 @@ class ArticleController extends BaseController
         exit(json_encode(array('code'=>200,'message'=>'确认成功','data'=>'')));
     }
 
+    /**
+     * 获取当前文章下所有评论列表
+     * @return [type] [description]
+     */
+    public function actionComments()
+    {   
+        $article_id = Yii::$app->request->get('article_id');
+        $order = Yii::$app->request->get('order') ? Yii::$app->request->get('order') : 'desc';
+        $page = Yii::$app->request->get('page') ? Yii::$app->request->get('page') : '1';
+        $offset = Yii::$app->request->get('offset') ? Yii::$app->request->get('offset') : ArticleComments::PAGESIZE;
+        return (new Article())->getArticleComments($article_id,$order,$page,$offset);
+    }
 
 }

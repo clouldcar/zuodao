@@ -40,8 +40,20 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
+//            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'Student',
+                    'pluralize'=> false,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'CommunicationRecord',
+                    'pluralize'=> false,
+                ],
+
             ],
         ],
 

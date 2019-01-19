@@ -86,6 +86,30 @@ class Article extends  \yii\db\ActiveRecord
         return true;
     }
 
-
+    /**
+     * 获取当前文章下所有评论列表
+     * @param  [type] $id     [description]
+     * @param  [type] $order  [description]
+     * @param  [type] $page   [description]
+     * @param  [type] $offset [description]
+     * @return [type]         [description]
+     */
+    public function getArticleComments($id,$order,$page,$offset)
+    {
+       $data = $this->find()
+                ->from('shop_article_comments')
+                ->select('shop_user.username, shop_article_comments.*')
+                ->leftJoin('shop_user', 'shop_user.id = shop_article_comments.user_id')
+                ->where([
+                    'shop_article_comments.article_id' => $id,
+                    'shop_article_comments.status' => ArticleComments::STATUS_ACTIVE
+                ])
+                ->orderBy('shop_article_comments.created_at '.$order)
+                ->offset(($page-1)*$offset)
+                ->limit($offset)
+                ->asArray()
+                ->all();
+        return $data;
+    }
 
 }

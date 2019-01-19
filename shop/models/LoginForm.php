@@ -23,10 +23,26 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
         ];
     }
+    /**
+     * 判断是否登录
+     * @param  [type]  $username [用户名]
+     * @return boolean           
+     */
+    public function isLogin($username)
+    {
+        if (Yii::$app->session->get('username') == $username) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function login()
     {
         if ($this->validate()) {
+            if ($this->rememberMe) {
+                $this->_user->generateAuthKey();
+            }
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24* 30 : 0);
         } else {
 //            var_dump($this->getErrors());
@@ -55,5 +71,24 @@ class LoginForm extends Model
     }
 
 
+    /**
+     * 设置登录成功后的session
+     * @param [type] $username [description]
+     */
+    public function setSession($username)
+    {
+        $userInfo = (new User())->getUserAllInfo($username);
+        Yii::$app->session->set('user_id', $userInfo['id']);
+        Yii::$app->session->set('username', $userInfo['username']);
 
+        if (isset($userInfo['platform_id'])) {
+            Yii::$app->session->set('platform_id', $userInfo['platform_id']);
+        }
+                
+        if (isset($userInfo['team_id'])) {
+            Yii::$app->session->set('team_id', $userInfo['team_id']);
+        }
+
+        return true;
+    }
 }
