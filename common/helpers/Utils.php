@@ -1,7 +1,9 @@
 <?php
-//全局工具函数
-if (!function_exists('createIncrementId')) {
-    function createIncrementId($type = null)
+namespace common\helpers;
+
+class Utils {
+	//生成ID
+	public static function createIncrementId($type = null)
     {
         $time = time();
         $time = $time - 1071497951;//1071497951->2003-12-15 22:19:11
@@ -13,5 +15,16 @@ if (!function_exists('createIncrementId')) {
         $num  = $time|$type|$seq;
         $num -= 83629516358986; //这样保证10年内位数不会增长
         return $num;
+    }
+
+    //状态返回
+    public static function returnMsg($code = null, $msg = null)
+    {
+    	$result = array(
+            'code' => 0,
+            'msg' => 'ok'
+        );
+
+        return $result;
     }
 }

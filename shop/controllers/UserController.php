@@ -2,11 +2,14 @@
 
 namespace shop\controllers;
 
+use common\helpers\Utils;
+use common\helpers\Validate;
 use shop\models\LoginForm;
 use Yii;
 use shop\models\User;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
+use AlibabaCloud\Client\AlibabaCloud;
 
 
 /**
@@ -50,23 +53,22 @@ class UserController extends BaseController
         if (Yii::$app->request->isPost) {
             //表单验证是不是post方法
             $data = Yii::$app->request->post();
-            if ($data['type'] == User::SIGNSTATUS_BACKEND) {
-                //后台管理使用账号密码创建及登录
-                if (empty($data['password']) || strlen($data['password']) < 6) {
-                    $this->error('密码为空或者小于6字符');
-                }
-                $model->setAttributes($data);
-                $model->setPassword($data['password']);
-                $model->id = createIncrementId();
-                if ($model->save()) {
-                    $this->returnData['code'] = 1;
-                    $this->returnData['msg'] = 'add success';
-                } else {
-                    $this->returnData['code'] = 0;
-                    $this->returnData['msg'] = 'add fail';
-                }
-            } else {
 
+            if (empty($data['password']) || strlen($data['password']) < 6) {
+                $this->error('密码为空或者小于6字符');
+            }
+            //默认普通用户
+            $data['type'] = User::SIGNSTATUS_FRONTEND;
+
+            $model->setAttributes($data);
+            $model->setPassword($data['password']);
+            $model->id = Utils::createIncrementId();
+            if ($model->save()) {
+                $this->returnData['code'] = 1;
+                $this->returnData['msg'] = 'add success';
+            } else {
+                $this->returnData['code'] = 0;
+                $this->returnData['msg'] = 'add fail';
             }
         }
         return $this->returnData;
@@ -74,7 +76,6 @@ class UserController extends BaseController
 
     public function actionLogin()
     {    
-
         $model = new LoginForm();
         $data = Yii::$app->request->post();
         if ($model->isLogin($data['username'])) {
@@ -83,19 +84,57 @@ class UserController extends BaseController
                 'msg' => '您已经登录',
             ];
         }
-        if (intval($data['type']) === User::SIGNSTATUS_BACKEND) {
-            if ($model->load($data, '') && $model->login()) {
-                //设置session
-                $model->setSession($data['username']);
 
-                $this->returnData['code'] = 1;
-                $this->returnData['msg'] = '登录成功';
-            } else {
-                $this->returnData['code'] = 0;
-                $this->returnData['msg'] = '登录失败';
-            }
+        if ($model->load($data, '') && $model->login()) {
+
+            //设置session
+            $model->setSession($data['username']);
+
+            $this->returnData['code'] = 1;
+            $this->returnData['msg'] = '登录成功';
+        } else {
+            $this->returnData['code'] = 0;
+            $this->returnData['msg'] = '登录失败';
         }
         return $this->returnData;
+    }
+
+    /**
+    * 补全信息
+    */
+    public function actionReplenish()
+    {
+        $result = array(
+            'code' => 0,
+            'msg' => '失败'
+        );
+
+        if (Yii::$app->request->isPost) {
+            $data = Yii::$app->request->post();
+            $uid = Yii::$app->user->id;
+
+            $code = $data['code'];
+            //TODO 短信验证
+            unset($data['code']);
+
+            $data['updated_at'] = date('Y-m-d H:i:s');
+
+            $model = User::findIdentity($uid);
+
+            if ($model && $model->status) {
+                $model->setAttributes($data);
+
+                if ($model->save()) {
+                    $result["code"] = 1;
+                    $result["msg"] = "success";
+                } else {
+                    var_dump($model->getErrors());exit;
+                }
+
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -106,7 +145,7 @@ class UserController extends BaseController
     {
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post();
-            $model = User::findOne($data['id']);
+            $model = User::findIdentity($data['id']);
             if (!$model || !$model->status) {
                 return $this->returnData = [
                     'code' => 803,
@@ -133,7 +172,6 @@ class UserController extends BaseController
                 ];
             }
         }
-        var_dump($_SESSION);
         return $this->returnData;
     }
 
@@ -174,5 +212,59 @@ class UserController extends BaseController
             'msg' => '登出成功',
         ];
 
+    }
+
+    public function actionSmsCode()
+    {
+        $data = Yii::$app->request->post();
+
+        if(isset($data['phone']) && !Validate::isMobile($data['phone']))
+        {
+            return Utils::returnMsg(1, "请正确填写手机号");
+        }
+
+        //每天最多20次
+        /*
+        if(count($result) > 20)
+        {
+            Common::ReturnJson('4', '请求次数超过限制，请明天再试');
+        }
+
+        $time = time();
+        if($result && $time - strtotime($result[0]['ctime']) < 300)
+        {
+            Common::ReturnJson('4', '请求次数过多，请稍后再试');
+        }
+
+        */
+
+        //随机验证码
+        $code = mt_rand(100000,999999);
+        str_shuffle($code);
+
+
+        AlibabaCloud::accessKeyClient('LTAIVBWvIkd7jKXi', 'Mw9k7bjpCVFZxBfS5fXKmfO8ayIkaW')
+                        ->regionId('cn-hangzhou') // replace regionId as you need
+                        ->asGlobalClient();
+
+        $result = AlibabaCloud::rpcRequest()
+                  ->product('Dysmsapi')
+                  // ->scheme('https')
+                  ->version('2017-05-25')
+                  ->action('SendSms')
+                  ->method('POST')
+                  ->options([
+                    'query' => [
+                        'PhoneNumbers' => $data['phone'],
+                        'SignName' => '做到',
+                        'TemplateCode' => 'SMS_138650016',
+                        'TemplateParam' => json_encode(["code" => $code])
+                    ],
+                ])->request();
+        if($result->Code !== "OK") 
+        {
+            return Utils::returnMsg(1, "发送失败，请检查后再试！");
+        }
+        return Utils::returnMsg(0, "发送成功！");
     }
 }

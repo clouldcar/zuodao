@@ -32,11 +32,6 @@ class User extends \common\models\User
         $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username]);
-    }
-
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password);
@@ -77,7 +72,7 @@ class User extends \common\models\User
      * @param $param 查询条件 $select 查询字段
      * @return array();
      */
-    public function userList($param,$select){
+    public function userList($param, $select){
         return User::find()->select($select)->where($param)->asArray()->all();
     }
 
