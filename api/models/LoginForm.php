@@ -77,10 +77,10 @@ class LoginForm extends Model
      * 设置登录成功后的session
      * @param [type] $username [description]
      */
-    public function setSession($username)
+    public function setSession($uid)
     {
-        $userInfo = (new User())->getUserAllInfo($username);
-        Yii::$app->session->set('user_id', $userInfo['id']);
+        $userInfo = (new User())->getUserAllInfo($uid);
+        Yii::$app->session->set('user_id', $uid);
         Yii::$app->session->set('username', $userInfo['username']);
 
         if (isset($userInfo['platform_id'])) {

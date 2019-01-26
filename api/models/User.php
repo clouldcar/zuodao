@@ -42,9 +42,9 @@ class User extends \common\models\User
      * @param  [string] $username [用户名]
      * @return [array]           [description]
      */
-    public function getUserAllInfo($username)
+    public function getUserAllInfo($uid)
     {
-        $user = static::findOne(['username' => $username]);
+        $user = static::findOne(['id' => $uid]);
         
         $userInfo = $user->attributes;
         $userWithPlatformInfo = PlatformUser::find()->select('platform_id')->where(['user_id'=> $userInfo['id']])->asArray()->one();

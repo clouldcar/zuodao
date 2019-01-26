@@ -18,11 +18,30 @@ class Utils {
     }
 
     //状态返回
-    public static function returnMsg($code = null, $msg = null)
+    public static function returnMsg($code = 0, $msg = null, $data = array())
     {
     	$result = array(
-            'code' => 0,
-            'msg' => 'ok'
+            'ret' => $code,
+        );
+
+        if(!empty($msg))
+        {
+            $result['msg'] = $msg;
+        }
+
+        if(!empty($data))
+        {
+            $result['data'] = $data;
+        }
+
+        return $result;
+    }
+
+    public static function redirectMsg($code = 0, $url = null) 
+    {
+        $result = array(
+            'ret' => $code,
+            'url' => $url
         );
 
         return $result;

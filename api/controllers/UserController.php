@@ -81,7 +81,7 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "您已经登录");
         }
 
-        if ($model->load($data, '') && $model->login()) {
+        if ($model->load($data) && $model->login()) {
 
             //设置session
             $model->setSession($data['username']);
