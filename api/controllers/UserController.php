@@ -66,14 +66,11 @@ class UserController extends BaseController
             $model->setPassword($data['password']);
             $model->id = Utils::createIncrementId();
             if ($model->save()) {
-                $this->returnData['code'] = 1;
-                $this->returnData['msg'] = 'add success';
+                return Utils::returnMsg(0, "success");
             } else {
-                $this->returnData['code'] = 0;
-                $this->returnData['msg'] = 'add fail';
+                return Utils::returnMsg(1, "add fail");
             }
         }
-        return $this->returnData;
     }
 
     public function actionLogin()
@@ -81,10 +78,7 @@ class UserController extends BaseController
         $model = new LoginForm();
         $data = Yii::$app->request->post();
         if ($model->isLogin($data['username'])) {
-            return $this->returnData = [
-                'code' => '801',
-                'msg' => '您已经登录',
-            ];
+            return Utils::returnMsg(1, "您已经登录");
         }
 
         if ($model->load($data, '') && $model->login()) {
@@ -92,13 +86,10 @@ class UserController extends BaseController
             //设置session
             $model->setSession($data['username']);
 
-            $this->returnData['code'] = 1;
-            $this->returnData['msg'] = '登录成功';
+            return Utils::returnMsg(0, "登录成功");
         } else {
-            $this->returnData['code'] = 0;
-            $this->returnData['msg'] = '登录失败';
+            return Utils::returnMsg(0, "登录失败");
         }
-        return $this->returnData;
     }
 
     /**
@@ -116,7 +107,7 @@ class UserController extends BaseController
             $uid = Yii::$app->user->id;
 
             $code = $data['code'];
-            //TODO 短信验证
+            //短信验证
             $result = CheckSms::get($data['phone']);
             $time = time();
             if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
@@ -133,12 +124,10 @@ class UserController extends BaseController
                 $model->setAttributes($data);
 
                 if ($model->save()) {
-                    $result["code"] = 1;
-                    $result["msg"] = "success";
+                    return Utils::returnMsg(0, "success");
                 } else {
-                    var_dump($model->getErrors());exit;
+                    return Utils::returnMsg(1, "fail");
                 }
-
             }
         }
 
@@ -169,15 +158,9 @@ class UserController extends BaseController
             unset($data['password']);
             $model->setAttributes($data);
             if ($model->save()) {
-                $this->returnData = [
-                    'code' => 1,
-                    'msg' => '修改用户成功',
-                ];             
+                return Utils::returnMsg(0, "success");
             }else {
-                $this->returnData = [
-                    'code' => 0,
-                    'msg' => '修改用户失败',
-                ];
+                return Utils::returnMsg(1, "fail");
             }
         }
         return $this->returnData;
@@ -190,22 +173,13 @@ class UserController extends BaseController
         $ids = Yii::$app->request->get('id', 0);
         $ids = implode(',', array_unique((array)$ids));
         if (empty($ids)) {
-            return $this->returnData = [
-                'code' => 802,
-                'msg' => '请选择要删除的数据',
-            ];
+            return Utils::returnMsg(1, "请选择要删除的数据");
         }
         $_where = 'id in (' . $ids . ')';
         if ((new User())->updateUserStatus($_where)) {
-            return $this->returnData = [
-                'code' => 1,
-                'msg' => '删除用户成功'
-            ];
+            return Utils::returnMsg(0, "删除用户成功");
         } else {
-            return $this->returnData = [
-                'code' => 0,
-                'msg' => '删除用户失败'
-            ];
+            return Utils::returnMsg(1, "删除用户失败");
         }
     }
 
@@ -215,11 +189,7 @@ class UserController extends BaseController
         Yii::$app->session->removeAll();
         Yii::$app->session->destroy();
 
-        return $this->returnData = [
-            'code' => 1,
-            'msg' => '登出成功',
-        ];
-
+        return Utils::returnMsg(1, "登出成功");
     }
 
     public function actionSmsCode()
