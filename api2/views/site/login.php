@@ -10,22 +10,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
-
-<div id="login_container" style="width:200px;height:200px;display: block;border: 1px;"></div>
-<script>
-var obj = new WxLogin({
- self_redirect:false,
- id:"login_container", 
- appid: "wx0c2876cfb615aa3e", 
- scope: "snsapi_login", 
- redirect_uri: encodeURIComponent("http://api.zuodao.club/wechart/auth"),
- state: Math.ceil(Math.random()*1000),
- style: "white",
- href: ""
-});
-</script>
-<!--div class="site-login" style="display: block;">
+<div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to login:</p>
@@ -40,6 +25,10 @@ var obj = new WxLogin({
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
+                <div style="color:#999;margin:1em 0">
+                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+                </div>
+
                 <div class="form-group">
                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
@@ -47,4 +36,4 @@ var obj = new WxLogin({
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-</div-->
+</div>
