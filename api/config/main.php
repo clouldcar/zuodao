@@ -55,7 +55,10 @@ return [
                 ],
 
             ],
-        ]
+        ],
+        'AliyunOss' => [
+            'class' => 'api\components\AliyunOss',
+        ],
 
     ],
     'params' => $params,

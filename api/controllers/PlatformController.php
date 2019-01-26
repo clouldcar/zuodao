@@ -4,7 +4,7 @@ namespace api\controllers;
 
 use common\models\CheckAuth;
 use api\models\InviteUser;
-use api\modelS\PlatformUser;
+use api\models\PlatformUser;
 use api\models\User;
 use Yii;
 

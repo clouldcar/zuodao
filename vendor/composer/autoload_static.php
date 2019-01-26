@@ -66,6 +66,10 @@ class ComposerStaticInit9c4ae0f1e3be1063039c0f96f3fd7424
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
         ),
+        'O' => 
+        array (
+            'OSS\\' => 4,
+        ),
         'J' => 
         array (
             'JmesPath\\' => 9,
@@ -196,6 +200,10 @@ class ComposerStaticInit9c4ae0f1e3be1063039c0f96f3fd7424
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
         ),
         'JmesPath\\' => 
         array (

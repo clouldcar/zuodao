@@ -220,21 +220,22 @@ class UserController extends BaseController
         str_shuffle($code);
 
 
-        AlibabaCloud::accessKeyClient('LTAIVBWvIkd7jKXi', 'Mw9k7bjpCVFZxBfS5fXKmfO8ayIkaW')
-                        ->regionId('cn-hangzhou') // replace regionId as you need
-                        ->asGlobalClient();
+        AlibabaCloud::accessKeyClient(
+                Yii::$app->params['aliyun']['accessKeyId'], 
+                Yii::$app->params['aliyun']['accessKeySecret']
+        )->regionId(Yii::$app->params['sms']['regionId'])->asGlobalClient();
 
         $result = AlibabaCloud::rpcRequest()
-                  ->product('Dysmsapi')
+                  ->product(Yii::$app->params['sms']['product'])
                   // ->scheme('https')
-                  ->version('2017-05-25')
-                  ->action('SendSms')
-                  ->method('POST')
+                  ->version(Yii::$app->params['sms']['version'])
+                  ->action(Yii::$app->params['sms']['action'])
+                  ->method(Yii::$app->params['sms']['method'])
                   ->options([
                     'query' => [
                         'PhoneNumbers' => $data['phone'],
-                        'SignName' => '做到',
-                        'TemplateCode' => 'SMS_138650016',
+                        'SignName' => Yii::$app->params['sms']['SignName'],
+                        'TemplateCode' => Yii::$app->params['sms']['TemplateCode'],
                         'TemplateParam' => json_encode(["code" => $code])
                     ],
                 ])->request();
