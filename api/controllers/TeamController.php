@@ -151,14 +151,30 @@ class TeamController extends BaseController
      */
     public function actionEditorTeam(){
         $data = $this->request->post();
-        if(empty($data['team_id'])){
-            exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
+        if(empty($data['id']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403', '/#/403');
         }
-        $result = (new PlatformTeam())->teamEditor($data);
+
+        //团队信息
+        $model = new Team();
+        $teamInfo = $model->getInfo($data['id']);
+        //TODO 管理员权限验证
+        if(!$this->isManager($teamInfo['uid']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403', '/#/403');
+        }
+
+        //要修改的字段
+
+        $result = $model->teamEditor($data);
         if(!$result){
-            exit(json_encode(array('code'=>100,'data'=>'','message'=>'失败')));
+            return Utils::returnMsg(0, '失败');
         }
-        exit(json_encode(array('code'=>200,'data'=>'','message'=>'成功')));
+
+        return Utils::returnMsg(0, '成功');
     }
 
     /*
