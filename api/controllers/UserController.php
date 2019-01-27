@@ -4,14 +4,14 @@ namespace api\controllers;
 
 use Yii;
 
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use AlibabaCloud\Client\AlibabaCloud;
 use common\helpers\Utils;
 use common\helpers\Validate;
 use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
-use AlibabaCloud\Client\AlibabaCloud;
 
 
 /**
@@ -33,9 +33,15 @@ class UserController extends BaseController
     {
         $behaviors =  parent::behaviors();
         return ArrayHelper::merge([
-            [
-                'class' => Cors::className(),
-            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ]
         ], $behaviors);
     }
 
@@ -43,7 +49,8 @@ class UserController extends BaseController
     public function actionIndex()
     {   
         $condition = ['status' => User::STATUS_ACTIVE];
-        return User::findAll($condition);
+        // return User::findAll($condition);
+        return Utils::returnMsg();
     }
 
     /** 
@@ -64,7 +71,7 @@ class UserController extends BaseController
 
             $model->setAttributes($data);
             $model->setPassword($data['password']);
-            $model->id = Utils::createIncrementId();
+            $model->id = Utils::createIncrementId(Utils::ID_TYPE_USER);
             if ($model->save()) {
                 return Utils::returnMsg(0, "success");
             } else {
@@ -97,41 +104,35 @@ class UserController extends BaseController
     */
     public function actionReplenish()
     {
-        $result = array(
-            'code' => 0,
-            'msg' => '失败'
-        );
+        if (!Yii::$app->request->isPost) {
+            return Utils::returnMsg(1, "404");
+        }
+        $data = Yii::$app->request->post();
+        $uid = Yii::$app->user->id;
 
-        if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
-            $uid = Yii::$app->user->id;
+        $code = $data['code'];
+        //短信验证
+        $result = CheckSms::get($data['phone']);
+        $time = time();
+        if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
+        {
+            Utils::returnMsg('1', '短信验证码不正确或已过期');
+        }
+        unset($data['code']);
 
-            $code = $data['code'];
-            //短信验证
-            $result = CheckSms::get($data['phone']);
-            $time = time();
-            if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
-            {
-                Utils::returnMsg('1', '短信验证码不正确或已过期');
-            }
-            unset($data['code']);
+        $data['updated_at'] = date('Y-m-d H:i:s');
 
-            $data['updated_at'] = date('Y-m-d H:i:s');
+        $model = User::findIdentity($uid);
 
-            $model = User::findIdentity($uid);
+        if ($model && $model->status) {
+            $model->setAttributes($data);
 
-            if ($model && $model->status) {
-                $model->setAttributes($data);
-
-                if ($model->save()) {
-                    return Utils::returnMsg(0, "success");
-                } else {
-                    return Utils::returnMsg(1, "fail");
-                }
+            if ($model->save()) {
+                return Utils::returnMsg(0, "success");
+            } else {
+                return Utils::returnMsg(1, "fail");
             }
         }
-
-        return $result;
     }
 
     /**

@@ -10,8 +10,6 @@ use yii;
 
 class TeamUser extends  \yii\db\ActiveRecord
 {
-    const  ADD_BATCH  = 1;
-    const  ADD_ALONE  = 0;
 
     public static function tableName()
     {
@@ -21,8 +19,8 @@ class TeamUser extends  \yii\db\ActiveRecord
     /*
      * @name 增加成员
      */
-    public function addMembers($data){
-        $result = '';
+    public function addMember($data){
+        /*
         if($data['type'] == self::ADD_BATCH){
             //批量添加
             unset($data['type']);
@@ -35,7 +33,8 @@ class TeamUser extends  \yii\db\ActiveRecord
             unset($data['type']);
             $result = Yii::$app->db->createCommand()->insert(self::tableName(), $data)->execute();
         }
-
+        */
+        $result = Yii::$app->db->createCommand()->insert(self::tableName(), $data)->execute();
         if(!$result){
             return false;
         }
@@ -68,16 +67,29 @@ class TeamUser extends  \yii\db\ActiveRecord
     /*
      * @name 展示团队下的成员信息
      */
-    public function membersList($teamId){
-        $list = $this->find()
-            ->from('shop_team_user as t')
-            ->leftJoin('shop_user as u','u.id=t.user_id')
-            ->select('t.permissions,p.create_time,u.username,u.phone')
-            ->where(['t.team_id'=>$teamId])
-            ->asArray()
-            ->all();
-        return $list?$list:[];
+    public static function membersList($teamId, $limit = null){
+        $list = self::find()
+            ->from(self::tableName() . ' as t')
+            ->leftJoin(user::tableName() . ' as u','u.id=t.uid')
+            ->select('u.id,u.real_name,u.avatar,t.permissions,t.create_time')
+            ->where(['t.team_id'=>$teamId]);
 
+
+        if($limit)
+        {
+            $list = $list->limit($limit);
+        }
+
+        $list = $list->asArray()->all();
+        
+        return $list?$list:[];
+    }
+
+    public function memberToal($teamId)
+    {
+        $result = $this->find()->where(['team_id' => $teamId])->count();
+
+        return $result;
     }
 
 

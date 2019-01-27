@@ -2,7 +2,10 @@
 namespace common\helpers;
 
 class Utils {
+    const ID_TYPE_USER = 31;
+    const ID_TYPE_TEAM = 2;
 	//生成ID
+    // null用户ID，2团队ID
 	public static function createIncrementId($type = null)
     {
         $time = time();

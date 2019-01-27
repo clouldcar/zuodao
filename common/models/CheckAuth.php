@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use shop\models\PlatformUser;
+use api\models\PlatformUser;
 use Yii;
 use yii\web\Controller;
 

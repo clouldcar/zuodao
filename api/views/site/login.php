@@ -25,7 +25,7 @@ var obj = new WxLogin({
  href: ""
 });
 </script>
-<!--div class="site-login" style="display: block;">
+<div class="site-login" style="display: block;">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to login:</p>
@@ -47,4 +47,4 @@ var obj = new WxLogin({
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-</div-->
+</div>

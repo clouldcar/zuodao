@@ -69,7 +69,7 @@ class WechartController extends BaseController
 
         //不存在，注册
         $insertData = [
-            'id' => Utils::createIncrementId(),
+            'id' => Utils::createIncrementId(Utils::ID_TYPE_USER),
             'real_name' => $result->nickname,
             'avatar' => $result->headimgurl,
             'wx_unionid' => $result->unionid,

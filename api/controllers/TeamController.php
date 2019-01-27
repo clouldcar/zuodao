@@ -3,10 +3,13 @@ namespace api\controllers;
 
 
 use Yii;
+
+use common\helpers\Utils;
+use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\CheckAuth;
-use api\models\PlatformTeam;
+use yii\filters\Cors;
+use api\models\Team;
 use api\models\TeamUser;
 
 
@@ -22,6 +25,18 @@ use api\models\TeamUser;
  */
 class TeamController extends BaseController
 {
+    //身份：学员
+    const LEVEL_STUDENT = 0;
+    //教练
+    const LEVEL_COACH  = 1;
+
+    //状态：正常
+    const STATUS_NORMAL = 0;
+    //删除
+    const STATUS_DELETE = 1;
+    //未审核
+    const STATUS_UNAUDITED = 2;
+
 
     public $session;
     public $user;
@@ -29,12 +44,12 @@ class TeamController extends BaseController
 
     public function behaviors()
     {
-        return [
+        $behaviors =  parent::behaviors();
+        return ArrayHelper::merge([
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['*'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,24 +61,7 @@ class TeamController extends BaseController
                     'logout' => ['post'],
                 ],
             ],
-        ];
-    }
-
-    public function init()
-    {
-        $this->session = \Yii::$app->session;
-echo 1;
-        $this->user = $this->session->get('user_id');
-        $this->platform_id = $this->session->get('platform_id');
-        // if(!$this->user ){
-        //     exit(json_encode(array('code'=>0,'message'=>'请先登录账号')));
-        // }
-        $isAuth = CheckAuth::isAuth();
-        // if(!$isAuth){
-        //     exit(json_encode(array('code'=>0,'message'=>'此账号无权限')));
-        // }
-
-        parent::init();
+        ], $behaviors);
     }
 
     /*
@@ -73,27 +71,76 @@ echo 1;
      */
     public function actionIndex()
     {
-        //通过用户去查平台的信息?还是get接受
-        $platformId= $this->request->get('platformId');
-        $teamList = (new PlatformTeam())->teamList($platformId);
-        exit(json_encode(array('code'=>200,'data'=>$teamList)));
+        $uid = Yii::$app->user->id;
+        $model = new Team();
+        $list = $model->teamList($uid);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
     /*
-     * @name 平台下团队的创建
-     * @param platform_id name public start_date
+     * @name 创建团队
      * @return mixed
      */
-    public function actionCreateTeam(){
-        $data = $this->request->post();
-        if(empty($data['platform_id']) || empty($data['name']) || empty($data['public']) || empty($data['start_date'])){
-            exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
+    public function actionCreate()
+    {
+        //TODO 没有做去重逻辑
+        $data = Yii::$app->request->post();
+
+        if(empty($data['platform_name']) || empty($data['name']))
+        {
+            return Utils::returnMsg('1', '缺少必要参数');
         }
-        $result = (new PlatformTeam())->teamCreate($data);
-        if(!$result){
-            exit(json_encode(array('code'=>100,'data'=>'','message'=>'失败')));
+        $data['id'] = Utils::createIncrementId(Utils::ID_TYPE_TEAM);
+        $data['uid'] = Yii::$app->user->id;
+        $result = (new Team())->teamCreate($data);
+        if(!$result)
+        {
+            return Utils::returnMsg('1', '创建失败');
         }
-        exit(json_encode(array('code'=>200,'data'=>'','message'=>'成功')));
+
+        //增加团队管理员
+        $member = array(
+            'team_id' => $data['id'],
+            'uid' => $data['uid'],
+            'permissions' => self::LEVEL_STUDENT,
+            'status' => self::STATUS_NORMAL
+        );
+
+        (new TeamUser())->addMember($member);
+
+        return Utils::returnMsg('0', '创建成功');
+    }
+
+    public function actionDetail()
+    {
+        $data = Yii::$app->request->get();
+        if(empty($data['id']))
+        {
+            return Utils::returnMsg('1', '缺少必要参数');
+        }
+
+        //团队表
+        $teamInfo = (new Team())->teamInfo($data['id']);
+        if(!$teamInfo)
+        {
+            //TODO 404处理
+            return Utils::redirectMsg('404', '/#/404');
+        }
+
+        //是否是管理员
+        $teamInfo['is_manager'] = $this->isManager($teamInfo['uid']);
+
+        //团队成员
+        $teamInfo['members'] = TeamUser::membersList($data['id']);
+
+        return Utils::returnMsg(0, null, $teamInfo);
+    }
+
+    //是否是管理员
+    private function isManager($teamUid)
+    {
+        return ($teamUid == Yii::$app->user->id) ? 1 : 0;
     }
 
 
