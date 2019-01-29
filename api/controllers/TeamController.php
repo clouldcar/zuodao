@@ -125,7 +125,7 @@ class TeamController extends BaseController
         if(!$teamInfo)
         {
             //TODO 404处理
-            return Utils::redirectMsg('404', '/#/404');
+            return Utils::redirectMsg('404');
         }
 
         //是否是管理员
@@ -154,7 +154,7 @@ class TeamController extends BaseController
         if(empty($data['id']))
         {
             //TODO 403处理
-            return Utils::redirectMsg('403', '/#/403');
+            return Utils::redirectMsg('403');
         }
 
         //团队信息
@@ -164,12 +164,18 @@ class TeamController extends BaseController
         if(!$this->isManager($teamInfo['uid']))
         {
             //TODO 403处理
-            return Utils::redirectMsg('403', '/#/403');
+            return Utils::redirectMsg('403');
         }
 
         //要修改的字段
+        $params = array(
+            'platform_name' => $data['platform_name'],
+            'ideal' => $data['ideal'],
+            'logo' => $data['logo'],
+            'visions_map' => $data['visions_map']
+        );
 
-        $result = $model->teamEditor($data);
+        $result = $model->teamEditor($params);
         if(!$result){
             return Utils::returnMsg(0, '失败');
         }
@@ -183,6 +189,7 @@ class TeamController extends BaseController
      * @return mixed
      */
 
+    /*
     public function actionDeleteTeam(){
         $teamId = $this->request->post('team_id');
         if(empty($data['team_id'])){
@@ -196,6 +203,7 @@ class TeamController extends BaseController
 
 
     }
+    */
 
 
 
@@ -266,20 +274,60 @@ class TeamController extends BaseController
 
     /*
      * @name 团队下成员信息列表
-     * @param team_id
+     * @param id
      * @return mixed
      */
-    public function actionMembersList(){
-        $teamId = $this->request->post('team_id');
-        if(empty($data['platform_id'])){
-            exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
+    public function actionMemberList(){
+        $teamId = Yii::$app->request->get('id');
+
+        if(!$teamId) {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        //团队信息
+        $model = new Team();
+        $teamInfo = $model->teamInfo($teamId);
+        //TODO 管理员权限验证
+        if(!$this->isManager($teamInfo['uid']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
         }
 
         $list = (new TeamUser())->membersList($teamId);
-        if (!$list) {
-            exit(json_encode(array('code' => 100, 'data' => '', 'message' => '失败')));
+        
+        return Utils::returnMsg(0, null, $list);
+    }
+
+    /**
+    * 修改成员身份
+    */
+    public function actionMemberLevel()
+    {
+        $teamId = Yii::$app->request->post('id');
+        $uid = Yii::$app->request->post('uid');
+        if(!$teamId || !$uid) {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
         }
-        exit(json_encode(array('code' => 200, 'data' => $list, 'message' => '成功')));
+
+        //团队信息
+        $model = new Team();
+        $teamInfo = $model->teamInfo($teamId);
+        //TODO 管理员权限验证
+        if(!$this->isManager($teamInfo['uid']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        //判断是否团队成员
+
+        //检查权限内容
+        $permissions = [0,1,2];
+
+        //修改
 
     }
 

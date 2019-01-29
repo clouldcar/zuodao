@@ -42,6 +42,14 @@ class Utils {
 
     public static function redirectMsg($code = 0, $url = null) 
     {
+        if($code == 403)
+        {
+            $url = '/#/403';
+        }
+        if($code == 404)
+        {
+            $url = '/#/404';
+        }
         $result = array(
             'ret' => $code,
             'url' => $url

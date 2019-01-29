@@ -53,6 +53,8 @@ return [
                     'controller' => 'CommunicationRecord',
                     'pluralize'=> false,
                 ],
+                // "<controller:\w+>/<action:\w+>/<id:\d+>" => "<controller>/<action>",
+                // "<controller:\w+>/<action:\w+>" => "<controller>/<action>"
 
             ],
         ],
