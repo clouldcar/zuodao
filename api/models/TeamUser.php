@@ -85,11 +85,16 @@ class TeamUser extends  \yii\db\ActiveRecord
         return $list?$list:[];
     }
 
-    public function memberToal($teamId)
+    public function memberTotal($teamId)
     {
         $result = $this->find()->where(['team_id' => $teamId])->count();
 
         return $result;
+    }
+
+    public static function hasUser($teamId, $uid)
+    {
+        return self::find()->where(['team_id' => $teamId, 'uid' => $uid])->count();
     }
 
 

@@ -150,7 +150,13 @@ class TeamController extends BaseController
      * @return mixed
      */
     public function actionEditorTeam(){
-        $data = $this->request->post();
+        if(!Yii::$app->request->isPost)
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        $data = Yii::$app->request->post();
         if(empty($data['id']))
         {
             //TODO 403处理
@@ -218,7 +224,13 @@ class TeamController extends BaseController
      */
     public function actionAddMembers()
     {
-        $data = $this->request->post();
+        if(!Yii::$app->request->isPost)
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        $data = Yii::$app->request->post();
         if(empty($data['user_id']) || empty($data['team_id']) || empty($data['type']) || empty($data['permissions'])){
             exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
         }
@@ -259,7 +271,31 @@ class TeamController extends BaseController
 
     public function actionEditorMembers()
     {
-        $data = $this->request->post();
+        if(!Yii::$app->request->isPost)
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        $data = Yii::$app->request->post();
+
+        if(empty($data['id']) || empty($data['uid']) || empty($data['permissions']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        //团队信息
+        $model = new Team();
+        $teamInfo = $model->getInfo($data['id']);
+        //TODO 管理员权限验证
+        if(!$this->isManager($teamInfo['uid']))
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+
         //验证参数需要写一个公共model了
         if(empty($data['user_id']) || empty($data['team_id']) || empty($data['type']) || empty($data['permissions'])){
             exit(json_encode(array('code'=>100,'data'=>'','message'=>'缺少必要参数')));
@@ -305,16 +341,23 @@ class TeamController extends BaseController
     */
     public function actionMemberLevel()
     {
-        $teamId = Yii::$app->request->post('id');
-        $uid = Yii::$app->request->post('uid');
-        if(!$teamId || !$uid) {
+        if(!Yii::$app->request->isPost)
+        {
+            //TODO 403处理
+            return Utils::redirectMsg('403');
+        }
+
+        $data = Yii::$app->request->post();
+
+        if(empty($data['id']) || empty($data['uid']) || empty($data['permissions']))
+        {
             //TODO 403处理
             return Utils::redirectMsg('403');
         }
 
         //团队信息
         $model = new Team();
-        $teamInfo = $model->teamInfo($teamId);
+        $teamInfo = $model->teamInfo($data['id']);
         //TODO 管理员权限验证
         if(!$this->isManager($teamInfo['uid']))
         {
@@ -323,12 +366,34 @@ class TeamController extends BaseController
         }
 
         //判断是否团队成员
+        if(!TeamUser::hasUser($data['id'], $data['uid']))
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
 
         //检查权限内容
         $permissions = [0,1,2];
 
-        //修改
+        if(!in_array($data['permissions'], $permissions))
+        {
+            //TODO 403处理
+            return Utils::returnMsg(1, '非法操作');
+        }
 
+        //修改
+        $teamUserModel = new TeamUser();
+        $cloumns = array('permissions' => $data['permissions']);
+        $where = array(
+            'team_id' => $data['id'],
+            'uid' => $data['uid'],
+            'status' => 0,
+        );
+        if(!$teamUserModel->editorMembers($cloumns, $where))
+        {
+            return Utils::returnMsg(1, '修改失败，请刷新页面后重试');
+        }
+
+        return Utils::returnMsg(0, '修改成功');
     }
 
 }
