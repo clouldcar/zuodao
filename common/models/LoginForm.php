@@ -15,6 +15,14 @@ class LoginForm extends Model
 
     private $_user;
 
+    const GET_API_TOKEN = 'generate_api_token';
+
+     public function init ()
+    {
+        parent::init();
+        $this->on(self::GET_API_TOKEN, [$this, 'onGenerateApiToken']);
+    }
+
 
     /**
      * @inheritdoc
@@ -56,6 +64,9 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+            $this->trigger(self::GET_API_TOKEN);
+            return $this->_user;
+            /*
             $status =  Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
             if($status){
                 $user = $this->getUser();
@@ -67,6 +78,7 @@ class LoginForm extends Model
                 }else{
                     return $token;
                 }
+                */
 ////                $this->setToken($this->User());
             }else{
                 return false;
@@ -78,18 +90,31 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[phone]]
+     * Finds user by [[username]]
      *
      * @return User|null
      */
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->phone);
+            $this->_user = User::findByUsername($this->username);
         }
 
         return $this->_user;
     }
+
+    /**
+     * 登录校验成功后，为用户生成新的token
+     * 如果token失效，则重新生成token
+     */
+    public function onGenerateApiToken ()
+    {
+        if (!User::apiTokenIsValid($this->_user->api_token)) {
+            $this->_user->generateApiToken();
+            $this->_user->save(false);
+        }
+    }
+
     //获取token
     protected function setToken(){
         return md5(str_replace('.','',uniqid($this->getRandomString(10).time(),true)));

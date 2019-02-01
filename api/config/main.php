@@ -12,6 +12,9 @@ $host_array = explode('.', $_SERVER["HTTP_HOST"]);
 if (count($host_array) == 3) {
     define('DOMAIN', $host_array[1] . '.' . $host_array[2]);
 }
+if (count($host_array) == 2) {
+    define('DOMAIN', $host_array[0] . '.' . $host_array[1]);
+}
 
 define('DOMAIN_HOME', 'www.' . DOMAIN);
 define('DOMAIN_API', 'api.' . DOMAIN);

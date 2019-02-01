@@ -15,6 +15,14 @@ class LoginForm extends Model
 
     protected $_user;
 
+    const GET_API_TOKEN = 'generate_api_token';
+
+     public function init ()
+    {
+        parent::init();
+        $this->on(self::GET_API_TOKEN, [$this, 'onGenerateApiToken']);
+    }
+
     public function rules()
     {
         return [
@@ -40,12 +48,17 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+
+            $this->trigger(self::GET_API_TOKEN);
+            return $this->_user;
+            /*
             if ($this->rememberMe) {
                 $this->_user->generateAuthKey();
             }
             $result = Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24* 30 : 0);
 
             return $result;
+            */
         } else {
 //            var_dump($this->getErrors());
             return false;
@@ -70,6 +83,18 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    /**
+     * 登录校验成功后，为用户生成新的token
+     * 如果token失效，则重新生成token
+     */
+    public function onGenerateApiToken ()
+    {
+        if (!User::apiTokenIsValid($this->_user->api_token)) {
+            $this->_user->generateApiToken();
+            $this->_user->save(false);
+        }
     }
 
 

@@ -4,6 +4,8 @@ namespace api\controllers;
 
 use Yii;
 
+use yii\filters\auth\QueryParamAuth;
+use yii\web\IdentityInterface;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use AlibabaCloud\Client\AlibabaCloud;
@@ -31,18 +33,15 @@ class UserController extends BaseController
 
     public function behaviors()
     {
-        $behaviors =  parent::behaviors();
-        return ArrayHelper::merge([
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ]
-        ], $behaviors);
+        return ArrayHelper::merge (parent::behaviors(), [ 
+            'authenticator' => [ 
+                'class' => QueryParamAuth::className(),
+                'tokenParam' => 'token',
+                'optional' => [
+                    'login'
+                ]
+            ] 
+        ]);
     }
 
     //用户列表
@@ -88,7 +87,16 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "您已经登录");
         }
 
-        if ($model->load($data) && $model->login()) {
+        $model->setAttributes($data);
+
+        if ($user = $model->login()) {
+
+            if ($user instanceof IdentityInterface) {
+                return Utils::returnMsg(0, null, $user->api_token);
+            } else {
+                return $user->errors;
+            }
+
 
             //设置session
             $model->setSession($data['username']);
@@ -185,7 +193,8 @@ class UserController extends BaseController
     }
 
     public function actionLogout()
-    {   
+    {
+        print_r(Yii::$app->request->post());exit;
         //移除所有session信息
         Yii::$app->session->removeAll();
         Yii::$app->session->destroy();
