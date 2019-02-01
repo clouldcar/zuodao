@@ -6,6 +6,16 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+//跨域session域名配置,获取当前主机名
+$host_array = explode('.', $_SERVER["HTTP_HOST"]);
+//针对com域名，获取顶级域名
+if (count($host_array) == 3) {
+    define('DOMAIN', $host_array[1] . '.' . $host_array[2]);
+}
+
+define('DOMAIN_HOME', 'www.' . DOMAIN);
+define('DOMAIN_API', 'api.' . DOMAIN);
+
 return [
     'id' => 'app-zuodao',
     'basePath' => dirname(__DIR__),
@@ -19,10 +29,12 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
+            'cookieParams' => ['domain' => '.' . DOMAIN, 'lifetime' => 0],
+            'timeout' => 3600,
             'name' => 'advanced-zuodao',
         ],
         'log' => [
