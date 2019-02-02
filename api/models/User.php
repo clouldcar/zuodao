@@ -90,14 +90,5 @@ class User extends \common\models\User
         }
     }
 
-    public static function findIdentityByAccessToken($token, $type = null)
-{
-    // 如果token无效的话，
-    if(!static::apiTokenIsValid($token)) {
-        throw new \yii\web\UnauthorizedHttpException("token is invalid.");
-    }
- 
-    return static::findOne(['api_token' => $token, 'status' => self::STATUS_ACTIVE]);
-    // throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-
+    
 }

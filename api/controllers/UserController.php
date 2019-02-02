@@ -194,7 +194,6 @@ class UserController extends BaseController
 
     public function actionLogout()
     {
-        print_r(Yii::$app->request->post());exit;
         //移除所有session信息
         Yii::$app->session->removeAll();
         Yii::$app->session->destroy();
