@@ -2,7 +2,7 @@
 
 namespace api\models;
 
-use api\models\User as User;
+use api\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -13,7 +13,7 @@ class LoginForm extends Model
     public $password;
     public $type;
 
-    protected $_user;
+    public $_user;
 
     public function rules()
     {
@@ -30,7 +30,7 @@ class LoginForm extends Model
      */
     public function isLogin($username)
     {
-        if (Yii::$app->session->get('username') == $username) {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->username == $username) {
             return true;
         } else {
             return false;
@@ -47,7 +47,6 @@ class LoginForm extends Model
 
             return $result;
         } else {
-//            var_dump($this->getErrors());
             return false;
         }
     }

@@ -20,7 +20,7 @@ class PlatformUser extends  \yii\db\ActiveRecord
      * @param platform_id 平台id $type  用户权限控制 0为所有用户
      * @return array()
      */
-    public function platformUsers($platform_id,$type){
+    public function getUsers($platform_id, $type){
         if(!empty($type)){
             $where = [1==1];
         }else{
@@ -37,12 +37,17 @@ class PlatformUser extends  \yii\db\ActiveRecord
         return $list?$list:[];
     }
 
+    public function isExists($uid, $platform_id)
+    {
+        return $this->find()->where(['uid' => $uid, 'platform_id' => $platform_id])->count();
+    }
+
     /*
      * @name 增加用户权限
      */
 
-    public function addEmployees($param){
-        $data = Yii::$app->db->createCommand()->insert(self::tableName(), $param)->execute();
+    public function addStaff($params){
+        $data = Yii::$app->db->createCommand()->insert(self::tableName(), $params)->execute();
         if(!$data){
             return false;
         }

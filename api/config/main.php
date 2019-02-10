@@ -13,6 +13,7 @@ if (count($host_array) == 3) {
     define('DOMAIN', $host_array[1] . '.' . $host_array[2]);
 }
 
+define('DOMAIN', 'zuodao.lg');
 define('DOMAIN_HOME', 'www.' . DOMAIN);
 define('DOMAIN_API', 'api.' . DOMAIN);
 

@@ -5,6 +5,7 @@ namespace api\controllers;
 use Yii;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use common\helpers\Utils;
 
 
 class BaseController extends ActiveController
@@ -33,6 +34,28 @@ class BaseController extends ActiveController
                 'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
             ],
         ];
+    }
+
+    public function checkLogin()
+    {
+        if(Yii::$app->user->isGuest)
+        {
+            return Utils::returnMsg(401, "请先登录");
+        }
+    }
+
+    public function checkPost()
+    {
+        if (!Yii::$app->request->isPost) {
+            return Utils::returnMsg(404, "404");
+        }
+    }
+
+    public function checkGet()
+    {
+        if (!Yii::$app->request->isPost) {
+            return Utils::returnMsg(404, "404");
+        }
     }
 //    public function init()
 //    {

@@ -47,8 +47,8 @@ class User extends \common\models\User
         $user = static::findOne(['id' => $uid]);
         
         $userInfo = $user->attributes;
-        $userWithPlatformInfo = PlatformUser::find()->select('platform_id')->where(['user_id'=> $userInfo['id']])->asArray()->one();
-        $userWithTeamInfo = TeamUser::find()->select('team_id')->where(['user_id'=> $userInfo['id']])->asArray()->one();
+        $userWithPlatformInfo = PlatformUser::find()->select('platform_id')->where(['uid'=> $userInfo['id']])->asArray()->one();
+        $userWithTeamInfo = TeamUser::find()->select('team_id')->where(['uid'=> $userInfo['id']])->asArray()->one();
         
         $userWithPlatformInfo = empty($userWithPlatformInfo) ? [] : $userWithPlatformInfo;
         $userWithTeamInfo = empty($userWithTeamInfo) ? [] : $userWithTeamInfo;

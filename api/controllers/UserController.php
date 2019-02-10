@@ -29,6 +29,7 @@ class UserController extends BaseController
         parent::init();
     }*/
 
+    /*
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
@@ -44,14 +45,7 @@ class UserController extends BaseController
             ]
         ], $behaviors);
     }
-
-    //用户列表
-    public function actionIndex()
-    {   
-        $condition = ['status' => User::STATUS_ACTIVE];
-        // return User::findAll($condition);
-        return Utils::returnMsg();
-    }
+    */
 
     /** 
      * 添加用户操作
@@ -81,17 +75,20 @@ class UserController extends BaseController
     }
 
     public function actionLogin()
-    {    
+    {
         $model = new LoginForm();
         $data = Yii::$app->request->post();
+
         if ($model->isLogin($data['username'])) {
             return Utils::returnMsg(1, "您已经登录");
         }
 
-        if ($model->load($data) && $model->login()) {
+        $model->setAttributes($data);
+
+        if ($model->login()) {
 
             //设置session
-            $model->setSession($data['username']);
+            $model->setSession($model->_user->id);
 
             return Utils::returnMsg(0, "登录成功");
         } else {
@@ -104,9 +101,9 @@ class UserController extends BaseController
     */
     public function actionReplenish()
     {
-        if (!Yii::$app->request->isPost) {
-            return Utils::returnMsg(1, "404");
-        }
+        parent::checkLogin();
+        parent::checkPost();
+        
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
@@ -141,51 +138,39 @@ class UserController extends BaseController
      */
     public function actionEdit()
     {
-        if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
-            $model = User::findIdentity($data['id']);
-            if (!$model || !$model->status) {
-                return $this->returnData = [
-                    'code' => 803,
-                    'msg' => '该用户不存在',
-                ];
-            }
-            $data['updated_at'] = date('Y-m-d H:i:s');
-            //判断是否需要重置密码
-            if (!empty($data['password'])) {
-                $model->generateAuthKey();
-                $model->setPassword($data['password']);
-            }
-            unset($data['password']);
-            $model->setAttributes($data);
-            if ($model->save()) {
-                return Utils::returnMsg(0, "success");
-            }else {
-                return Utils::returnMsg(1, "fail");
-            }
+        parent::checkLogin();
+        parent::checkPost();
+
+        $data = Yii::$app->request->post();
+        $model = User::findIdentity($data['id']);
+        if (!$model || !$model->status) {
+            return $this->returnData = [
+                'code' => 803,
+                'msg' => '该用户不存在',
+            ];
+        }
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        //判断是否需要重置密码
+        if (!empty($data['password'])) {
+            $model->generateAuthKey();
+            $model->setPassword($data['password']);
+        }
+        unset($data['password']);
+        $model->setAttributes($data);
+        if ($model->save()) {
+            return Utils::returnMsg(0, "success");
+        }else {
+            return Utils::returnMsg(1, "fail");
         }
         return $this->returnData;
     }
 
 
-    public function actionDelete()
-    {
-        //判断批量删除
-        $ids = Yii::$app->request->get('id', 0);
-        $ids = implode(',', array_unique((array)$ids));
-        if (empty($ids)) {
-            return Utils::returnMsg(1, "请选择要删除的数据");
-        }
-        $_where = 'id in (' . $ids . ')';
-        if ((new User())->updateUserStatus($_where)) {
-            return Utils::returnMsg(0, "删除用户成功");
-        } else {
-            return Utils::returnMsg(1, "删除用户失败");
-        }
-    }
-
     public function actionLogout()
-    {   
+    {
+        parent::checkLogin();
+        parent::checkPost();
+
         //移除所有session信息
         Yii::$app->session->removeAll();
         Yii::$app->session->destroy();
@@ -195,6 +180,9 @@ class UserController extends BaseController
 
     public function actionSmsCode()
     {
+        parent::checkLogin();
+        parent::checkPost();
+        
         $data = Yii::$app->request->post();
 
         if(isset($data['phone']) && !Validate::isMobile($data['phone']))

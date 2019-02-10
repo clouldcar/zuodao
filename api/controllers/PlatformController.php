@@ -133,10 +133,10 @@ class PlatformController extends BaseController
             }
 
             $param_platform = [
-                'user_id'    =>$user_id,
-                'platform'   =>$post['platform_id'],
-                'permissions'=>$post['permissions'],
-                'status'     =>self::PLATFORM_STATUS
+                'user_id'    => $user_id,
+                'platform'   => $post['platform_id'],
+                'permissions'=> $post['permissions'],
+                'status'     => self::PLATFORM_STATUS
             ];
             $platform = (new PlatformUser())->addEmployees($param_platform);
             if(!$platform){
