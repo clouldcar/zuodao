@@ -14,7 +14,7 @@ use Yii;
 /**
  * 后台平台员工管理控制器
  */
-class PlatformController extends BaseController
+class Platform2Controller extends BaseController
 {
     const  INVITE_STATUS_ON  = 1;
     const  INVITE_STATUS_OFF = 0;

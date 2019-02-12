@@ -2,8 +2,12 @@
 namespace api\controllers\platform;
 
 use Yii;
-use common\helpers\Utils;
+use  yii\web\Session;
+
 use api\controllers\BaseController;
+use common\helpers\Utils;
+use api\models\PlatformUser;
+
 
 class StaffController extends BaseController
 {
@@ -23,11 +27,20 @@ class StaffController extends BaseController
 
     	$data = Yii::$app->request->get();
 
-    	$type = $data['type'] ? $data['type'] : 0;
-    	$page = $data['page'] ? $data['page'] : 1;
-    	$page_size = 20;
+    	$type = isset($data['type']) ? $data['type'] : 0;
+    	$page = isset($data['page']) ? $data['page'] : 1;
+    	if($page < 1)
+        {
+            $page = 1;
+        }
+        $page_size = 20;
+    	$platform_id = Yii::$app->session->get("platform_id");
 
-    	$user_list = (new PlatformUser())->platformUsers($platform_id, $type, $page, $page_size);
+    	$model = new PlatformUser();
+
+    	$list = $model->getUsers($platform_id, $type, $page, $page_size);
+
+    	return Utils::returnMsg(0, null, $list);
     }
 
     /**
@@ -54,5 +67,22 @@ class StaffController extends BaseController
         $platform = $model->addStaff($params);
 
 		return Utils::returnMsg(0, "success");
+	}
+
+	public function actionUpdatePermission()
+	{
+		parent::checkPost();
+		$data = Yii::$app->request->post();
+
+		$platform_id = Yii::$app->session->get("platform_id");
+
+		$params = array(
+			'platform_id'   => $platform_id,
+			'uid' => $data['uid'],
+			'permissions'=> $data['permissions']
+		);
+
+		PlatformUser::updatePermission($params);
+
 	}
 }

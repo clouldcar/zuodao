@@ -6,6 +6,7 @@ use Yii;
 use yii\rest\ActiveController;
 use yii\web\Response;
 use common\helpers\Utils;
+use api\models\PlatformUser;
 
 
 class BaseController extends ActiveController
@@ -53,14 +54,32 @@ class BaseController extends ActiveController
 
     public function checkGet()
     {
-        if (!Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
             return Utils::returnMsg(404, "404");
         }
     }
-//    public function init()
-//    {
-//
-//    }
+    public function init()
+    {
+        parent::init();
+
+        //开启session
+        $session = Yii::$app->session;
+        if(!$session->isActive)
+        {
+            $session->open();
+        }
+
+        // print_r(Yii::$app->user->identity);exit;
+
+        //检查平台用户
+        if($uid = Yii::$app->user->id)
+        {
+            $platform_user = PlatformUser::getUser($uid);
+            $session->set('platform_id', $platform_user->platform_id);
+            $session->set('platform_user_type', $platform_user->permissions);
+        }
+
+    }
 //
 //    /**
 //     * ajax返回客户端json方法

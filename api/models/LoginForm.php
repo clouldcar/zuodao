@@ -2,9 +2,11 @@
 
 namespace api\models;
 
-use api\models\User;
 use Yii;
 use yii\base\Model;
+use yii\web\Session;
+
+use api\models\User;
 
 class LoginForm extends Model
 {
@@ -58,7 +60,6 @@ class LoginForm extends Model
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
-
         }
     }
 

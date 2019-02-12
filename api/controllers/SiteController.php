@@ -60,6 +60,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        echo '<pre>';print_r(Yii::$app->user);echo '</pre>';
         return $this->render('index');
     }
 
@@ -75,8 +76,9 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        $model->load(Yii::$app->request->post());
+        if ($model->login()) {
+            return $this->goHome();
         } else {
             $model->password = '';
 

@@ -88,7 +88,7 @@ class UserController extends BaseController
         if ($model->login()) {
 
             //设置session
-            $model->setSession($model->_user->id);
+            // $model->setSession($model->_user->id);
 
             return Utils::returnMsg(0, "登录成功");
         } else {
@@ -103,7 +103,7 @@ class UserController extends BaseController
     {
         parent::checkLogin();
         parent::checkPost();
-        
+
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 

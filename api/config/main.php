@@ -20,6 +20,7 @@ define('DOMAIN_API', 'api.' . DOMAIN);
 return [
     'id' => 'app-zuodao',
     'basePath' => dirname(__DIR__),
+    'timeZone' => 'Asia/Shanghai',
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
@@ -30,7 +31,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
+            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true],
+            // 'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
