@@ -5,6 +5,7 @@ use Yii;
 use common\helpers\Utils;
 use api\controllers\BaseController;
 use api\models\Team;
+use api\models\UserInfo;
 
 class TeamController extends BaseController
 {
@@ -66,11 +67,19 @@ class TeamController extends BaseController
         parent::checkPost();
 
         $data = Yii::$app->request->post();
+        if(!$data['ids'])
+        {
+        	return Utils::returnMsg(1, '参数错误');
+        }
+        //检查是否为本平台学员
+        if(!UserInfo::checPlatformkUser($this->platform_id, $data['ids']))
+        {
+        	return Utils::returnMsg(1, '学员信息有误');
+        }
 
-        $grade = $data['grade'];
-        $ids = $data['ids'];
+        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, $data['team_id'], $data['grade']);
         
 
-        return Utils::returnMsg(0, null);
+        return Utils::returnMsg(0, 'success');
     }
 }

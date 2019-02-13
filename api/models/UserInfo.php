@@ -136,4 +136,26 @@ class UserInfo extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * 检查是否为本平台学员
+     */
+    public static function checPlatformkUser($platform_id, $ids)
+    {
+        $query = self::find()->where(['in', 'id', $ids]);
+
+        $result = true;
+        
+        foreach($query->each() as $user){
+            // 数据从服务端中以 100 个为一组批量获取，
+            // 但是 $user 代表 user 表里的一行数据
+            if($user['platform_id'] != $platform_id)
+            {
+                $result = false;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
 }
