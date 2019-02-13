@@ -1,20 +1,16 @@
 {
-	"variables": [],
 	"info": {
-		"name": "zuodao",
 		"_postman_id": "9e2e57da-cca6-a749-dbac-c7fb54ee319b",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"name": "zuodao",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "用户",
-			"description": "",
 			"item": [
 				{
 					"name": "创建手机号用户",
 					"request": {
-						"url": "http://zuodao.lg/user/add",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -23,15 +19,25 @@
 								{
 									"key": "username",
 									"value": "15810020641",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "123456",
-									"description": "",
 									"type": "text"
 								}
+							]
+						},
+						"url": {
+							"raw": "http://zuodao.lg/user/add",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"user",
+								"add"
 							]
 						},
 						"description": "创建普通用户，用于测试"
@@ -39,47 +45,17 @@
 					"response": []
 				},
 				{
-					"name": "登录",
-					"request": {
-						"url": "http://zuodao.lg/user/login",
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "15810020641",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"description": "账号登录"
-					},
-					"response": []
-				},
-				{
 					"name": "信息补全",
 					"request": {
-						"url": "http://zuodao.lg/user/replenish",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic MTU4MTAwMjA2NDE6MTIzNDU2",
-								"description": ""
+								"value": "Basic MTU4MTAwMjA2NDE6MTIzNDU2"
 							},
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 							}
 						],
 						"body": {
@@ -88,57 +64,60 @@
 								{
 									"key": "real_name",
 									"value": "李刚",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "avatar",
 									"value": "1",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "phone",
 									"value": "15810020641",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "code",
 									"value": "1234",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "email",
 									"value": "webn716@gmail.com",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "birthday",
 									"value": "1986-06-23",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "province",
 									"value": "北京",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "city",
 									"value": "北京",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "district",
 									"value": "大兴区",
-									"description": "",
 									"type": "text"
 								}
+							]
+						},
+						"url": {
+							"raw": "http://zuodao.lg/user/replenish",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"user",
+								"replenish"
 							]
 						},
 						"description": "用户补全信息"
@@ -148,13 +127,11 @@
 				{
 					"name": "退出登录",
 					"request": {
-						"url": "http://zuodao.lg/user/logout",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3",
-								"description": ""
+								"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3"
 							}
 						],
 						"body": {
@@ -163,9 +140,20 @@
 								{
 									"key": "token",
 									"value": "7VuWLoPNiORpN6Rrx4aQ0FpFDNf2Ffm0_1549126474",
-									"description": "",
 									"type": "text"
 								}
+							]
+						},
+						"url": {
+							"raw": "http://zuodao.lg/user/logout",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"user",
+								"logout"
 							]
 						},
 						"description": "退出登录"
@@ -175,7 +163,6 @@
 				{
 					"name": "发送短信",
 					"request": {
-						"url": "http://zuodao.lg/user/sms-code",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -184,22 +171,46 @@
 								{
 									"key": "phone",
 									"value": "15810020641",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://zuodao.lg/user/sms-code",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"user",
+								"sms-code"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "微信扫码前的state",
 					"request": {
-						"url": "http://zuodao.lg/wechart/get-state",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://zuodao.lg/wechart/get-state",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"wechart",
+								"get-state"
+							]
+						},
 						"description": "微信扫码前的state"
 					},
 					"response": []
@@ -207,6 +218,12 @@
 				{
 					"name": "微信扫码回调地址",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://zuodao.lg/wechart/auth?code=1234&state=3d6be0a4035d839573b04816624a415e",
 							"protocol": "http",
@@ -221,23 +238,14 @@
 							"query": [
 								{
 									"key": "code",
-									"value": "1234",
-									"equals": true,
-									"description": ""
+									"value": "1234"
 								},
 								{
 									"key": "state",
-									"value": "3d6be0a4035d839573b04816624a415e",
-									"equals": true,
-									"description": ""
+									"value": "3d6be0a4035d839573b04816624a415e"
 								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
+							]
+						}
 					},
 					"response": []
 				}
@@ -245,60 +253,85 @@
 		},
 		{
 			"name": "文章",
-			"description": "",
 			"item": [
 				{
 					"name": "发布文章",
 					"request": {
-						"url": "",
 						"method": "POST",
 						"header": [],
 						"body": {},
-						"description": ""
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "文章列表",
 					"request": {
-						"url": "http://zuodao.lg/article/",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://zuodao.lg/article/",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"article",
+								""
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "文章详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "文章分类列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "新建文章分类",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -306,27 +339,34 @@
 		},
 		{
 			"name": "评论",
-			"description": "",
 			"item": [
 				{
 					"name": "发表评论",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "评论列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -334,126 +374,169 @@
 		},
 		{
 			"name": "个人中心",
-			"description": "",
 			"item": [
 				{
 					"name": "成就宣言列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "成就宣言详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "消息列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "周计划列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "周计划详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "个人成就进度",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "个人信息读取",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "个人信息修改",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "添加早宣晚总",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "修改早宣晚总",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "修改成就宣言",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -461,27 +544,34 @@
 		},
 		{
 			"name": "导师",
-			"description": "",
 			"item": [
 				{
 					"name": "导师列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "导师详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -489,27 +579,34 @@
 		},
 		{
 			"name": "教练",
-			"description": "",
 			"item": [
 				{
 					"name": "教练列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "教练详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -517,40 +614,47 @@
 		},
 		{
 			"name": "团队",
-			"description": "",
 			"item": [
 				{
 					"name": "团队列表",
 					"request": {
-						"url": "http://zuodao.lg/team",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D",
-								"description": ""
+								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D"
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://zuodao.lg/team",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"team"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "创建团队",
 					"request": {
-						"url": "http://zuodao.lg/team/create",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic MTU4MTAwMjA2NDE6MTIzNDU2",
-								"description": ""
+								"value": "Basic MTU4MTAwMjA2NDE6MTIzNDU2"
 							},
 							{
 								"key": "Cookie",
-								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D",
-								"description": ""
+								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D"
 							}
 						],
 						"body": {
@@ -588,15 +692,8 @@
 								}
 							]
 						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "团队详情",
-					"request": {
 						"url": {
-							"raw": "http://zuodao.lg/team/detail?id=41438024747209",
+							"raw": "http://zuodao.lg/team/create",
 							"protocol": "http",
 							"host": [
 								"zuodao",
@@ -604,35 +701,15 @@
 							],
 							"path": [
 								"team",
-								"detail"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "41438024747209",
-									"equals": true,
-									"description": ""
-								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cookie",
-								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "修改团队信息",
 					"request": {
-						"url": "zuodao.lg/team/edit",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -641,53 +718,73 @@
 								{
 									"key": "id",
 									"value": "41438024747209",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "platform_name",
 									"value": "中公大平台",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "ideal",
 									"value": "aabbccdd",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "logo",
 									"value": "",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "visions_map",
 									"value": "",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "zuodao.lg/team/edit",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"team",
+								"edit"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "邀请加入",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "成员列表",
 					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://zuodao.lg/team/member-list?id=41438024747209",
 							"protocol": "http",
@@ -702,58 +799,51 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "41438024747209",
-									"equals": true,
-									"description": ""
+									"value": "41438024747209"
 								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Cookie",
-								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "成就宣言列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "周计划列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "修改成员身份",
 					"request": {
-						"url": "http://zuodao.lg/team/member-level",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D",
-								"description": ""
+								"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D"
 							}
 						],
 						"body": {
@@ -762,13 +852,11 @@
 								{
 									"key": "id",
 									"value": "41438024747209",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "uid",
 									"value": "41275744476381",
-									"description": "",
 									"type": "text"
 								},
 								{
@@ -779,17 +867,33 @@
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://zuodao.lg/team/member-level",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"team",
+								"member-level"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "授权修改成就宣言",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						},
 						"description": "学员想修改成就宣言，需要由教练确认授权"
 					},
 					"response": []
@@ -798,60 +902,79 @@
 		},
 		{
 			"name": "毕业学员",
-			"description": "",
 			"item": [
 				{
 					"name": "文章列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "发布文章",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "增加分类",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "分类列表",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "推荐文章",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -859,22 +982,18 @@
 		},
 		{
 			"name": "平台",
-			"description": "",
 			"item": [
 				{
 					"name": "员工管理",
-					"description": "",
 					"item": [
 						{
 							"name": "新增员工",
 							"request": {
-								"url": "http://zuodao.lg/platform/staff/create",
 								"method": "POST",
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3",
-										"description": ""
+										"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3"
 									}
 								],
 								"body": {
@@ -883,54 +1002,73 @@
 										{
 											"key": "uid",
 											"value": "41275744476381",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "platform_id",
 											"value": "1",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "permissions",
 											"value": "1",
-											"description": "",
 											"type": "text"
 										}
 									]
 								},
-								"description": ""
+								"url": {
+									"raw": "http://zuodao.lg/platform/staff/create",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"staff",
+										"create"
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "员工列表",
 							"request": {
-								"url": "http://zuodao.lg/platform/staff",
 								"method": "GET",
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 									}
 								],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://zuodao.lg/platform/staff",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"staff"
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "修改员工权限",
 							"request": {
-								"url": "http://zuodao.lg/platform/staff/update-permission",
 								"method": "POST",
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 									}
 								],
 								"body": {
@@ -939,18 +1077,28 @@
 										{
 											"key": "uid",
 											"value": "37399054152662",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "permissions",
 											"value": "1",
-											"description": "",
 											"type": "text"
 										}
 									]
 								},
-								"description": ""
+								"url": {
+									"raw": "http://zuodao.lg/platform/staff/update-permission",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"staff",
+										"update-permission"
+									]
+								}
 							},
 							"response": []
 						}
@@ -959,99 +1107,108 @@
 				},
 				{
 					"name": "学员管理",
-					"description": "",
 					"item": [
 						{
 							"name": "新增学员",
 							"request": {
-								"url": "http://zuodao.lg/platform/student/create",
-								"method": "POST",
-								"header": [
-									{
-										"key": "Cookie",
-										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-										"description": ""
-									}
-								],
+								"method": "GET",
+								"header": [],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "real_name",
-											"value": "李刚",
-											"description": "",
-											"type": "text"
-										},
-										{
-											"key": "phone",
-											"value": "15810020641",
-											"description": "",
-											"type": "text"
-										}
-									]
+									"mode": "raw",
+									"raw": ""
 								},
-								"description": ""
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "学员列表",
 							"request": {
-								"url": "http://zuodao.lg/platform/student",
 								"method": "GET",
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 									}
 								],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://zuodao.lg/platform/student",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"student"
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "问卷列表",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "查看问卷",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "沟通记录列表",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "新增沟通记录",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						}
@@ -1060,49 +1217,129 @@
 				},
 				{
 					"name": "班级管理",
-					"description": "",
 					"item": [
 						{
 							"name": "创建团队",
 							"request": {
-								"url": "",
-								"method": "GET",
-								"header": [],
-								"body": {},
-								"description": ""
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "advanced-zuodao=bb6c4fb5d96ef64b8ff88e1ad3c015fa; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=c23dfb32c94fff34785fd36efcda2f367172a2d889eef000c922157fa89c8c9ea%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22-wMud0idTv2yB8XuCq-lTeIf34k6v7yL%22%3B%7D",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "LP10",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2019-03-06",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://zuodao.lg/platform/team/create",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"team",
+										"create"
+									]
+								}
 							},
 							"response": []
 						},
 						{
-							"name": "增加团队成员",
+							"name": "团队列表",
 							"request": {
-								"url": "",
 								"method": "GET",
-								"header": [],
-								"body": {},
-								"description": "学员、导师、教练、总教练、助教、助教团长"
-							},
-							"response": []
-						},
-						{
-							"name": "团队成员列表",
-							"request": {
-								"url": "",
-								"method": "GET",
-								"header": [],
-								"body": {},
-								"description": ""
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "advanced-zuodao=bb6c4fb5d96ef64b8ff88e1ad3c015fa; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=c23dfb32c94fff34785fd36efcda2f367172a2d889eef000c922157fa89c8c9ea%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22-wMud0idTv2yB8XuCq-lTeIf34k6v7yL%22%3B%7D",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://zuodao.lg/platform/team",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"team"
+									]
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "阶段修改",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								},
 								"description": "修改学员上课阶段：一阶段，二阶段，三阶段"
+							},
+							"response": []
+						},
+						{
+							"name": "批量增加学员",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Cookie",
+										"value": "advanced-zuodao=bb6c4fb5d96ef64b8ff88e1ad3c015fa; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=c23dfb32c94fff34785fd36efcda2f367172a2d889eef000c922157fa89c8c9ea%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22-wMud0idTv2yB8XuCq-lTeIf34k6v7yL%22%3B%7D",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "team_id",
+											"value": "41438024747217",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://zuodao.lg/platform/team/add-user",
+									"protocol": "http",
+									"host": [
+										"zuodao",
+										"lg"
+									],
+									"path": [
+										"platform",
+										"team",
+										"add-user"
+									]
+								}
 							},
 							"response": []
 						}
@@ -1111,27 +1348,34 @@
 				},
 				{
 					"name": "信息管理",
-					"description": "",
 					"item": [
 						{
 							"name": "信息列表",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						},
 						{
 							"name": "信息发布",
 							"request": {
-								"url": "",
 								"method": "GET",
 								"header": [],
-								"body": {},
-								"description": ""
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": ""
+								}
 							},
 							"response": []
 						}
@@ -1141,46 +1385,56 @@
 				{
 					"name": "平台登录",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "平台申请",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "平台详情",
 					"request": {
-						"url": "",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "修改学员信息",
 					"request": {
-						"url": "http://zuodao.lg/platform/student/edit",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 							}
 						],
 						"body": {
@@ -1189,18 +1443,28 @@
 								{
 									"key": "uid",
 									"value": "41275744476381",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "real_name",
 									"value": "王刚",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://zuodao.lg/platform/student/edit",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"platform",
+								"student",
+								"edit"
+							]
+						}
 					},
 					"response": []
 				}
@@ -1208,18 +1472,15 @@
 		},
 		{
 			"name": "文件上传",
-			"description": "",
 			"item": [
 				{
 					"name": "头像上传",
 					"request": {
-						"url": "http://zuodao.lg/attachment/upload-avatar",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/multipart/form-data",
-								"description": ""
+								"value": "application/multipart/form-data"
 							}
 						],
 						"body": {
@@ -1227,17 +1488,114 @@
 							"formdata": [
 								{
 									"key": "avatar",
-									"value": "",
-									"description": "",
-									"type": "file"
+									"type": "file",
+									"src": ""
 								}
 							]
 						},
-						"description": ""
+						"url": {
+							"raw": "http://zuodao.lg/attachment/upload-avatar",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"attachment",
+								"upload-avatar"
+							]
+						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "15810020641",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://zuodao.lg/user/login",
+					"protocol": "http",
+					"host": [
+						"zuodao",
+						"lg"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "账号登录"
+			},
+			"response": []
+		},
+		{
+			"name": "增加团队成员",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				},
+				"description": "学员、导师、教练、总教练、助教、助教团长"
+			},
+			"response": []
+		},
+		{
+			"name": "团队详情",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "advanced-shop=lmb233t5n5njgetjd4ii17as13; _csrf-shop=3196b015060c23a424254d1b23885f1ef961724b03b0d08d0d844d3576d02046a%3A2%3A%7Bi%3A0%3Bs%3A10%3A%22_csrf-shop%22%3Bi%3A1%3Bs%3A32%3A%22zKH4PqrY2VgQUMMSx_-BtYjlVhz574LP%22%3B%7D; advanced-zuodao=50orsuk0ee38sspai3c7pci5k4; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=341adfad4dedaecccb29911f4612ecb78dae5906e170f53a1b36b6c75aa797e2a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22fs_-WNh8oGeTPaYbdbpjrG-uMRfDZclr%22%3B%7D"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://zuodao.lg/team/detail?id=41438024747209",
+					"protocol": "http",
+					"host": [
+						"zuodao",
+						"lg"
+					],
+					"path": [
+						"team",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "41438024747209"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

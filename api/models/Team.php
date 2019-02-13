@@ -2,6 +2,7 @@
 namespace api\models;
 
 use yii;
+use yii\data\Pagination;
 
 /*
  * @name 团队model
@@ -88,8 +89,43 @@ class Team extends  \yii\db\ActiveRecord
     }
 
 
+    /**
+     * 平台团队信息
+     */
+    public static function getInfoByName($name, $platform_id)
+    {
+        $where = ['name' => $name, 'platform_id' => $platform_id];
+        return self::find()->where($where)->one();
+    }
 
+    /**
+     * 平台团队列表
+     */
+    public static function getTeamList($platform_id, $page, $page_size)
+    {
+        $where = ['platform_id' => $platform_id, 'status' => 0];
+        
+        //team info + user count
+        $query = self::find()->select('count(u.uid) as total, t.*')
+            ->from(self::tableName() . ' as t')
+            ->leftJoin(TeamUser::tableName() . ' as u','t.id = u.team_id')
+            ->where(['t.platform_id' => $platform_id]);
 
+        //分页
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return [
+            'list' => $list,
+            'pages' => $pages,
+        ];
+    }
 
 
 }

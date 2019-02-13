@@ -38,7 +38,7 @@ class UserInfo extends \yii\db\ActiveRecord
     {
         return [
             [['platform_id', 'phone', 'real_name', 'ctime'], 'required'],
-            [['uid', 'platform_id'], 'integer'],
+            [['uid', 'platform_id', 'team_id', 'grade'], 'integer'],
             [['ctime'], 'safe'],
             [['phone', 'real_name', 'birthday', 'province', 'city', 'district', 'address'], 'string', 'max' => 100],
             [['avatar'], 'string', 'max' => 255],
@@ -54,6 +54,8 @@ class UserInfo extends \yii\db\ActiveRecord
             'id' => 'ID',
             'uid' => 'Uid',
             'platform_id' => 'Platform ID',
+            'team_id' => 'Team ID',
+            'grade' => 'Grade',
             'phone' => 'Phone',
             'real_name' => 'Real Name',
             'avatar' => 'Avatar',
@@ -106,6 +108,32 @@ class UserInfo extends \yii\db\ActiveRecord
             'list' => $list,
             'pages' => $pages,
         ];
+    }
+
+    /**
+     * 批量修改团队信息
+     * $ids user_info.id
+     * $platform_id 平台ID
+     * $team_id 团队ID
+     * $grade 年级/阶段
+     */
+    public static function updateTeamInfo($ids, $platform_id, $team_id, $grade)
+    {
+        $values = [];
+        foreach($ids as $id)
+        {
+            $values[] = "($id, $team_id, $grade)";
+        }
+        $sql = 'replace into ' . self::tableName() . '(id, team_id, grade) values' . implode(',', $values);
+        
+        if(Yii::$app->db->createCommand($sql)->execute())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }
