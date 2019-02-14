@@ -16,9 +16,7 @@ class WechartController extends BaseController
     private $userInfoUrl = 'https://api.weixin.qq.com/sns/userinfo';
 
     public function actionAuth() {
-        if (!Yii::$app->request->isGet) {
-            return Utils::returnMsg(1, "非法请求，请重试");
-        }
+        parent::checkGet();
 
         $data = Yii::$app->request->get();
 
@@ -62,16 +60,22 @@ class WechartController extends BaseController
 
         //已存在->登录
         if ($user) {
-            (new LoginForm())->setSession($user['id']);
-
-            return Utils::redirectMsg(0, '/#/');
+            $result = Yii::$app->user->login($user, 3600 * 24* 30);
+            if($result)
+            {
+                return Utils::redirectMsg(0, '/#/');
+            }
+            else
+            {
+                return Utils::returnMsg(1, '登录失败，请重试');
+            }
         }
 
         //不存在，注册
         $insertData = [
             'id' => Utils::createIncrementId(Utils::ID_TYPE_USER),
-            'real_name' => $result->nickname,
-            'avatar' => $result->headimgurl,
+            // 'real_name' => $result->nickname,
+            // 'avatar' => $result->headimgurl,
             'wx_unionid' => $result->unionid,
             'type' => 1,
         ];
