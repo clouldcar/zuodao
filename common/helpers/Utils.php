@@ -24,9 +24,7 @@ class Utils {
     //状态返回
     public static function returnMsg($code = 0, $msg = null, $data = array())
     {
-    	$result = array(
-            'ret' => $code,
-        );
+    	$result = ['ret' => $code];
 
         if(!empty($msg))
         {
@@ -51,11 +49,23 @@ class Utils {
         {
             $url = '/#/404';
         }
-        $result = array(
+        $result = [
             'ret' => $code,
             'url' => $url
-        );
+        ];
 
         return $result;
+    }
+
+    public static function pagination($pages)
+    {
+        return [
+            'pagination' => [
+                'total' => $pages->totalCount,
+                'page_size' => $pages->getPageSize(),
+                'page_count' => $pages->getPageCount(),
+                'current_page' => $pages->getPage()+1
+            ]
+        ];
     }
 }

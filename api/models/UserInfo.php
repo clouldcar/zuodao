@@ -104,10 +104,10 @@ class UserInfo extends \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
-        return [
-            'list' => $list,
-            'pages' => $pages,
-        ];
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
     }
 
     /**
@@ -117,14 +117,21 @@ class UserInfo extends \yii\db\ActiveRecord
      * $team_id 团队ID
      * $grade 年级/阶段
      */
-    public static function updateTeamInfo($ids, $platform_id, $team_id, $grade)
+    public static function updateTeamInfo($ids, $platform_id, $team_id = null, $grade = null)
     {
         $values = [];
         foreach($ids as $id)
         {
-            $values[] = "($id, $team_id, $grade)";
+            $str = "($id";
+            $str .= $team_id ? ", $team_id" : "";
+            $str .= $grade ? ", $grade" : "";
+            $str .= ")";
+            $values[] = $str;
         }
-        $sql = 'replace into ' . self::tableName() . '(id, team_id, grade) values' . implode(',', $values);
+        $cloumn = "id";
+        $cloumn .= $team_id ? ", team_id" : "";
+        $cloumn .= $grade ? ", grade" : "";
+        $sql = "replace into " . self::tableName() . "($cloumn) values" . implode(',', $values);
         
         if(Yii::$app->db->createCommand($sql)->execute())
         {

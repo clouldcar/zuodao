@@ -19,6 +19,11 @@ class StudentController extends BaseController
     {
         parent::init();
         $this->platform_id = Yii::$app->session['platform_id'];
+
+        if(!$this->platform_id)
+        {
+            return Utils::returnMsg(1, '参数错误，请检查平台权限');
+        }
     }
 
     /**

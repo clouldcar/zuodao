@@ -3,6 +3,7 @@ namespace api\models;
 
 use yii;
 use yii\data\Pagination;
+use common\helpers\Utils;
 
 /*
  * @name 团队model
@@ -106,10 +107,11 @@ class Team extends  \yii\db\ActiveRecord
         $where = ['platform_id' => $platform_id, 'status' => 0];
         
         //team info + user count
-        $query = self::find()->select('count(u.uid) as total, t.*')
+        $query = self::find()->select('count(u.uid) as user_total, t.*')
             ->from(self::tableName() . ' as t')
             ->leftJoin(TeamUser::tableName() . ' as u','t.id = u.team_id')
-            ->where(['t.platform_id' => $platform_id]);
+            ->where(['t.platform_id' => $platform_id])
+            ->groupBy('t.id');
 
         //分页
         $countQuery = clone $query;
@@ -121,11 +123,9 @@ class Team extends  \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
-        return [
-            'list' => $list,
-            'pages' => $pages,
-        ];
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
     }
-
-
 }
