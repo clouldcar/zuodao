@@ -72,9 +72,9 @@ class BaseController extends ActiveController
         // print_r(Yii::$app->user->identity);exit;
 
         //检查平台用户
-        if($uid = Yii::$app->user->id)
+        if(!Yii::$app->user->isGuest)
         {
-            $platform_user = PlatformUser::getUser($uid);
+            $platform_user = PlatformUser::getUser(Yii::$app->user->id);
             $session->set('platform_id', $platform_user->platform_id);
             $session->set('platform_user_type', $platform_user->permissions);
         }
