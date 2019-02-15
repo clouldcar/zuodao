@@ -119,12 +119,13 @@ class UserController extends BaseController
 
         $data['updated_at'] = date('Y-m-d H:i:s');
 
-        $model = User::findIdentity($uid);
+        $model = UserInfo::getInfoByUID($uid);
 
         if ($model && $model->status) {
             $model->setAttributes($data);
 
             if ($model->save()) {
+                Yii::$app->user->login($model, 3600 * 24* 30);
                 return Utils::returnMsg(0, "success");
             } else {
                 return Utils::returnMsg(1, "fail");

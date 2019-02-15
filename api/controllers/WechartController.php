@@ -63,11 +63,11 @@ class WechartController extends BaseController
             $result = Yii::$app->user->login($user, 3600 * 24* 30);
             if($result)
             {
-                return Utils::redirectMsg(0, '/#/');
+                return $this->redirect(Yii::$app->getParam('baseUrl') . '#/');
             }
             else
             {
-                return Utils::returnMsg(1, '登录失败，请重试');
+                die('登录失败，请重试');
             }
         }
 
@@ -81,19 +81,13 @@ class WechartController extends BaseController
         ];
 
         $model->load($insertData);
-        if (!$model->validate()) 
+        if ($model->validate() && $model->save()) 
         {
-            return Utils::returnMsg(1, '注册失败，请重试');
+            Yii::$app->user->login($model, 3600 * 24* 30);
+            return $this->redirect(Yii::$app->getParam('baseUrl') . '#/member/supplement');
         }
 
-        if (!$model->save()) 
-        {
-            return Utils::returnMsg(1, '登录失败');
-        }
-
-        (new LoginForm())->setSession($insertData['id']);
-
-        return Utils::redirectMsg(0, '/#/member/supplement');
+        die('登录失败');
     }
 
     //获取state

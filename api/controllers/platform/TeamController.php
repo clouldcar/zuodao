@@ -9,12 +9,10 @@ use api\models\UserInfo;
 
 class TeamController extends BaseController
 {
-	public $platform_id;
-
-    public function init()
+	public function init()
     {
         parent::init();
-        $this->platform_id = Yii::$app->session['platform_id'];
+        parent::checkPlatformUser();
     }
 
 	public function actionIndex()

@@ -5,7 +5,9 @@ namespace api\controllers;
 use Yii;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use yii\helpers\Json;
 use common\helpers\Utils;
+use api\models\Platform;
 use api\models\PlatformUser;
 
 
@@ -14,7 +16,20 @@ class BaseController extends ActiveController
 
     public $modelClass = '';
 //    public $enableCsrfValidation = false;
-    public $returnData = array();
+    public $platform_id;
+
+    public function init()
+    {
+        parent::init();
+
+        //开启session
+        $session = Yii::$app->session;
+        if(!$session->isActive)
+        {
+            $session->open();
+        }
+
+    }
 
     public function behaviors()
     {
@@ -41,44 +56,56 @@ class BaseController extends ActiveController
     {
         if(Yii::$app->user->isGuest)
         {
-            return Utils::returnMsg(401, "请先登录");
+            echo Json::encode(Utils::returnMsg(401, "请先登录"));
+            exit;
         }
     }
 
     public function checkPost()
     {
         if (!Yii::$app->request->isPost) {
-            return Utils::returnMsg(404, "404");
+            echo Json::encode(Utils::returnMsg(404, "404"));
+            exit;
         }
     }
 
     public function checkGet()
     {
         if (Yii::$app->request->isPost) {
-            return Utils::returnMsg(404, "404");
+            echo Json::encode(Utils::returnMsg(404, "404"));
+            exit;
         }
     }
-    public function init()
+
+    //检查平台用户
+    public function checkPlatformUser()
     {
-        parent::init();
-
-        //开启session
-        $session = Yii::$app->session;
-        if(!$session->isActive)
+        $result = false;
+        if(Yii::$app->user->isGuest)
         {
-            $session->open();
+            echo Json::encode(Utils::returnMsg(404, "404"));
+            exit;
         }
 
-        // print_r(Yii::$app->user->identity);exit;
+        $uid = Yii::$app->user->id;
 
-        //检查平台用户
-        if(!Yii::$app->user->isGuest)
+        $platform = Platform::getInfoByUID($uid);
+        if($platform && $platform->id)
         {
-            $platform_user = PlatformUser::getUser(Yii::$app->user->id);
-            $session->set('platform_id', $platform_user->platform_id);
-            $session->set('platform_user_type', $platform_user->permissions);
+            $this->platform_id = $platform->id;
+            $result = true;
+        }
+        elseif($platform_user = PlatformUser::getUser($uid))
+        {
+            $this->platform_id = $platform_user->platform_id;
+            $result = true;
         }
 
+        if(!$result)
+        {
+            echo Json::encode(Utils::returnMsg(404, "404"));
+            exit;
+        }
     }
 //
 //    /**

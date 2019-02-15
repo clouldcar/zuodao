@@ -77,6 +77,11 @@ class UserInfo extends \yii\db\ActiveRecord
         return new UserInfoQuery(get_called_class());
     }
 
+    public static function getInfoByUID($uid)
+    {
+        return self::find()->where(['uid' => $uid])->orderBy('id desc')->one();
+    }
+
     public static function getPlatformUserByPhone($phone, $platform_id)
     {
         $where = ['phone' => $phone, 'platform_id' => $platform_id];

@@ -13,17 +13,11 @@ class StudentController extends BaseController
 {
 
     public $modelClass = 'api\models\Student';
-    public $platform_id;
 
     public function init()
     {
         parent::init();
-        $this->platform_id = Yii::$app->session['platform_id'];
-
-        if(!$this->platform_id)
-        {
-            return Utils::returnMsg(1, '参数错误，请检查平台权限');
-        }
+        parent::checkPlatformUser();
     }
 
     /**

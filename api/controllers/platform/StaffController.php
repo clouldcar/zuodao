@@ -18,6 +18,12 @@ class StaffController extends BaseController
     const  USER_PASSWORD = 123456;
     const  PLATFORM_STATUS = 1;
 
+    public function init()
+    {
+        parent::init();
+        parent::checkPlatformUser();
+    }
+
     /**
 	* 员工列表
     */
