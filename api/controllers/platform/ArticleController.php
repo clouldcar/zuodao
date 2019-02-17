@@ -40,20 +40,23 @@ class ArticleController extends BaseController
      * @param user_id platform_id title content class type send_to feedback_way created_at
      * @return mixed
      */
-    public function actionCreateArticle(){
+    public function actionCreate(){
         parent::checkPost();
         $data = Yii::$app->request->post();
         //验证数据是否有缺失
+        if(!$data['title'] || !$data['content'] || !$data['cid'])
+        {
+            return Utils::returnMsg(1, '请检查参数');
+        }
 
         //向表里插入数据
-        //如果是全平台 那么就不想缓存表里插入数据了 如果不是那么就插入
-        $data['user_id'] = $this->user;
+        $data['user_id'] = Yii::$app->user->id;
         $data['platform_id'] = $this->platform_id;
-        $result = (new Article())->addArticle($data);
+        $result = Article::addArticle($data);
         if(!$result){
-            exit(json_encode(array('code'=>0,'message'=>'添加失败')));
+            Utils::returnMsg(1, '添加失败');
         }
-        exit(json_encode(array('code'=>200,'message'=>'添加成功')));
+        Utils::returnMsg(0, '添加成功');
     }
 
     /*

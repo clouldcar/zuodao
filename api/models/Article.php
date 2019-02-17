@@ -15,7 +15,7 @@ class Article extends  \yii\db\ActiveRecord
      * @param
      * @return mixed
      */
-    public function addArticle($param){
+    public static function addArticle($param){
         $db = Yii::$app->db;
         $tran = $db->beginTransaction();
 
