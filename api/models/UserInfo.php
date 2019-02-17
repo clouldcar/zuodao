@@ -98,7 +98,7 @@ class UserInfo extends \yii\db\ActiveRecord
 
     public static function getPlatformUsers($platform_id, $page, $page_size)
     {
-        $query = self::find()->where(['platform_id' => $platform_id]);
+        $query = self::find()->where(['platform_id' => $platform_id])->orderBy('id desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
