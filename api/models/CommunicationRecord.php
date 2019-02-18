@@ -82,13 +82,11 @@ class CommunicationRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['staff_uid', 'student_uid', 'communicate_type', 'target', 'content', 'result'], 'required'],
+            [['staff_uid', 'uid', 'type', 'target', 'content', 'result'], 'required'],
             [['content', 'result'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['staff_uid', 'student_uid'], 'string', 'max' => 20],
-            [['communicate_type', 'target'], 'string', 'max' => 4],
-            [['staff_uid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['staff_uid' => 'id']],
-            [['student_uid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['student_uid' => 'id']],
+            [['staff_uid', 'uid'], 'integer'],
+            [['type', 'target'], 'string', 'max' => 4]
         ];
     }
 
@@ -101,7 +99,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
             'id' => 'ID',
             'staff_uid' => '统筹uid',
             'student_uid' => '学员uid',
-            'communicate_type' => '沟通方式：电话（1）微信（2）邮件（3）',
+            'type' => '沟通方式：电话（1）微信（2）邮件（3）',
             'target' => '沟通目标：报读（1）建立链接（2）答疑（3）其它（4）',
             'content' => '内容',
             'result' => '结果',
@@ -154,6 +152,11 @@ class CommunicationRecord extends \yii\db\ActiveRecord
         }
 
         return $result;
+    }
+
+    public static function info($id)
+    {
+        return self::find()->where(['id' => $id, 'status' => self::STATUS_ACTIVE])->one();
     }
 
     /**
