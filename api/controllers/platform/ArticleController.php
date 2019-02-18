@@ -35,6 +35,28 @@ class ArticleController extends BaseController
         parent::checkPlatformUser();
     }
 
+
+    /*
+     * @name 平台下文章的列表
+     * @param $platform_id
+     * @return mixed
+     */
+    public function actionIndex(){
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if($page < 1)
+        {
+            $page = 1;
+        }
+        $page_size = 20;
+
+        $list = Article::list($this->platform_id, $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
+    }
+
     /*
      * @name 文章的创建
      * @param user_id platform_id title content class type send_to feedback_way created_at
@@ -44,34 +66,19 @@ class ArticleController extends BaseController
         parent::checkPost();
         $data = Yii::$app->request->post();
         //验证数据是否有缺失
-        if(!$data['title'] || !$data['content'] || !$data['cid'])
+        if(!$data['title'] || !$data['content'])
         {
             return Utils::returnMsg(1, '请检查参数');
         }
 
         //向表里插入数据
-        $data['user_id'] = Yii::$app->user->id;
+        $data['uid'] = Yii::$app->user->id;
         $data['platform_id'] = $this->platform_id;
-        $result = Article::addArticle($data);
+        $result = Article::add($data);
         if(!$result){
-            Utils::returnMsg(1, '添加失败');
+            return Utils::returnMsg(1, '添加失败');
         }
-        Utils::returnMsg(0, '添加成功');
-    }
-
-    /*
-     * @name 平台下文章的列表
-     * @param $platform_id
-     * @return mixed
-     */
-    public function actionArticleList(){
-        //或者用session
-        $platform_id = \Yii::$app->request->get('platform_id');
-        if(!empty($data['platform_id']) || !isset($data['platform_id'])){
-            exit(json_encode(array('code'=>0,'message'=>'缺少必要参数')));
-        }
-        $list = (new Article())->articleList($platform_id);
-        exit(json_encode(array('code'=>0,'data'=> $list?$list:[])));
+        return Utils::returnMsg(0, '添加成功');
     }
 
     /*
@@ -79,13 +86,22 @@ class ArticleController extends BaseController
      * @param article_id
      * @return mixed
      */
-    public function actionArticleInfo(){
-        $id = \Yii::$app->request->get('id');
-        if(!empty($id) || !isset($id)){
-            exit(json_encode(array('code'=>0,'message'=>'缺少必要参数')));
+    public function actionInfo(){
+        parent::checkGet();
+
+        $id = Yii::$app->request->get('id');
+        if(empty($id) || !isset($id)){
+            return Utils::returnMsg(1, '缺少必要参数');
         }
-        $list = (new Article())->articleInfo($id);
-        exit(json_encode(array('code'=>0,'data'=> $list?$list:[])));
+        $info = Article::info($id);
+
+        //鉴权
+        if(!$info || $info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '文章不存在');
+        }
+
+        return Utils::returnMsg(0, null , $info);
     }
 
     /*
@@ -93,20 +109,56 @@ class ArticleController extends BaseController
      * @param 修改参数 和 必要的文章id
      * @return mixed
      */
-    public function actionArticleEditor(){
-        $data = \Yii::$app->request->post();
+    public function actionEdit(){
+        parent::checkPost();
+
+        $data = Yii::$app->request->post();
         //验证参数
+        if(!$data['id'] || !$data['title'] || !$data['content'])
+        {
+            return Utils::returnMsg(1, '请检查参数');
+        }
+
+        //鉴权
+        $info = Article::info($data['id']);
+        if(!$info || $info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '文章不存在');
+        }
 
         //修改数据
-        $result = (new Article())->articleEditor($data);
-        if($result == 100){
-            exit(json_encode(array('code'=>100,'message'=>'不存在该文章')));
-        }
+        $result = Article::edit($data);
+        
         if(!$result){
-            exit(json_encode(array('code'=>0,'message'=>'修改失败')));
+            return Utils::returnMsg(1, '修改失败');
         }
-        exit(json_encode(array('code'=>200,'message'=>'修改成功')));
+        
+        return Utils::returnMsg(0, '修改成功');
+    }
 
+    public function actionRemove()
+    {
+        parent::checkGet();
+
+        $id = Yii::$app->request->get('id');
+        if(empty($id) || !isset($id)){
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+        $info = Article::info($id);
+
+
+        //鉴权
+        if(!$info || $info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '文章不存在');
+        }
+
+        $result = Article::remove($id);
+        if(!$result){
+            return Utils::returnMsg(1, '删除失败');
+        }
+        
+        return Utils::returnMsg(0, '删除成功');
     }
 
     /*

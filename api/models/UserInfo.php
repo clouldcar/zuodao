@@ -4,6 +4,7 @@ namespace api\models;
 
 use Yii;
 use yii\data\Pagination;
+use common\helpers\Utils;
 
 /**
  * This is the model class for table "shop_user_info".

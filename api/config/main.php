@@ -11,9 +11,11 @@ $host_array = explode('.', $_SERVER["HTTP_HOST"]);
 //针对com域名，获取顶级域名
 if (count($host_array) == 3) {
     define('DOMAIN', $host_array[1] . '.' . $host_array[2]);
+}else
+{
+    define('DOMAIN', 'zuodao.lg');
 }
 
-define('DOMAIN', 'zuodao.lg');
 define('DOMAIN_HOME', 'www.' . DOMAIN);
 define('DOMAIN_API', 'api.' . DOMAIN);
 
@@ -31,8 +33,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true],
-            // 'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
+            // 'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
