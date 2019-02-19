@@ -85,10 +85,10 @@ class PlatformUser extends  \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
-        return [
-            'list' => $list,
-            'pages' => $pages,
-        ];
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
     }
 
 
