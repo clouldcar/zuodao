@@ -40,11 +40,10 @@ class StaffController extends BaseController
             $page = 1;
         }
         $page_size = 20;
-    	$platform_id = Yii::$app->session->get("platform_id");
 
     	$model = new PlatformUser();
 
-    	$list = $model->getUsers($platform_id, $type, $page, $page_size);
+    	$list = $model->getUsers($this->platform_id, $type, $page, $page_size);
 
     	return Utils::returnMsg(0, null, $list);
     }
