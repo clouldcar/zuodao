@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\data\Pagination;
+use common\helpers\Utils;
 /**
  * This is the model class for table "{{%communication_record}}".
  *
@@ -85,7 +87,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
             [['staff_uid', 'uid', 'type', 'target', 'content', 'result'], 'required'],
             [['content', 'result'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['staff_uid', 'uid'], 'integer'],
+            [['platform_id', 'staff_uid', 'uid'], 'integer'],
             [['type', 'target'], 'string', 'max' => 4]
         ];
     }
@@ -97,6 +99,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'platform_id' => '平台id',
             'staff_uid' => '统筹uid',
             'student_uid' => '学员uid',
             'type' => '沟通方式：电话（1）微信（2）邮件（3）',
@@ -129,11 +132,33 @@ class CommunicationRecord extends \yii\db\ActiveRecord
      * 获取所有沟通列表
      * @param  [type] $order  [排序]
      * @param  [type] $limit  [页数]
-     * @param  [type] $offset [分页数]
+     * @param  [type] $page_size [分页数]
      * @return [type]         [数据]
      */
-    public function crecordList($order,$page,$offset)
-    {   
+    public static function getList($platform_id, $uid = 0, $page = 1, $page_size)
+    {
+        $where = ['platform_id' => $platform_id];
+        if($uid)
+        {
+            $where['uid'] = $uid;
+        }
+        $query = self::find()->where($where)->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+
+        /*
         $data = static::find()
                 ->joinWith(['staffU', 'studentU'])
                 ->select('shop_communication_record.*,shop_user.username, shop_student.stu_name')
@@ -152,6 +177,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
         }
 
         return $result;
+        */
     }
 
     public static function info($id)

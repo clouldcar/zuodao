@@ -78,9 +78,21 @@ class UserInfo extends \yii\db\ActiveRecord
         return new UserInfoQuery(get_called_class());
     }
 
-    public static function getInfoByUID($uid)
+    //$type 0全部,1基础信息
+    public static function getInfoByUID($uid, $type = 0)
     {
-        return self::find()->where(['uid' => $uid])->orderBy('id desc')->one();
+        $query = self::find()->where(['uid' => $uid]);
+
+        if($type == 1)
+        {
+            $query = $query->select('real_name, avatar');
+
+            $commandQuery = clone $query;
+        }
+
+        $query = $query->orderBy('id desc')->one();
+
+        return $query;
     }
 
     public static function getPlatformUserByPhone($phone, $platform_id)

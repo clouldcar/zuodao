@@ -29,10 +29,26 @@ class RecordController extends BaseController
      */
     public function actionIndex()
     {
-        $order = Yii::$app->request->get('order') ? Yii::$app->request->get('order') : 'desc';
-        $page = Yii::$app->request->get('page') ? Yii::$app->request->get('page') : '1';
-        $offset = Yii::$app->request->get('offset') ? Yii::$app->request->get('offset') : CommunicationRecord::PAGESIZE;
-        return (new CommunicationRecord())->crecordList($order, $page, $offset);
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+        $uid = isset($data['uid']) ? $data['uid'] : 0;
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $page_size = 20;
+        $platform_id = $this->platform_id;
+
+        $data = CommunicationRecord::getList($this->platform_id, $uid, $page, $page_size);
+
+        if($data['list'])
+        {
+            foreach($data['list'] as &$item)
+            {
+                $item['staff'] = UserInfo::getInfoByUID($item['staff_uid'], 1);
+                $item['student'] = UserInfo::getInfoByUID($item['uid'], 1);
+            }
+        }
+
+        return Utils::returnMsg(0, null, $data);
     }
 
 
@@ -52,6 +68,7 @@ class RecordController extends BaseController
             return Utils::returnMsg(1, '非法操作');
         }
 
+        $data['platform_id'] = $this->platform_id;
         //员工ID
         $data['staff_uid'] = Yii::$app->user->id;
 

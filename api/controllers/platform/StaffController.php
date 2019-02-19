@@ -64,7 +64,7 @@ class StaffController extends BaseController
 
 		$params = [
             'uid'    => $data['uid'],
-            'platform_id'   => $data['platform_id'],
+            'platform_id'   => $this->platform_id,
             'permissions'=> $data['permissions'],
             'status'     => self::PLATFORM_STATUS
         ];
