@@ -64,6 +64,10 @@ class StudentController extends BaseController
         {
             $data['uid'] = $user->id;
         }
+        else
+        {
+            $data['uid'] = Utils::createIncrementId(Utils::ID_TYPE_USER);
+        }
 
         $data['platform_id'] = $this->platform_id;
         $data['ctime'] = date('Y-m-d H:i:s');

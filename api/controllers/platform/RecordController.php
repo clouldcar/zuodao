@@ -56,7 +56,7 @@ class RecordController extends BaseController
      * 添加沟通记录
      * @return [type] [description]
      */
-    public function actionAdd()
+    public function actionCreate()
     {
         parent::checkPost();
         $data = Yii::$app->request->post();

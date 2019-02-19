@@ -95,6 +95,23 @@ class UserInfo extends \yii\db\ActiveRecord
         return $query;
     }
 
+    //$type 0全部,1基础信息
+    public static function getInfoByPhone($phone, $type = 0)
+    {
+        $query = self::find()->where(['phone' => $phone]);
+
+        if($type == 1)
+        {
+            $query = $query->select('real_name, avatar');
+
+            $commandQuery = clone $query;
+        }
+
+        $query = $query->orderBy('id desc')->one();
+
+        return $query;
+    }
+
     public static function getPlatformUserByPhone($phone, $platform_id)
     {
         $where = ['phone' => $phone, 'platform_id' => $platform_id];

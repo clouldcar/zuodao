@@ -119,7 +119,12 @@ class UserController extends BaseController
 
         $data['updated_at'] = date('Y-m-d H:i:s');
 
-        $model = UserInfo::getInfoByUID($uid);
+        $model = UserInfo::getInfoByPhone($phone);
+        //如果user_info中有记录，则替换uid
+        if($model)
+        {
+            $data['id'] = $model->uid;
+        }
 
         if ($model && $model->status) {
             $model->setAttributes($data);
