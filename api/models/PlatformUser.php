@@ -4,6 +4,7 @@ namespace api\models;
 
 use yii;
 use yii\data\Pagination;
+use common\helpers\Utils;
 
 /*
  * @name 用户平台关联Model
@@ -48,7 +49,7 @@ class PlatformUser extends  \yii\db\ActiveRecord
     public static function getUser($uid)
     {
         $select = 'platform_id,permissions';
-        $where = ['uid' => $uid, 'status' => 1];
+        $where = ['uid' => $uid, 'status' => 0];
 
         return self::find()->select($select)->where($where)->one();
     }

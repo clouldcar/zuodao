@@ -42,7 +42,7 @@ class Article extends  \yii\db\ActiveRecord
      * @return array()
      * 是否需要分类显示?
      */
-    public static function list($platform_id, $page = 1, $page_size = 20){
+    public static function getArticles($platform_id, $page = 1, $page_size = 20){
         $query = self::find()
             ->select('a.*, u.real_name')
             ->from(['a' => self::tableName()])

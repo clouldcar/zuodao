@@ -52,7 +52,7 @@ class ArticleController extends BaseController
         }
         $page_size = 20;
 
-        $list = Article::list($this->platform_id, $page, $page_size);
+        $list = Article::getArticles($this->platform_id, $page, $page_size);
 
         return Utils::returnMsg(0, null, $list);
     }
