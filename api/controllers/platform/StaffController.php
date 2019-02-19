@@ -16,7 +16,7 @@ class StaffController extends BaseController
     const  INVITE_TYPE_IN = 1;
     const  INVITE_TYPE_OUT = 0;
     const  USER_PASSWORD = 123456;
-    const  PLATFORM_STATUS = 1;
+    const  PLATFORM_STATUS = 0;
 
     public function init()
     {
