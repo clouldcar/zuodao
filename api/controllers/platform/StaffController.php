@@ -88,6 +88,13 @@ class StaffController extends BaseController
 		);
 
 		PlatformUser::updatePermission($params);
-
 	}
+
+    public function actionRemove()
+    {
+        parent::checkGet();
+
+        $uid = Yii::$app->request->get('uid');
+        
+    }
 }

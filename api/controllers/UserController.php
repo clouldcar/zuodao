@@ -92,7 +92,7 @@ class UserController extends BaseController
 
             return Utils::returnMsg(0, "登录成功");
         } else {
-            return Utils::returnMsg(0, "登录失败");
+            return Utils::returnMsg(1, "登录失败");
         }
     }
 

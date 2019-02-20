@@ -46,6 +46,15 @@ class PlatformUser extends  \yii\db\ActiveRecord
         return true;
     }
 
+    public static function update($params)
+    {
+        $data = Yii::$app->db->createCommand()->update(self::tableName(), $params)->execute();
+        if(!$data){
+            return false;
+        }
+        return true;
+    }
+
     public static function getUser($uid)
     {
         $select = 'platform_id,permissions';
