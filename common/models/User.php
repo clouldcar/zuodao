@@ -21,9 +21,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             ['username', 'filter', 'filter' => 'trim'],
-            ['type', 'required'],
-            [['birthday', 'province','city','district'], 'string', 'max' => 100],
-            [['username','avatar','email','real_name'], 'string', 'max' => 255],
+            [['username', ], 'string', 'max' => 255],
             [['password'], 'string', 'min' => 6],
             // [['created_at', 'updated_at'], 'safe'],
             [['created_at','updated_at'], 'default', 'value' => date('Y-m-d H:i:s')],
@@ -36,14 +34,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
-            'real_name' => 'RealName',
-            'type' => 'Type',
-            'avatar' => 'Avatar',
-            'email' => 'Email',
-            'birthday' => 'Birthday',
-            'province' => 'Province',
-            'city' => 'City',
-            'district' => 'District',
             'status' => 'Status',
             'created_at' => 'Created_at',
             'updated_at' => 'Updated_at'

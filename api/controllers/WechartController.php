@@ -80,7 +80,8 @@ class WechartController extends BaseController
             'type' => 1,
         ];
 
-        $model->load($insertData);
+        $model = new User();
+        $model->setAttributes($insertData);
         if ($model->validate() && $model->save()) 
         {
             Yii::$app->user->login($model, 3600 * 24* 30);
