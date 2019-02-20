@@ -7,6 +7,7 @@ use  yii\web\Session;
 use api\controllers\BaseController;
 use common\helpers\Utils;
 use api\models\PlatformUser;
+use api\models\UserInfo;
 
 
 class StaffController extends BaseController
@@ -48,6 +49,17 @@ class StaffController extends BaseController
     	return Utils::returnMsg(0, null, $list);
     }
 
+    //新增员工时，按手机号查询用户
+    public function actionSearch()
+    {
+        parent::checkGet();
+        $phone = Yii::$app->request->get('phone');
+
+        $result = UserInfo::getInfoByPhone($phone, 1);
+
+        return Utils::returnMsg(0, null, $result);
+    }
+
     /**
 	* 新增员工
     */
@@ -74,6 +86,7 @@ class StaffController extends BaseController
 		return Utils::returnMsg(0, "success");
 	}
 
+    //修改权限
 	public function actionUpdatePermission()
 	{
 		parent::checkPost();
@@ -95,6 +108,23 @@ class StaffController extends BaseController
         parent::checkGet();
 
         $uid = Yii::$app->request->get('uid');
-        
+
+        if(!$uid)
+        {
+            return Utils::returnMsg(1, '无效参数');
+        }
+
+        $user = PlatformUser::getUser($uid);
+        if(!$user || $user->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
+
+        if(!PlatformUser::remove($uid, $this->platform_id))
+        {
+            return Utils::returnMsg(1, '删除失败');
+        }
+
+        return Utils::returnMsg(1, '删除成功');
     }
 }

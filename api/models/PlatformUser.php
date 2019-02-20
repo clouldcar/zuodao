@@ -46,14 +46,18 @@ class PlatformUser extends  \yii\db\ActiveRecord
         return true;
     }
 
-    public static function update($params)
+    public static function remove($uid, $platform_id)
     {
-        $data = Yii::$app->db->createCommand()->update(self::tableName(), $params)->execute();
+        $data = Yii::$app->db->createCommand()->update(self::tableName(), 
+            ['status' => 1],
+            ['uid' => $uid, 'platform_id' => $platform_id]
+        )->execute();
         if(!$data){
             return false;
         }
         return true;
     }
+
 
     public static function getUser($uid)
     {

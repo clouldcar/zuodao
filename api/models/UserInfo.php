@@ -102,9 +102,7 @@ class UserInfo extends \yii\db\ActiveRecord
 
         if($type == 1)
         {
-            $query = $query->select('real_name, avatar');
-
-            $commandQuery = clone $query;
+            $query = $query->select('uid, real_name, avatar');
         }
 
         $query = $query->orderBy('id desc')->one();
