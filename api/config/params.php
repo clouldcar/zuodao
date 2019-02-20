@@ -1,6 +1,7 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
+    'baseUrl' => 'http://www.zuodao.club/',
     'aliyun' => [
     	'accessKeyId'=>'LTAIVBWvIkd7jKXi',
         'accessKeySecret'=>'Mw9k7bjpCVFZxBfS5fXKmfO8ayIkaW'
