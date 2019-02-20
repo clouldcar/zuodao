@@ -63,7 +63,7 @@ class WechartController extends BaseController
             $result = Yii::$app->user->login($user, 3600 * 24* 30);
             if($result)
             {
-                return $this->redirect(Yii::$app->getParam('baseUrl') . '#/');
+                return $this->redirect(Yii::$app->params['baseUrl'] . '#/');
             }
             else
             {
@@ -86,7 +86,7 @@ class WechartController extends BaseController
         {
             $model->addUser($insertData);
             Yii::$app->user->login($model, 3600 * 24* 30);
-            return $this->redirect(Yii::$app->getParam('baseUrl') . '#/member/supplement');
+            return $this->redirect(Yii::$app->params['baseUrl'] . '#/member/supplement');
         }
 
         die('登录失败');
