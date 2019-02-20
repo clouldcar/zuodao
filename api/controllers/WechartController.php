@@ -82,8 +82,9 @@ class WechartController extends BaseController
 
         $model = new User();
         $model->setAttributes($insertData);
-        if ($model->validate() && $model->save()) 
+        if ($model->validate()) 
         {
+            $model->addUser($insertData);
             Yii::$app->user->login($model, 3600 * 24* 30);
             return $this->redirect(Yii::$app->getParam('baseUrl') . '#/member/supplement');
         }

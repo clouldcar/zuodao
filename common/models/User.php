@@ -34,6 +34,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
+            'wx_unionid' => 'Wx_unionid',
+            'type' => 'Type',
             'status' => 'Status',
             'created_at' => 'Created_at',
             'updated_at' => 'Updated_at'
