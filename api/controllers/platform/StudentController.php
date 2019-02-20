@@ -82,6 +82,21 @@ class StudentController extends BaseController
         }
     }
 
+    public function actionInfo()
+    {
+        parent::checkGet();
+
+        $uid = Yii::$app->request->get('uid');
+
+        $info = UserInfo::getPlatformUserByUID($uid, $this->platform_id);
+        if(!$info)
+        {
+            return Utils::returnMsg(1, '记录不存在');
+        }
+
+        return Utils::returnMsg(0, null, $info);
+    }
+
     /*
      * 编辑学员
      */
