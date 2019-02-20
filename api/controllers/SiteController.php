@@ -75,6 +75,10 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
+        $state = md5(uniqid(rand(), true));
+        
+        Yii::$app->session->set('wx_state', $state);
+
         $model = new LoginForm();
         $model->load(Yii::$app->request->post());
         if ($model->login()) {
@@ -84,6 +88,7 @@ class SiteController extends Controller
 
             return $this->render('login', [
                 'model' => $model,
+                'state' => $state
             ]);
         }
     }

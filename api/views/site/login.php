@@ -20,7 +20,7 @@ var obj = new WxLogin({
  appid: "wx0c2876cfb615aa3e", 
  scope: "snsapi_login", 
  redirect_uri: encodeURIComponent("http://api.zuodao.club/wechart/auth"),
- state: Math.ceil(Math.random()*1000),
+ state: '<?php echo $state?>',
  style: "white",
  href: ""
 });

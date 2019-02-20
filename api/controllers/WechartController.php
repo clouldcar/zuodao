@@ -40,7 +40,7 @@ class WechartController extends BaseController
             'secret' => $this->appSecret,
             'code' => $data['code'],
             'grant_type' => 'authorization_code',
-        ])->get($accessTokenUrl);
+        ])->get($this->accessTokenUrl);
         $wxResult = json_decode($wxResponse);
 
         if (isset($wxResult->errcode) && $wxResult->errcode > 0) {
@@ -52,7 +52,7 @@ class WechartController extends BaseController
             'access_token' => $wxResult->access_token,
             'openid' => $wxResult->openid,
             'lang' => 'zh_CN',
-        ])->get($userInfoUrl);
+        ])->get($this->userInfoUrl);
         $result = json_decode($response);
 
         //检查用户表
