@@ -68,8 +68,9 @@ class Team extends  \yii\db\ActiveRecord
     /*
      * @name 编辑团队
      */
-    public function teamEditor($param){
-        $data = Yii::$app->db->createCommand()->update(self::tableName(), $param)->execute();
+    public function teamEditor($param, $team_id){
+
+        $data = Yii::$app->db->createCommand()->update(self::tableName(), $param, ['id' => $team_id])->execute();
         if($data){
             return true;
         }else{
@@ -97,6 +98,11 @@ class Team extends  \yii\db\ActiveRecord
     {
         $where = ['name' => $name, 'platform_id' => $platform_id];
         return self::find()->where($where)->one();
+    }
+
+    public static function getInfoById($team_id)
+    {
+        return self::find()->where(['id' => $team_id, 'status' => 0])->one();
     }
 
     /**

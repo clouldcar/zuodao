@@ -176,10 +176,29 @@ class UserInfo extends \yii\db\ActiveRecord
         }
     }
 
+    public static function getTeamUsers($team_id, $page, $page_size)
+    {
+        $query = self::find()->where(['team_id' => $team_id])->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
     /**
      * 检查是否为本平台学员
      */
-    public static function checPlatformkUser($platform_id, $ids)
+    public static function checkPlatformkUser($platform_id, $ids)
     {
         $query = self::find()->where(['in', 'id', $ids]);
 
