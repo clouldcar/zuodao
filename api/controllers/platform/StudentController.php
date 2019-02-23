@@ -69,18 +69,33 @@ class StudentController extends BaseController
             $uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
-
         $params = [
             'uid' => $uid,
             'real_name' => $data['real_name'],
             'phone' => $data['phone'],
             'platform_id' => $this->platform_id,
-            'grade' => $data['grade'],
-            'team_id' => $data['team_id'],
-            'birthday' => $data['birthday'],
-            'city' => $data['city'],
             'ctime' => date('Y-m-d H:i:s')
         ];
+
+        if(isset($data['grade']) && !empty($data['grade']))
+        {
+            $params['grade'] = $data['grade']
+        }
+
+        if(isset($data['team_id']) && $data['team_id'] !== '')
+        {
+            $params['team_id'] = $data['team_id']
+        }
+
+        if(isset($data['birthday']) && !empty($data['birthday']))
+        {
+            $params['birthday'] = $data['birthday']
+        }
+
+        if(isset($data['city']) && !empty($data['city']))
+        {
+            $params['city'] = $data['city']
+        }
 
         $model = new UserInfo();
         $model->setAttributes($data);
