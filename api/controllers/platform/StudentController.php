@@ -62,15 +62,25 @@ class StudentController extends BaseController
         $user = User::findByUsername($data['phone']);
         if($user)
         {
-            $data['uid'] = $user->id;
+            $uid = $user->id;
         }
         else
         {
-            $data['uid'] = Utils::createIncrementId(Utils::ID_TYPE_USER);
+            $uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
-        $data['platform_id'] = $this->platform_id;
-        $data['ctime'] = date('Y-m-d H:i:s');
+
+        $params = [
+            'uid' => $uid,
+            'real_name' => $data['real_name'],
+            'phone' => $data['phone'],
+            'platform_id' => $this->platform_id,
+            'grade' => $data['grade'],
+            'team_id' => $data['team_id'],
+            'birthday' => $data['birthday'],
+            'city' => $data['city'],
+            'ctime' => date('Y-m-d H:i:s')
+        ];
 
         $model = new UserInfo();
         $model->setAttributes($data);

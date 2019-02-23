@@ -137,7 +137,7 @@ class CommunicationRecord extends \yii\db\ActiveRecord
      */
     public static function getList($platform_id, $uid = 0, $page = 1, $page_size)
     {
-        $where = ['platform_id' => $platform_id];
+        $where = ['platform_id' => $platform_id, 'status' => 0];
         if($uid)
         {
             $where['uid'] = $uid;
