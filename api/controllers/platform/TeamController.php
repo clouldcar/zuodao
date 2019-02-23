@@ -109,15 +109,15 @@ class TeamController extends BaseController
         $page = isset($data['page']) ? $data['page'] : 1;
         $page_size = 20;
 
-        $filter = [];
-        if($data['team_id'])
-        {
-            $filter['team_id'] = $data['team_id'];
-        }
-        if($data['grade'])
-        {
-            $filter['grade'] = $data['grade'];
-        }
+        // $filter = [];
+        // if($data['team_id'])
+        // {
+        //     $filter['team_id'] = $data['team_id'];
+        // }
+        // if($data['grade'])
+        // {
+        //     $filter['grade'] = $data['grade'];
+        // }
 
         $result = UserInfo::getTeamUsers($data['team_id'], $page, $page_size);
 
