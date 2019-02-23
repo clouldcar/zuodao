@@ -123,6 +123,9 @@ class TeamController extends BaseController
         parent::checkPost();
 
         $data = Yii::$app->request->post();
+
+        $grade = ($data['grade'] === '') ? null : $data['grade'];
+
         if(!$data['ids'])
         {
         	return Utils::returnMsg(1, '参数错误');
@@ -132,9 +135,42 @@ class TeamController extends BaseController
         {
         	return Utils::returnMsg(1, '学员信息有误');
         }
+        //检查是否本平台团队
+        $info = Team::getInfoById($data['team_id']);
+        if($info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '团队信息有误');
+        }
 
-        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, $data['team_id'], $data['grade']);
-        
+        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, $data['team_id'], $grade);
+
+        return Utils::returnMsg(0, 'success');
+    }
+
+    //批量删除团队成员
+    public function actionRemoveUser()
+    {
+        parent::checkPost();
+
+        $data = Yii::$app->request->post();
+        if(!$data['ids'])
+        {
+            return Utils::returnMsg(1, '参数错误');
+        }
+        //检查是否为本平台学员
+        if(!UserInfo::checkPlatformkUser($this->platform_id, $data['ids']))
+        {
+            return Utils::returnMsg(1, '学员信息有误');
+        }
+
+        //检查是否本平台团队
+        $info = Team::getInfoById($data['team_id']);
+        if($info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '团队信息有误');
+        }
+
+        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, 0);
 
         return Utils::returnMsg(0, 'success');
     }
