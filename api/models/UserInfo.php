@@ -152,8 +152,14 @@ class UserInfo extends \yii\db\ActiveRecord
     public static function updateTeamInfo($ids, $platform_id, $team_id = null, $grade = null)
     {
         $cloumn = [];
-        $cloumn[] = $team_id ? "team_id = $team_id" : "";
-        $cloumn[] = $grade ? "grade = $grade" : "";
+        if($team_id)
+        {
+            $cloumn[] = "team_id = $team_id";
+        }
+        if($grade)
+        {
+            $cloumn[] = "grade = $grade";
+        }
 
         $sql = "update " . self::tableName() . " SET " . implode(',', $cloumn) . " where platform_id = $platform_id and uid in(" . implode(',', $ids) . ")";
 
