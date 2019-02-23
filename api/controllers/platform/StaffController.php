@@ -69,7 +69,7 @@ class StaffController extends BaseController
 
 		$data = Yii::$app->request->post();
 		$model = new PlatformUser();
-		if($model->isExists($data['uid'], $data['platform_id']))
+		if($model->isExists($data['uid'], $this->platform_id))
 		{
 			return Utils::returnMsg(1, "用户已存在");
 		}
@@ -92,10 +92,8 @@ class StaffController extends BaseController
 		parent::checkPost();
 		$data = Yii::$app->request->post();
 
-		$platform_id = Yii::$app->session->get("platform_id");
-
 		$params = array(
-			'platform_id'   => $platform_id,
+			'platform_id'   => $this->platform_id,
 			'uid' => $data['uid'],
 			'permissions'=> $data['permissions']
 		);
