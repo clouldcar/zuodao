@@ -173,7 +173,6 @@ class StudentController extends BaseController
         {
             $user_info->city = $data['city'];
         }
-
        
         if(!$user_info->validate()) 
         {

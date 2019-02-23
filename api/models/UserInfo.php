@@ -151,20 +151,12 @@ class UserInfo extends \yii\db\ActiveRecord
      */
     public static function updateTeamInfo($ids, $platform_id, $team_id = null, $grade = null)
     {
-        $values = [];
-        foreach($ids as $id)
-        {
-            $str = "($id";
-            $str .= $team_id ? ", $team_id" : "";
-            $str .= $grade ? ", $grade" : "";
-            $str .= ")";
-            $values[] = $str;
-        }
-        $cloumn = "id";
-        $cloumn .= $team_id ? ", team_id" : "";
-        $cloumn .= $grade ? ", grade" : "";
-        $sql = "replace into " . self::tableName() . "($cloumn) values" . implode(',', $values);
-        
+        $cloumn = [];
+        $cloumn[] = $team_id ? "team_id = $team_id" : "";
+        $cloumn[] = $grade ? "grade = $grade" : "";
+
+        $sql = "update " . self::tableName() . " SET " . implode(',', $cloumn) . " where platform_id = $platform_id and uid in(" . implode(',', $ids) . ")";
+
         if(Yii::$app->db->createCommand($sql)->execute())
         {
             return true;
