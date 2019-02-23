@@ -131,29 +131,61 @@ class StudentController extends BaseController
 
         $data = Yii::$app->request->post();
 
+        if(!$data['uid'])
+        {
+            return Utils::returnMsg(1, '参数有误');
+        }
+
         //检查学员是否存在
         $user_info = UserInfo::getPlatformUserByUID($data['uid'], $this->platform_id);
+        
         if(!$user_info)
         {
             return Utils::returnMsg(1, '学员不存在');
         }
 
-        $data['platform_id'] = $this->platform_id;
-
-        $model = new UserInfo();
-        if ($model->load($data) && $model->validate()) 
+        if(isset($data['real_name']) && !empty($data['real_name']))
         {
-            $model->setAttributes($data);
-            if ($model->save()) 
-            {
-                return returnMsg(0, '修改成功');             
-            } else 
-            {
-                return Utils::returnMsg(1, '修改失败');
-            }   
+            $user_info->real_name = $data['real_name'];
         }
+
+        if(isset($data['phone']) && !empty($data['phone']))
+        {
+            $user_info->phone = $data['phone'];
+        }
+
+        if(isset($data['grade']) && !empty($data['grade']))
+        {
+            $user_info->grade = $data['grade'];
+        }
+
+        if(isset($data['team_id']) && $data['team_id'] !== '')
+        {
+            $user_info->team_id = $data['team_id'];
+        }
+
+        if(isset($data['birthday']) && !empty($data['birthday']))
+        {
+            $user_info->birthday = $data['birthday'];
+        }
+
+        if(isset($data['city']) && !empty($data['city']))
+        {
+            $user_info->city = $data['city'];
+        }
+
+       
+        if(!$user_info->validate()) 
+        {
+            return Utils::returnMsg(1, '修改失败');
+        }
+
+        if(!$user_info->save()) 
+        {
+            return Utils::returnMsg(1, '修改失败');
+        } 
         
-        return Utils::returnMsg(1, '修改失败');
+        return Utils::returnMsg(0, '修改成功');  
     }
 
     /**
