@@ -112,10 +112,11 @@ class UserController extends BaseController
         $code = $data['code'];
         //短信验证
         $result = CheckSms::get($data['phone']);
+        print_r($result);exit;
         $time = time();
         if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
         {
-            Utils::returnMsg('1', '短信验证码不正确或已过期');
+            return Utils::returnMsg('1', '短信验证码不正确或已过期');
         }
         unset($data['code']);
 
@@ -123,9 +124,10 @@ class UserController extends BaseController
 
         $model = UserInfo::getInfoByPhone($data['phone']);
         //如果user_info中有记录，则替换uid
-        if($user_info)
+        if($model)
         {
-            $data['id'] = $user_info->uid;
+            $model->isNewRecord = false;
+            $data['id'] = $model->uid;
         }
         else
         {
@@ -143,7 +145,6 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "fail");
         }
 
-        Yii::$app->user->login($model, 3600 * 24* 30);
         return Utils::returnMsg(0, "success");
     }
 

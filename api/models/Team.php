@@ -29,7 +29,7 @@ class Team extends  \yii\db\ActiveRecord
             foreach($teamList as &$team)
             {
                 $team['total'] = TeamUser::find()->where(['team_id' => $team['id']])->count();
-                $team['manager'] = User::find()->select('id,real_name,avatar')->where(['id' => $team['uid']])->one()->toArray();
+                $team['manager'] = UserInfo::find()->select('ud,real_name,avatar')->where(['ud' => $team['uid']])->one()->toArray();
             }
         }
 
@@ -108,7 +108,7 @@ class Team extends  \yii\db\ActiveRecord
     /**
      * 平台团队列表
      */
-    public static function getTeamList($platform_id, $filter, $page, $page_size)
+    public static function getTeamList($platform_id, $page, $page_size)
     {
         $where = ['platform_id' => $platform_id, 'status' => 0];
         
