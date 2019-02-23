@@ -79,26 +79,26 @@ class StudentController extends BaseController
 
         if(isset($data['grade']) && !empty($data['grade']))
         {
-            $params['grade'] = $data['grade']
+            $params['grade'] = $data['grade'];
         }
 
         if(isset($data['team_id']) && $data['team_id'] !== '')
         {
-            $params['team_id'] = $data['team_id']
+            $params['team_id'] = $data['team_id'];
         }
 
         if(isset($data['birthday']) && !empty($data['birthday']))
         {
-            $params['birthday'] = $data['birthday']
+            $params['birthday'] = $data['birthday'];
         }
 
         if(isset($data['city']) && !empty($data['city']))
         {
-            $params['city'] = $data['city']
+            $params['city'] = $data['city'];
         }
 
         $model = new UserInfo();
-        $model->setAttributes($data);
+        $model->setAttributes($params);
 
         if ($model->validate() && $model->save()) {
             return Utils::returnMsg(0, '添加学员成功');
