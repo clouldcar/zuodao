@@ -9,7 +9,7 @@ use common\models\CheckAuth;
 use api\models\Article;
 use api\models\ArticleNotic;
 use api\models\PlatformTeam;
-use api\models\TeamUser;
+use api\models\UserInfo;
 
 use api\models\ArticleComments;
 
@@ -53,6 +53,13 @@ class ArticleController extends BaseController
         $page_size = 20;
 
         $list = Article::getArticles($this->platform_id, $page, $page_size);
+        if($list['list'])
+        {
+            foreach($list['list'] as &$item)
+            {
+                $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+            }
+        }
 
         return Utils::returnMsg(0, null, $list);
     }

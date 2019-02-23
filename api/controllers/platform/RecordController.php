@@ -90,6 +90,35 @@ class RecordController extends BaseController
 
 
      /*
+     * 沟通记录详情
+     */
+    public function actionInfo()
+    {
+        parent::checkGet();
+        $id = Yii::$app->request->get('id');
+
+        $info = CommunicationRecord::info($id);
+
+        if (!$info) 
+        {
+            return Utils::returnMsg(1, '沟通记录不存在');
+        }
+
+        $info = $info->toArray();
+
+        if($info['platform_id'] != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '沟通记录不存在');
+        }
+
+        $info['staff'] = UserInfo::getInfoByUID($info['staff_uid'], 1);
+        $info['student'] = UserInfo::getInfoByUID($info['uid'], 1);
+
+        return Utils::returnMsg(0, null, $info);
+    }
+
+
+     /*
      * 编辑沟通记录
      */
     public function actionEdit()

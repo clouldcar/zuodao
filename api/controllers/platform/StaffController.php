@@ -125,6 +125,6 @@ class StaffController extends BaseController
             return Utils::returnMsg(1, '删除失败');
         }
 
-        return Utils::returnMsg(1, '删除成功');
+        return Utils::returnMsg(0, '删除成功');
     }
 }

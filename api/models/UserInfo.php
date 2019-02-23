@@ -85,7 +85,7 @@ class UserInfo extends \yii\db\ActiveRecord
 
         if($type == 1)
         {
-            $query = $query->select('real_name, avatar');
+            $query = $query->select('uid, real_name, avatar');
 
             $commandQuery = clone $query;
         }

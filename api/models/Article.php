@@ -44,12 +44,8 @@ class Article extends  \yii\db\ActiveRecord
      */
     public static function getArticles($platform_id, $page = 1, $page_size = 20){
         $query = self::find()
-            ->select('a.*, u.real_name')
-            ->from(['a' => self::tableName()])
-            ->leftJoin(UserInfo::tableName() . ' as u', 'u.id = a.uid')
-            ->where(['a.platform_id' => $platform_id])
-            ->orderBy('a.id desc');
-
+            ->where(['platform_id' => $platform_id, 'status' => 0])
+            ->orderBy('id desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);

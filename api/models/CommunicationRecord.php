@@ -23,8 +23,8 @@ use common\helpers\Utils;
  */
 class CommunicationRecord extends \yii\db\ActiveRecord
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE  = 1;    
+    const STATUS_DELETED = 1;
+    const STATUS_ACTIVE  = 0;    
     
     const PAGESIZE = 10;
 
