@@ -108,7 +108,7 @@ class Team extends  \yii\db\ActiveRecord
     /**
      * 平台团队列表
      */
-    public static function getTeamList($platform_id, $page, $page_size)
+    public static function getTeamList($platform_id, $filter, $page, $page_size)
     {
         $where = ['platform_id' => $platform_id, 'status' => 0];
         

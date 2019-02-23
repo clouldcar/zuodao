@@ -23,7 +23,17 @@ class TeamController extends BaseController
 		$page = isset($data['page']) ? $data['page'] : 1;
     	$page_size = 20;
 
-    	$result = Team::getTeamList($this->platform_id, $page, $page_size);
+        $filter = [];
+        if($data['team_id'])
+        {
+            $filter['team_id'] = $data['team_id'];
+        }
+        if($data['grade'])
+        {
+            $filter['grade'] = $data['grade'];
+        }
+
+    	$result = Team::getTeamList($this->platform_id, $filter, $page, $page_size);
 
     	return Utils::returnMsg(0, null, $result);
 	}

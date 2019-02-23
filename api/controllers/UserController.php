@@ -12,6 +12,7 @@ use common\helpers\Validate;
 use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
+use api\models\UserInfo;
 
 
 /**
@@ -87,6 +88,7 @@ class UserController extends BaseController
 
         if ($model->validate() && $model->login()) {
 
+            $result = Yii::$app->user->login($model, 3600 * 24* 30);
             //设置session
             // $model->setSession($model->_user->id);
 
@@ -119,23 +121,30 @@ class UserController extends BaseController
 
         $data['updated_at'] = date('Y-m-d H:i:s');
 
-        $model = UserInfo::getInfoByPhone($phone);
+        $model = UserInfo::getInfoByPhone($data['phone']);
         //如果user_info中有记录，则替换uid
-        if($model)
+        if($user_info)
         {
-            $data['id'] = $model->uid;
+            $data['id'] = $user_info->uid;
+        }
+        else
+        {
+            $model = new UserInfo();
         }
 
-        if ($model && $model->status) {
-            $model->setAttributes($data);
+        $model->setAttributes($data);
 
-            if ($model->save()) {
-                Yii::$app->user->login($model, 3600 * 24* 30);
-                return Utils::returnMsg(0, "success");
-            } else {
-                return Utils::returnMsg(1, "fail");
-            }
+        if(!$model->validate())
+        {
+            return Utils::returnMsg(1, "参数有误");
         }
+
+        if (!$model->save()) {
+            return Utils::returnMsg(1, "fail");
+        }
+
+        Yii::$app->user->login($model, 3600 * 24* 30);
+        return Utils::returnMsg(0, "success");
     }
 
     /**
