@@ -152,11 +152,11 @@ class UserInfo extends \yii\db\ActiveRecord
     public static function updateTeamInfo($ids, $platform_id, $team_id = null, $grade = null)
     {
         $cloumn = [];
-        if($team_id)
+        if($team_id !== null)
         {
             $cloumn[] = "team_id = $team_id";
         }
-        if($grade)
+        if($grade !== null)
         {
             $cloumn[] = "grade = $grade";
         }
