@@ -36,6 +36,11 @@ class Team extends  \yii\db\ActiveRecord
         return $teamList;
     }
 
+    public static function isExists($uid, $name)
+    {
+        return self::find()->where(['uid' => $uid, 'name' => $name, 'status' => 0])->count();
+    }
+
     //团队基础信息
     public function teamInfo($teamId)
     {
@@ -54,7 +59,7 @@ class Team extends  \yii\db\ActiveRecord
     /*
      * @name 添加新的团队
      */
-    public function teamCreate($param){
+    public static function teamCreate($param){
         $data = Yii::$app->db->createCommand()->insert(self::tableName(), $param)->execute();
         if($data){
             return true;
@@ -115,7 +120,7 @@ class Team extends  \yii\db\ActiveRecord
         //team info + user count
         $query = self::find()->select('count(u.uid) as user_total, t.*')
             ->from(self::tableName() . ' as t')
-            ->leftJoin(TeamUser::tableName() . ' as u','t.id = u.team_id')
+            ->leftJoin(UserInfo::tableName() . ' as u','t.id = u.team_id')
             ->where(['t.platform_id' => $platform_id])
             ->groupBy('t.id');
 

@@ -42,27 +42,13 @@ class TeamController extends BaseController
     public $user;
     public $platform_id;
 
-    public function behaviors()
+    public function init()
     {
-        $behaviors =  parent::behaviors();
-        return ArrayHelper::merge([
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ], $behaviors);
+        parent::init();
+
+        parent::checkLogin();
     }
+
 
     /*
      * @name 平台下团队的展示
@@ -84,16 +70,23 @@ class TeamController extends BaseController
      */
     public function actionCreate()
     {
-        //TODO 没有做去重逻辑
+        parent::checkPost();
+       
         $data = Yii::$app->request->post();
+        $data['id'] = Utils::createIncrementId(Utils::ID_TYPE_TEAM);
+        $data['uid'] = Yii::$app->user->id;
 
         if(empty($data['platform_name']) || empty($data['name']))
         {
             return Utils::returnMsg('1', '缺少必要参数');
         }
-        $data['id'] = Utils::createIncrementId(Utils::ID_TYPE_TEAM);
-        $data['uid'] = Yii::$app->user->id;
-        $result = (new Team())->teamCreate($data);
+        
+        if(Team::isExists($data['uid'], $data['name']))
+        {
+            return Utils::returnMsg('1', '请不要重复创建');
+        }
+        
+        $result = Team::teamCreate($data);
         if(!$result)
         {
             return Utils::returnMsg('1', '创建失败');
