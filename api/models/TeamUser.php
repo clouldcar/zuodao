@@ -19,7 +19,7 @@ class TeamUser extends  \yii\db\ActiveRecord
     /*
      * @name 增加成员
      */
-    public function addMember($data){
+    public static function addMember($data){
         /*
         if($data['type'] == self::ADD_BATCH){
             //批量添加

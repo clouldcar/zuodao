@@ -2,9 +2,14 @@
 namespace common\helpers;
 
 class Utils {
+    //用户ID
     const ID_TYPE_USER = 31;
+    //团队ID
     const ID_TYPE_TEAM = 2;
+    //平台ID
     const ID_TYPE_PLATFORM = 3;
+    //文章分类ID
+    const ID_TYPE_ARTICLE_CATEGORY = 4;
 	//生成ID
     // null用户ID，2团队ID
 	public static function createIncrementId($type = null)

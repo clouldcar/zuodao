@@ -28,7 +28,7 @@ class ArticleCategoryController extends BaseController
         }
         $page_size = 20;
 
-        $list = ArticleCategory::getCategories($this->platform_id, $page, $page_size);
+        $list = ArticleCategory::getCategoriesByType(ArticleCategory::TYPE_ID_PLATFORM, $page, $page_size);
 
         return Utils::returnMsg(0, null, $list);
     }
@@ -49,6 +49,7 @@ class ArticleCategoryController extends BaseController
         }
 
         $params = [
+            'id' => Utils::createIncrementId(Utils::ID_TYPE_ARTICLE_CATEGORY),
         	'name' => $data['name'],
         	'platform_id' => $this->platform_id
         ];

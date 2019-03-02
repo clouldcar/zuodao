@@ -51,8 +51,7 @@ class TeamController extends BaseController
 
 
     /*
-     * @name 平台下团队的展示
-     * @param 验证了用户权限后查看平台下的团队列表
+     * @name 加入的团队列表
      * @mixed
      */
     public function actionIndex()
@@ -83,13 +82,13 @@ class TeamController extends BaseController
         
         if(Team::isExists($data['uid'], $data['name']))
         {
-            return Utils::returnMsg('1', '请不要重复创建');
+            return Utils::returnMsg(1, '请不要重复创建');
         }
 
         $result = Team::teamCreate($data);
         if(!$result)
         {
-            return Utils::returnMsg('1', '创建失败');
+            return Utils::returnMsg(1, '创建失败');
         }
 
         //增加团队管理员
@@ -100,9 +99,9 @@ class TeamController extends BaseController
             'status' => self::STATUS_NORMAL
         );
 
-        (new TeamUser())->addMember($member);
+        TeamUser::addMember($member);
 
-        return Utils::returnMsg('0', '创建成功');
+        return Utils::returnMsg(0, '创建成功');
     }
 
     public function actionDetail()

@@ -16,6 +16,9 @@ use common\helpers\Utils;
  */
 class ArticleCategory extends \yii\db\ActiveRecord
 {
+    const TYPE_ID_PLATFORM = 1;
+    const TYPE_ID_GRAD = 2;
+    const TYPE_ID_TEAM = 3;
     /**
      * @inheritdoc
      */
@@ -77,4 +80,25 @@ class ArticleCategory extends \yii\db\ActiveRecord
             Utils::pagination($pages)
         );
     }
+
+    public static function getCategoriesByType($type, $page, $page_size)
+    {
+        $query = self::find()->select('id,name')->where(['type' => $type, 'status' => 0])->orderBy('ctime asc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
+
 }
