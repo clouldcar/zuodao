@@ -88,7 +88,6 @@ class UserController extends BaseController
 
         if ($model->validate() && $model->login()) {
 
-            $result = Yii::$app->user->login($model, 3600 * 24* 30);
             //设置session
             // $model->setSession($model->_user->id);
 
@@ -112,7 +111,6 @@ class UserController extends BaseController
         $code = $data['code'];
         //短信验证
         $result = CheckSms::get($data['phone']);
-        print_r($result);exit;
         $time = time();
         if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
         {

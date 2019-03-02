@@ -85,7 +85,7 @@ class TeamController extends BaseController
         {
             return Utils::returnMsg('1', '请不要重复创建');
         }
-        
+
         $result = Team::teamCreate($data);
         if(!$result)
         {
@@ -108,13 +108,13 @@ class TeamController extends BaseController
     public function actionDetail()
     {
         $data = Yii::$app->request->get();
-        if(empty($data['id']))
+        if(empty($data['team_id']))
         {
             return Utils::returnMsg('1', '缺少必要参数');
         }
 
         //团队表
-        $teamInfo = (new Team())->teamInfo($data['id']);
+        $teamInfo = (new Team())->teamInfo($data['team_id']);
         if(!$teamInfo)
         {
             //TODO 404处理
@@ -125,7 +125,7 @@ class TeamController extends BaseController
         $teamInfo['is_manager'] = $this->isManager($teamInfo['uid']);
 
         //团队成员
-        $teamInfo['members'] = TeamUser::membersList($data['id']);
+        $teamInfo['members'] = TeamUser::membersList($data['team_id']);
 
         return Utils::returnMsg(0, null, $teamInfo);
     }
@@ -150,7 +150,7 @@ class TeamController extends BaseController
         }
 
         $data = Yii::$app->request->post();
-        if(empty($data['id']))
+        if(empty($data['team_id']))
         {
             //TODO 403处理
             return Utils::redirectMsg('403');
@@ -158,7 +158,7 @@ class TeamController extends BaseController
 
         //团队信息
         $model = new Team();
-        $teamInfo = $model->getInfo($data['id']);
+        $teamInfo = $model->getInfo($data['team_id']);
         //TODO 管理员权限验证
         if(!$this->isManager($teamInfo['uid']))
         {
@@ -307,7 +307,7 @@ class TeamController extends BaseController
      * @return mixed
      */
     public function actionMemberList(){
-        $teamId = Yii::$app->request->get('id');
+        $teamId = Yii::$app->request->get('team_id');
 
         if(!$teamId) {
             //TODO 403处理
