@@ -73,7 +73,7 @@ class ArticleController extends BaseController
         parent::checkPost();
         $data = Yii::$app->request->post();
         //验证数据是否有缺失
-        if(!$data['title'] || !$data['content'])
+        if(!$data['title'] || !$data['content'] || !$data['cid'])
         {
             return Utils::returnMsg(1, '请检查参数');
         }
@@ -81,6 +81,13 @@ class ArticleController extends BaseController
         //向表里插入数据
         $data['uid'] = Yii::$app->user->id;
         $data['platform_id'] = $this->platform_id;
+
+        $params = [
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'uid' => Yii::$app->user->id,
+            'type' => $data['type']
+        ];
         $result = Article::add($data);
         if(!$result){
             return Utils::returnMsg(1, '添加失败');
