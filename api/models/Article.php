@@ -25,13 +25,7 @@ class Article extends  \yii\db\ActiveRecord
             $tran->rollBack();
             return false;
         }
-        if($param == 2){
-            $result = Yii::$app->db->createCommand()->batchInsert(self::tableName(), $param)->execute();
-            if(!$result){
-                $tran->rollBack();
-                return false;
-            }
-        }
+        
         $tran->commit();
         return true;
     }
