@@ -7,6 +7,7 @@ use api\controllers\BaseController;
 
 use common\models\CheckAuth;
 use api\models\Article;
+use api\models\TeamArticle;
 use api\models\ArticleNotic;
 use api\models\PlatformTeam;
 use api\models\UserInfo;
@@ -86,12 +87,28 @@ class ArticleController extends BaseController
             'title' => $data['title'],
             'content' => $data['content'],
             'uid' => Yii::$app->user->id,
-            'type' => $data['type']
+            'type' => $data['type'],
+            'cid' => $data['cid'],
+            'send_to' => $data['send_to']
         ];
-        $result = Article::add($data);
-        if(!$result){
-            return Utils::returnMsg(1, '添加失败');
+        $article_id = Article::add($params);
+
+        if($data['send_to'] == 1)
+        {
+            foreach($data['team_id'] as $team_id)
+            {
+                $params = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'article_id' => $article_id
+                ];
+
+                teamArticle::add($params);
+            }
         }
+        // if(!$result){
+        //     return Utils::returnMsg(1, '添加失败');
+        // }
         return Utils::returnMsg(0, '添加成功');
     }
 

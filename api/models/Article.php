@@ -18,16 +18,13 @@ class Article extends  \yii\db\ActiveRecord
      */
     public static function add($param){
         $db = Yii::$app->db;
-        $tran = $db->beginTransaction();
 
         $data = Yii::$app->db->createCommand()->insert(self::tableName(), $param)->execute();
         if(!$data){
-            $tran->rollBack();
             return false;
         }
         
-        $tran->commit();
-        return true;
+        return Yii::$app->db->getLastInsertID();
     }
 
     /*

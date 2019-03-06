@@ -46,4 +46,11 @@ class TeamArticle extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    public static function add($params)
+    {
+        $sql = "replace into " . self::tableName() . "(platform_id, team_id, article_id) values(" . $params['platform_id'] . ", " . $params['team_id'] . ", " . $params['article_id'] . ")";
+
+        return Yii::$app->db->createCommand($sql)->execute();
+    }
 }
