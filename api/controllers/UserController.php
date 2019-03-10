@@ -13,6 +13,7 @@ use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
 use api\models\UserInfo;
+use api\models\Plan;
 
 
 /**
@@ -247,5 +248,18 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "发送失败，请检查后再试！");
         }
         return Utils::returnMsg(0, "发送成功！");
+    }
+
+    public function actionPlanList()
+    {
+        parent::checkGet();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $page_size = 20;
+
+        $uid = Yii::$app->user->id;
+
+        $list = Plan::listByUid($uid, $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
     }
 }

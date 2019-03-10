@@ -10,8 +10,10 @@ class Utils {
     const ID_TYPE_PLATFORM = 3;
     //文章分类ID
     const ID_TYPE_ARTICLE_CATEGORY = 4;
-	//生成ID
-    // null用户ID，2团队ID
+    //成就宣言ID
+    const ID_TYPE_PLAN = 5;
+
+    // 生成ID
 	public static function createIncrementId($type = null)
     {
         $time = time();

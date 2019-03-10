@@ -87,12 +87,14 @@ class ArticleController extends BaseController
             'title' => $data['title'],
             'content' => $data['content'],
             'uid' => Yii::$app->user->id,
+            'platform_id' => $this->platform_id,
             'type' => $data['type'],
             'cid' => $data['cid'],
             'send_to' => $data['send_to']
         ];
         $article_id = Article::add($params);
 
+        /*
         if($data['send_to'] == 1)
         {
             foreach($data['team_id'] as $team_id)
@@ -106,9 +108,10 @@ class ArticleController extends BaseController
                 teamArticle::add($params);
             }
         }
-        // if(!$result){
-        //     return Utils::returnMsg(1, '添加失败');
-        // }
+        */
+        if(!$result){
+            return Utils::returnMsg(1, '添加失败');
+        }
         return Utils::returnMsg(0, '添加成功');
     }
 
@@ -157,12 +160,36 @@ class ArticleController extends BaseController
             return Utils::returnMsg(1, '文章不存在');
         }
 
+        $params = [
+            'id' => $data['id'],
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'type' => $data['type'],
+            'cid' => $data['cid'],
+            'send_to' => $data['send_to']
+        ];
+
         //修改数据
-        $result = Article::edit($data);
-        
-        if(!$result){
-            return Utils::returnMsg(1, '修改失败');
+        $result = Article::edit($params);
+
+        /*
+        if($data['send_to'] == 1)
+        {
+            foreach($data['team_id'] as $team_id)
+            {
+                $params = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'article_id' => $article_id
+                ];
+
+                teamArticle::add($platform_id, $article_id, $team_ids);
+            }
         }
+        */
+
+
+        
         
         return Utils::returnMsg(0, '修改成功');
     }
