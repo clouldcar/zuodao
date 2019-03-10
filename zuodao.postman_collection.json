@@ -345,7 +345,7 @@
 				{
 					"name": "成就宣言列表",
 					"request": {
-						"url": "",
+						"url": "http://zuodao.lg/user/plan-list",
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -359,7 +359,33 @@
 				{
 					"name": "成就宣言详情",
 					"request": {
-						"url": "",
+						"url": {
+							"raw": "http://zuodao.lg/plan/info?plan_id=42389701867597&team_id=41438024747209",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"plan",
+								"info"
+							],
+							"query": [
+								{
+									"key": "plan_id",
+									"value": "42389701867597",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -479,53 +505,6 @@
 							"raw": ""
 						},
 						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "修改成就宣言",
-					"request": {
-						"url": "",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "创建成就宣言",
-					"request": {
-						"url": "http://zuodao.lg/plan/create",
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "个人成就",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "inspire",
-									"value": "3",
-									"description": "感召人数",
-									"type": "text"
-								},
-								{
-									"key": "social_services",
-									"value": "2",
-									"description": "社服小时",
-									"type": "text"
-								}
-							]
-						},
-						"description": ""
 					},
 					"response": []
 				}
@@ -880,6 +859,59 @@
 							"raw": ""
 						},
 						"description": "学员想修改成就宣言，需要由教练确认授权"
+					},
+					"response": []
+				},
+				{
+					"name": "创建成就宣言",
+					"request": {
+						"url": "http://zuodao.lg/plan/create",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "个人成就",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "inspire",
+									"value": "3",
+									"description": "感召人数",
+									"type": "text"
+								},
+								{
+									"key": "social_services",
+									"value": "2",
+									"description": "社服小时",
+									"type": "text"
+								},
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "修改成就宣言",
+					"request": {
+						"url": "",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -1802,7 +1834,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D",
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
 										"description": ""
 									}
 								],
@@ -1822,7 +1854,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=d5fdf3259972a2709b71f345ec4d52e4; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=3754b63597161270c29e1249a85d71253b2f60197754048a33f7deb04585a847a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22bmMOIPZxF0uEBTpJG8M9QitZIfDyihIZ%22%3B%7D",
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
 										"description": ""
 									}
 								],
@@ -1856,6 +1888,18 @@
 											"value": "42204830038825",
 											"description": "文章分类",
 											"type": "text"
+										},
+										{
+											"key": "team_id[]",
+											"value": "41438024747221",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "team_id[]",
+											"value": "41438024747220",
+											"description": "",
+											"type": "text"
 										}
 									]
 								},
@@ -1871,7 +1915,8 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=d5fdf3259972a2709b71f345ec4d52e4; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=3754b63597161270c29e1249a85d71253b2f60197754048a33f7deb04585a847a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22bmMOIPZxF0uEBTpJG8M9QitZIfDyihIZ%22%3B%7D"
+										"value": "_identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=d5fdf3259972a2709b71f345ec4d52e4; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=3754b63597161270c29e1249a85d71253b2f60197754048a33f7deb04585a847a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22bmMOIPZxF0uEBTpJG8M9QitZIfDyihIZ%22%3B%7D",
+										"description": ""
 									}
 								],
 								"body": {
@@ -1903,6 +1948,23 @@
 											"value": "0",
 											"description": "0文章，1通知",
 											"type": "text"
+										},
+										{
+											"key": "cid",
+											"value": "42204830038825",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "team_id[]",
+											"value": "41438024747221",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "team_id[]",
+											"value": "41438024747222",
+											"description": ""
 										}
 									]
 								},
