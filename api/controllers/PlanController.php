@@ -45,14 +45,14 @@ class PlanController extends baseController
 
 		$uid = Yii::$app->user->id;
 
-		$objective = '{"1":[{"subject":"建团队","target":"40","unit":"人","weight":40},{"subject":"增加业绩","target":"40","unit":"万","weight":40}],"2":[{"subject":"夫妻关系","target":"40","unit":"人","weight":40},{"subject":"亲子关系","target":"40","unit":"人","weight":40}],"3":[{"subject":"减肥","target":"40","unit":"人","weight":40},{"subject":"看病","target":"40","unit":"人","weight":40}]}';
+		//$objective = '{"1":[{"subject":"建团队","target":"40","unit":"人","weight":40},{"subject":"增加业绩","target":"40","unit":"万","weight":40}],"2":[{"subject":"夫妻关系","target":"40","unit":"人","weight":40},{"subject":"亲子关系","target":"40","unit":"人","weight":40}],"3":[{"subject":"减肥","target":"40","unit":"人","weight":40},{"subject":"看病","target":"40","unit":"人","weight":40}]}';
 
 		$params = [
 			'id' => Utils::createIncrementId(Utils::ID_TYPE_PLAN),
 			'title' => $data['title'],
 			'uid' => $uid,
 			'team_id' => $data['team_id'],
-			'objective' => $objective,
+			'objective' => $data['objective'],
 			'inspire' => 3,
 			'social_services' => 4
 		];
