@@ -388,4 +388,20 @@ class TeamController extends BaseController
         return Utils::returnMsg(0, '修改成功');
     }
 
+
+    public function actionPlanList()
+    {
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+        $team_id = $data['team_id'];
+        $uid = Yii::$app->user->id;
+
+        //团队信息
+        $model = new Team();
+        $teamInfo = $model->getInfo($data['team_id']);
+
+        
+    }
+
 }
