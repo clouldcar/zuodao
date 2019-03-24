@@ -2,14 +2,14 @@
 	"variables": [],
 	"info": {
 		"name": "zuodao",
-		"_postman_id": "1cca89d4-11db-c93e-fd28-05af9061a56f",
+		"_postman_id": "02e7b365-070d-4a08-831c-c4200ffe5c6d",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "用户",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "创建手机号用户",
@@ -158,8 +158,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3",
-								"description": ""
+								"value": "_csrf-zuodao=90985e76d80af525fc4df83d23a40420a1532fa4469e145201c1003aa9374a07a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22LaXqj7Y-DR4YzmoxYBluuXCM8MX4ML6w%22%3B%7D; advanced-zuodao=b2qmk9i825mcacgufm54at0vb3"
 							}
 						],
 						"body": {
@@ -230,7 +229,7 @@
 		},
 		{
 			"name": "文章",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "发布文章",
@@ -306,7 +305,7 @@
 		},
 		{
 			"name": "评论",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "发表评论",
@@ -340,7 +339,7 @@
 		},
 		{
 			"name": "个人中心",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "成就宣言列表",
@@ -374,14 +373,12 @@
 								{
 									"key": "plan_id",
 									"value": "42389701867597",
-									"equals": true,
-									"description": ""
+									"equals": true
 								},
 								{
 									"key": "team_id",
 									"value": "41438024747209",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
 							],
 							"variable": []
@@ -512,7 +509,7 @@
 		},
 		{
 			"name": "导师",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "导师列表",
@@ -546,7 +543,7 @@
 		},
 		{
 			"name": "教练",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "教练列表",
@@ -580,7 +577,7 @@
 		},
 		{
 			"name": "团队",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "团队列表",
@@ -590,8 +587,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D"
 							}
 						],
 						"body": {
@@ -610,8 +606,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 							}
 						],
 						"body": {
@@ -671,8 +666,7 @@
 								{
 									"key": "team_id",
 									"value": "41438024747219",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
 							],
 							"variable": []
@@ -681,12 +675,14 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 							}
 						],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -762,8 +758,7 @@
 								{
 									"key": "team_id",
 									"value": "41438024747209",
-									"equals": true,
-									"description": ""
+									"equals": true
 								}
 							],
 							"variable": []
@@ -772,8 +767,7 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-								"description": ""
+								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 							}
 						],
 						"body": {
@@ -874,7 +868,6 @@
 								{
 									"key": "title",
 									"value": "个人成就",
-									"description": "",
 									"type": "text"
 								},
 								{
@@ -892,12 +885,11 @@
 								{
 									"key": "team_id",
 									"value": "41438024747209",
-									"description": "",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -914,12 +906,203 @@
 						"description": null
 					},
 					"response": []
+				},
+				{
+					"name": "创建成就宣言",
+					"request": {
+						"url": "http://zuodao.lg/plan/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "三阶段个人成就",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "name[1][2][]",
+									"value": "做饭",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "target[1][2][]",
+									"value": "3",
+									"description": "目标数量",
+									"type": "text"
+								},
+								{
+									"key": "unit[1][2][0]",
+									"value": "顿",
+									"description": "单位",
+									"type": "text"
+								},
+								{
+									"key": "weight[1][2][]",
+									"value": "30",
+									"description": "权重",
+									"type": "text"
+								},
+								{
+									"key": "name[1][2][]",
+									"value": "看电影",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "target[1][2][]",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "unit[1][2][]",
+									"value": "月",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "weight[1][2][]",
+									"value": "40",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "name[1][1][]",
+									"value": "提升业绩",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "target[1][1][]",
+									"value": "50",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "unit[1][1][]",
+									"value": "万",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "weight[1][1][]",
+									"value": "30",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "name[2][0][]",
+									"value": "感召",
+									"description": ""
+								},
+								{
+									"key": "target[2][0][0]",
+									"value": "3",
+									"description": ""
+								},
+								{
+									"key": "unit[2][0][0]",
+									"value": "人",
+									"description": ""
+								},
+								{
+									"key": "weight[2][0][0]",
+									"value": "20",
+									"description": ""
+								},
+								{
+									"key": "name[3][0][]",
+									"value": "社服",
+									"description": ""
+								},
+								{
+									"key": "target[3][0][]",
+									"value": "3",
+									"description": ""
+								},
+								{
+									"key": "unit[3][0][]",
+									"value": "20",
+									"description": ""
+								},
+								{
+									"key": "weight[3][0][]",
+									"value": "10",
+									"description": ""
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "成就宣言详情",
+					"request": {
+						"url": {
+							"raw": "http://zuodao.lg/plan/info?plan_id=42708833612796&team_id=41438024747209",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"plan",
+								"info"
+							],
+							"query": [
+								{
+									"key": "plan_id",
+									"value": "42708833612796",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
 		{
 			"name": "毕业学员",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "文章列表",
@@ -995,11 +1178,11 @@
 		},
 		{
 			"name": "平台",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "员工管理",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "新增员工",
@@ -1009,8 +1192,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1040,8 +1222,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1165,7 +1346,7 @@
 				},
 				{
 					"name": "学员管理",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "新增学员",
@@ -1175,8 +1356,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D",
-										"description": ""
+										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1195,25 +1375,21 @@
 										{
 											"key": "grade",
 											"value": "0",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "city",
 											"value": "",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "birthday",
 											"value": "208-11-22",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "team_id",
 											"value": "",
-											"description": "",
 											"type": "text"
 										}
 									]
@@ -1230,8 +1406,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D",
-										"description": ""
+										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1250,19 +1425,16 @@
 										{
 											"key": "grade",
 											"value": "0",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "birthday",
 											"value": "",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "uid",
 											"value": "41275744476381",
-											"description": "",
 											"type": "text"
 										}
 									]
@@ -1279,8 +1451,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1318,8 +1489,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D",
-										"description": ""
+										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1415,8 +1585,7 @@
 										{
 											"key": "id",
 											"value": "16",
-											"equals": true,
-											"description": ""
+											"equals": true
 										}
 									],
 									"variable": []
@@ -1541,7 +1710,7 @@
 				},
 				{
 					"name": "团队管理",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "创建团队",
@@ -1640,24 +1809,8 @@
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "team_id",
-											"value": "41438024747217",
-											"type": "text"
-										},
-										{
-											"key": "name",
-											"value": "LP101111",
-											"type": "text"
-										},
-										{
-											"key": "start_date",
-											"value": "2019-03-06",
-											"type": "text"
-										}
-									]
+									"mode": "raw",
+									"raw": ""
 								},
 								"description": null
 							},
@@ -1743,8 +1896,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D",
-										"description": ""
+										"value": "_identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=jbuh39g9kdehiethlq3mfo6663; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=5d09320ffd1a3e6e212839714e1cce6d8bace8ad988dc2c4bc22d27db93402aaa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22mOxxfWiP0qhoHmV_q9hSdFT9MJMIgkEg%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1785,8 +1937,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=ihgb8tioh459dtilv8nfihlno7; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=e56d0bef04256d3fd42e82208e33ce6c87ae10e2cac99d807dea54bb3403543fa%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22Mc3teCe8vIXJaRVhBudgl5ePJHwwjktm%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1824,7 +1975,7 @@
 				},
 				{
 					"name": "信息管理",
-					"description": "",
+					"description": null,
 					"item": [
 						{
 							"name": "信息列表",
@@ -1834,8 +1985,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1854,8 +2004,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1892,13 +2041,11 @@
 										{
 											"key": "team_id[]",
 											"value": "41438024747221",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "team_id[]",
 											"value": "41438024747220",
-											"description": "",
 											"type": "text"
 										}
 									]
@@ -1915,8 +2062,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "_identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=d5fdf3259972a2709b71f345ec4d52e4; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=3754b63597161270c29e1249a85d71253b2f60197754048a33f7deb04585a847a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22bmMOIPZxF0uEBTpJG8M9QitZIfDyihIZ%22%3B%7D",
-										"description": ""
+										"value": "_identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; advanced-zuodao=d5fdf3259972a2709b71f345ec4d52e4; _identity-zuodao=ff1722f6da1ce12f5be3c83b9f1f4f12fabcf963394d8bee57b74e9d76f7fd8fa%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=3754b63597161270c29e1249a85d71253b2f60197754048a33f7deb04585a847a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22bmMOIPZxF0uEBTpJG8M9QitZIfDyihIZ%22%3B%7D"
 									}
 								],
 								"body": {
@@ -1952,19 +2098,16 @@
 										{
 											"key": "cid",
 											"value": "42204830038825",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "team_id[]",
 											"value": "41438024747221",
-											"description": "",
 											"type": "text"
 										},
 										{
 											"key": "team_id[]",
-											"value": "41438024747222",
-											"description": ""
+											"value": "41438024747222"
 										}
 									]
 								},
@@ -1980,8 +2123,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 									}
 								],
 								"body": {
@@ -2006,8 +2148,7 @@
 								"header": [
 									{
 										"key": "Cookie",
-										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D",
-										"description": ""
+										"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
 									}
 								],
 								"body": {
@@ -2159,7 +2300,7 @@
 		},
 		{
 			"name": "文件上传",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "头像上传",
