@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\Cors;
 use api\models\Team;
 use api\models\TeamUser;
+use api\models\Plan;
 
 
 /**
@@ -386,6 +387,31 @@ class TeamController extends BaseController
         }
 
         return Utils::returnMsg(0, '修改成功');
+    }
+
+    public function actionPlanList()
+    {
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $page_size = 20;
+        $uid = Yii::$app->user->id;
+
+        if(empty($data['team_id']))
+        {
+            return Utils::returnMsg('1', '缺少必要参数');
+        }
+
+        //判断是否团队成员
+        if(!TeamUser::hasUser($data['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
+
+        $list = Plan::listByTeamId($data['team_id'], $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
 }

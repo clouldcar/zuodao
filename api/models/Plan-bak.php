@@ -12,14 +12,24 @@ use api\models\UserInfo;
  * This is the model class for table "plan".
  *
  * @property int $id
- * @property int $uid
- * @property int $team_id
- * @property string $title
+ * @property int $uid uid
+ * @property string $title 标题
+ * @property string $content 内容，json
+ * @property int $score 分数
  * @property int $status
  * @property string $ctime
  */
 class Plan extends \yii\db\ActiveRecord
 {
+
+    const type = [
+        '1' => '事业',
+        '2' => '家庭',
+        '3' => '健康',
+        '4' => '人际关系',
+        '5' => '学习成长'
+    ];
+
     /**
      * @inheritdoc
      */
@@ -34,11 +44,12 @@ class Plan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'team_id', 'title', 'status'], 'required'],
-            [['uid', 'team_id'], 'integer'],
+            [['id', 'uid', 'title'], 'required'],
+            [['id', 'uid'], 'integer'],
+            [['content'], 'string'],
             [['ctime'], 'safe'],
             [['title'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 4],
+            [['score', 'status'], 'string', 'max' => 4],
         ];
     }
 
@@ -49,9 +60,10 @@ class Plan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'uid' => 'Uid',
-            'team_id' => 'Team ID',
-            'title' => 'Title',
+            'uid' => 'uid',
+            'title' => '标题',
+            'content' => '内容，json',
+            'score' => '分数',
             'status' => 'Status',
             'ctime' => 'Ctime',
         ];
@@ -67,15 +79,27 @@ class Plan extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function info($id)
+    public static function detail($id)
     {
+        $select = 'id,uid,team_id,title,objective,inspire,social_services,score,ctime';
         $where = ['id' => $id, 'status' => 0];
         
-        $query = self::find()->where($where)->asArray()->one();
-        if($query)
-        {
-            $query['user'] = UserInfo::getInfoByUID($query['uid'], 1)->toArray();
+        $query = self::find()->select($select)->where($where)->asArray()->one();
+
+        $uid = $query['uid'];
+        $objective = json_decode($query['objective'], 1);
+
+        $obj = [];
+        $obj2 = [];
+        foreach ($objective as $key => $value) {
+            $obj['name'] = self::type[$key];
+            $obj['content'] = $objective[$key];
+
+            $obj2[] = $obj;
+
         }
+        $query['user'] = UserInfo::getInfoByUID($uid, 1);
+        $query['objective'] = $obj2;
 
         return $query;
     }

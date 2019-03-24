@@ -60,8 +60,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        echo '<pre>';print_r(Yii::$app->user);echo '</pre>';
-        return $this->render('index');
+        $model = new \api\models\Plan();
+        $model2 = new \api\models\PlanDetail();
+
+        if(Yii::$app->request->isPost)
+        {
+            print_r(Yii::$app->request->post());exit;
+        }
+        return $this->render('/plan/create',[
+            'model' => $model,
+            'model2' => $model2,
+        ]);
     }
 
     /**
