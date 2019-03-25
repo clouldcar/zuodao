@@ -2,12 +2,20 @@
 
 namespace api\controllers;
 
-//周计划
-class WeekPlanController extends \yii\web\Controller
+use Yii;
+use use common\helpers\Utils;
+
+class WeekPlanController extends baseController
 {
+    public function init()
+    {
+        parent::init();
+        parent::checkLogin();
+    }
+
     public function actionIndex()
     {
-        return $this->render('index');
+
     }
 
     public function actionCreate()

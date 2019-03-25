@@ -24,9 +24,11 @@ class PlanController extends baseController
 
     }
 
+
     public function actionInfo()
     {
         parent::checkGet();
+
         $data = Yii::$app->request->get();
         $id = $data['plan_id'];
         $team_id = $data['team_id'];

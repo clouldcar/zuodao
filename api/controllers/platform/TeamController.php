@@ -182,4 +182,25 @@ class TeamController extends BaseController
 
         return Utils::returnMsg(0, 'success');
     }
+
+    public function actionPlanList()
+    {
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $page_size = 20;
+        $team_id = $data['team_id'];
+        $uid = Yii::$app->user->id;
+
+        //检查是否团队成员
+        if(!TeamUser::isTeamUser($team_id, $Uid))
+        {
+            return Utils::returnMsg(1, '非团队成员，无法查看');
+        }
+
+        $list = Plan::listByTeamId($team_id, $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
+    }
 }
