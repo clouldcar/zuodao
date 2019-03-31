@@ -12,6 +12,10 @@ class Utils {
     const ID_TYPE_ARTICLE_CATEGORY = 4;
     //成就宣言ID
     const ID_TYPE_PLAN = 5;
+    //成就宣言详情ID
+    const ID_TYPE_PLAN_DETAIL = 6;
+    //周计划ID
+    const ID_TYPE_WEEK_PLAN = 7;
 
     // 生成ID
 	public static function createIncrementId($type = null)

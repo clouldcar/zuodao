@@ -71,4 +71,9 @@ class PlanDetail extends \yii\db\ActiveRecord
     {
         return self::find()->where(['plan_id' => $plan_id])->orderBy('id asc')->all();
     }
+
+    public static function info($plan_detail_id)
+    {
+        return self::find()->where(['id' => $plan_detail_id])->one()->toArray();
+    }
 }
