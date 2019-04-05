@@ -71,7 +71,7 @@ class TeamUser extends  \yii\db\ActiveRecord
         $list = self::find()
             ->from(self::tableName() . ' as t')
             ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
-            ->select('u.id, u.real_name, u.avatar, t.permissions, t.create_time')
+            ->select('u.uid, u.real_name, u.avatar, t.permissions, t.create_time')
             ->where(['t.team_id'=>$teamId]);
 
 
