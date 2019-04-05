@@ -10,7 +10,7 @@ use api\models\PlanDetail;
 /**
 * 成就宣言
 */
-class PlanController extends baseController
+class PlanController extends BaseController
 {
 
     public function init()
