@@ -128,7 +128,7 @@
 				{
 					"name": "登录",
 					"request": {
-						"url": "http://api.zuodao.club/user/login",
+						"url": "http://zuodao.lg/user/login",
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -582,12 +582,14 @@
 				{
 					"name": "团队列表",
 					"request": {
-						"url": "http://api.zuodao.club/team",
+						"url": "http://zuodao.lg/team",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D"
+								"value": "advanced-zuodao=oc9fuhokg3sab7ijptlete0r27; _identity-zuodao=76f66db4d0c3aee53697a6fa66a3c708a24c0cb303e062c84bacb0a6c0899d28a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=2b3634333c5d7e84cb654a3928156306c24cf80ed157a978ebc35027edc2e9f0a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22pGu_zAV2n6myHMOQ3zw0ctplJ-yh1vqP%22%3B%7D",
+								"description": "",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -652,7 +654,7 @@
 					"name": "团队详情",
 					"request": {
 						"url": {
-							"raw": "http://zuodao.lg/team/detail?team_id=41438024747219",
+							"raw": "http://zuodao.lg/team/detail?team_id=41438024747209",
 							"protocol": "http",
 							"host": [
 								"zuodao",
@@ -665,8 +667,9 @@
 							"query": [
 								{
 									"key": "team_id",
-									"value": "41438024747219",
-									"equals": true
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
 								}
 							],
 							"variable": []
@@ -675,7 +678,8 @@
 						"header": [
 							{
 								"key": "Cookie",
-								"value": "advanced-zuodao=o6i2onnkmlnhb1ge2gq1jrn275; _identity-zuodao=a141fddd6cd9007d359f7e1f06b9079446a09e24820dddea88923212d0b00f47a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A31%3A%22%5B%2241275744476381%22%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=53eddf05d192e14fbbe7ad53b93c6a759173be8357323e4e7b2cfe9e337acbfda%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22P1wR4ACPQossaERspZlK6vGmREGONKcD%22%3B%7D"
+								"value": "advanced-zuodao=234c8rv2joih0g3mfqj93n5c37; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=4b504ade3e22f7910b262588a1da9eff215fe69e61654877128bb0ac66133186a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%227ZIdtngh0JeHm3qYADhRoI5eyTAjCNf4%22%3B%7D",
+								"description": ""
 							}
 						],
 						"body": {
@@ -779,34 +783,6 @@
 					"response": []
 				},
 				{
-					"name": "成就宣言列表",
-					"request": {
-						"url": "",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": null
-					},
-					"response": []
-				},
-				{
-					"name": "周计划列表",
-					"request": {
-						"url": "",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": null
-					},
-					"response": []
-				},
-				{
 					"name": "修改成员身份",
 					"request": {
 						"url": "http://zuodao.lg/team/member-level",
@@ -857,48 +833,51 @@
 					"response": []
 				},
 				{
-					"name": "创建成就宣言",
+					"name": "修改成就宣言",
 					"request": {
-						"url": "http://zuodao.lg/plan/create",
-						"method": "POST",
+						"url": "",
+						"method": "GET",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "个人成就",
-									"type": "text"
-								},
-								{
-									"key": "inspire",
-									"value": "3",
-									"description": "感召人数",
-									"type": "text"
-								},
-								{
-									"key": "social_services",
-									"value": "2",
-									"description": "社服小时",
-									"type": "text"
-								},
-								{
-									"key": "team_id",
-									"value": "41438024747209",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"description": null
 					},
 					"response": []
 				},
 				{
-					"name": "修改成就宣言",
+					"name": "成就宣言列表",
 					"request": {
-						"url": "",
+						"url": {
+							"raw": "http://zuodao.lg/team/plan-list?team_id=41438024747209",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"team",
+								"plan-list"
+							],
+							"query": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -1093,6 +1072,208 @@
 						"body": {
 							"mode": "raw",
 							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "创建周计划",
+					"request": {
+						"url": "http://zuodao.lg/week-plan/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "plan_detail_id",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2019-03-18",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2019-03-24",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "target",
+									"value": "3",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "周计划详情",
+					"request": {
+						"url": {
+							"raw": "http://zuodao.lg/week-plan/info?week_plan_id=42866184511785",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"week-plan",
+								"info"
+							],
+							"query": [
+								{
+									"key": "week_plan_id",
+									"value": "42866184511785",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "周计划列表",
+					"request": {
+						"url": {
+							"raw": "http://zuodao.lg/week-plan?team_id=41438024747209",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"week-plan"
+							],
+							"query": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "修改周计划",
+					"request": {
+						"url": "http://zuodao.lg/week-plan/edit",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "week_plan_id",
+									"value": "42866184511785",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "week_plan_detail_id",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "target",
+									"value": "4",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "result",
+									"value": "6",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "completion_ratio",
+									"value": "10",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "note1",
+									"value": "本周超额完成",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "检视周计划",
+					"request": {
+						"url": "http://zuodao.lg/week-plan/validate",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "week_plan_detail_id",
+									"value": "1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "node2",
+									"value": "已完成",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
 						"description": ""
 					},
