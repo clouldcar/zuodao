@@ -11,7 +11,7 @@ use api\models\PlanDetail;
 use api\models\WeekPlan;
 use api\models\WeekPlanDetail;
 
-class WeekPlanController extends baseController
+class WeekPlanController extends BaseController
 {
     public function init()
     {
