@@ -33,6 +33,9 @@ class BaseController extends ActiveController
             $session->open();
         }
 
+        $user = User::findOne(['id' => 41275744476381]);
+        Yii::$app->user->login($user, 3600 * 24* 30);
+
     }
 
     public function behaviors()

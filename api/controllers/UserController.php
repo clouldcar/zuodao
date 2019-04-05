@@ -89,7 +89,6 @@ class UserController extends BaseController
         $model->setAttributes($data);
 
         if ($model->validate() && $model->login()) {
-            print_r($model);exit;
 
             //设置session
             // $model->setSession($model->_user->id);
