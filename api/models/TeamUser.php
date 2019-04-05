@@ -70,8 +70,8 @@ class TeamUser extends  \yii\db\ActiveRecord
     public static function membersList($teamId, $limit = null){
         $list = self::find()
             ->from(self::tableName() . ' as t')
-            ->leftJoin(userInfo::tableName() . ' as u','u.id=t.uid')
-            ->select('u.id,u.real_name,u.avatar,t.permissions,t.create_time')
+            ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
+            ->select('u.id, u.real_name, u.avatar, t.permissions, t.create_time')
             ->where(['t.team_id'=>$teamId]);
 
 

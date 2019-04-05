@@ -33,6 +33,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            // 'enableSession' => false,
+            // 'loginUrl' => null,
             // 'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true],
             'identityCookie' => ['name' => '_identity-zuodao', 'httpOnly' => true, 'domain' => '.' . DOMAIN],
         ],

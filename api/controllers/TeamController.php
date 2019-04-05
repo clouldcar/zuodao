@@ -124,6 +124,7 @@ class TeamController extends BaseController
         //是否是管理员
         $teamInfo['is_manager'] = $this->isManager($teamInfo['uid']);
 
+
         //团队成员
         $teamInfo['members'] = TeamUser::membersList($data['team_id']);
 

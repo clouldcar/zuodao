@@ -34,6 +34,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => 'Username',
             'password' => 'Password',
+            'access_token' => 'Access_token',
             'wx_unionid' => 'Wx_unionid',
             'type' => 'Type',
             'status' => 'Status',
@@ -52,8 +53,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findOne(['access_token' => $token]);
     }
+
+    // public function loginByAccessToken($accessToken, $type){
+    //     //查询数据库中有没有存在这个token  
+    //     return static::findIdentityByAccessToken($token, $type);  
+    // }
 
     public static function findByUsername($username)
     {
@@ -75,8 +81,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         // TODO: Implement validateAuthKey() method.
     }
 
+    //生成 "remember me" 认证key
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    //生成 access_token
+    public function generateAccessToken()
+    {
+        $this->access_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 }

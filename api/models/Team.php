@@ -50,7 +50,7 @@ class Team extends  \yii\db\ActiveRecord
         {
             $result['total'] = TeamUser::find()->where(['team_id' => $teamId])->count();
 
-            $result['manager'] = UserInfo::find()->select('id,real_name,avatar')->where(['id' => $result['uid']])->asArray()->one();
+            $result['manager'] = UserInfo::getInfoByUID($result['uid'], 1);
         }
 
         return $result;

@@ -68,6 +68,7 @@ class UserController extends BaseController
             $model->setAttributes($data);
             $model->setPassword($data['password']);
             $model->id = Utils::createIncrementId(Utils::ID_TYPE_USER);
+            print_r($model);exit;
             if ($model->save()) {
                 return Utils::returnMsg(0, "success");
             } else {
@@ -88,6 +89,7 @@ class UserController extends BaseController
         $model->setAttributes($data);
 
         if ($model->validate() && $model->login()) {
+            print_r($model);exit;
 
             //设置session
             // $model->setSession($model->_user->id);

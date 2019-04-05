@@ -4,6 +4,8 @@ namespace api\controllers;
 
 use Yii;
 use yii\rest\ActiveController;
+use yii\filters\auth\QueryParamAuth;
+use yii\filters\Cors;
 use yii\web\Response;
 use yii\helpers\Json;
 use common\helpers\Utils;
@@ -22,6 +24,8 @@ class BaseController extends ActiveController
     {
         parent::init();
 
+        // \Yii::$app->user->enableSession = false;
+
         //开启session
         $session = Yii::$app->session;
         if(!$session->isActive)
@@ -34,8 +38,33 @@ class BaseController extends ActiveController
     public function behaviors()
     {
         $behaviors =  parent::behaviors();
+
+        //设置跨域
+        $behaviors['corsFilter'] = [
+            'class' => Cors::className(),
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+                'Access-Control-Allow-Credentials' => true,
+            ],
+        ];
+
         //定义返回格式是json
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
+
+        //取消默认authenticator认证，以确保 cors 被首先处理。然后，我们在实施自己的认证程序之前，强制 cors 允许凭据。
+        unset($behaviors['authenticator']);
+
+        //token验证
+        // $behaviors['authenticator'] = [
+        //    'class' => QueryParamAuth::className(),
+        //    'optional' => [
+        //         'login',
+        //         'add'
+        //     ],
+        // ];
+   
         return $behaviors;
     }
 
