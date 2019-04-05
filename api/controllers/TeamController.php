@@ -143,7 +143,7 @@ class TeamController extends BaseController
      * @param team_id name public start_date
      * @return mixed
      */
-    public function actionEditorTeam(){
+    public function actionEdit(){
         if(!Yii::$app->request->isPost)
         {
             //TODO 403处理
@@ -159,7 +159,7 @@ class TeamController extends BaseController
 
         //团队信息
         $model = new Team();
-        $teamInfo = $model->getInfo($data['team_id']);
+        $teamInfo = $model->getInfoById($data['team_id']);
         //TODO 管理员权限验证
         if(!$this->isManager($teamInfo['uid']))
         {
@@ -175,7 +175,7 @@ class TeamController extends BaseController
             'visions_map' => $data['visions_map']
         );
 
-        $result = $model->teamEditor($params);
+        $result = $model->teamEditor($params, $data['team_id']);
         if(!$result){
             return Utils::returnMsg(0, '失败');
         }
