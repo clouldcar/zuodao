@@ -11,6 +11,7 @@ use yii\helpers\Json;
 use common\helpers\Utils;
 use api\models\Platform;
 use api\models\PlatformUser;
+use api\models\User;
 
 
 class BaseController extends ActiveController
