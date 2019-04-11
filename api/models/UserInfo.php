@@ -14,12 +14,15 @@ use common\helpers\Utils;
  * @property int $platform_id
  * @property string $phone
  * @property string $real_name
+ * @property string $gender
  * @property string $avatar
  * @property string $birthday
  * @property string $province
  * @property string $city
  * @property string $district
  * @property string $address
+ * @property string $vow
+ * @property string $idea
  * @property string $ctime
  */
 class UserInfo extends \yii\db\ActiveRecord
@@ -40,8 +43,8 @@ class UserInfo extends \yii\db\ActiveRecord
         return [
             [['phone', 'real_name'], 'required'],
             [['uid', 'platform_id', 'team_id', 'grade'], 'integer'],
-            [['phone', 'real_name', 'birthday', 'province', 'city', 'district', 'address'], 'string', 'max' => 100],
-            [['avatar'], 'string', 'max' => 255],
+            [['phone', 'real_name', 'gender', 'birthday', 'province', 'city', 'district'], 'string', 'max' => 100],
+            [['avatar', 'address', 'vow', 'idea'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,12 +61,15 @@ class UserInfo extends \yii\db\ActiveRecord
             'grade' => 'Grade',
             'phone' => 'Phone',
             'real_name' => 'Real Name',
+            'gender' => 'Gender',
             'avatar' => 'Avatar',
             'birthday' => 'Birthday',
             'province' => 'Province',
             'city' => 'City',
             'district' => 'District',
             'address' => 'Address',
+            'vow' => 'Vow',
+            'idea' => 'Idea',
             'ctime' => 'Ctime',
         ];
     }

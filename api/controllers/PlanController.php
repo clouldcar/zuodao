@@ -3,9 +3,11 @@ namespace api\controllers;
 
 use Yii;
 use common\helpers\Utils;
+use api\models\Team;
 use api\models\TeamUser;
 use api\models\Plan;
 use api\models\PlanDetail;
+use api\models\UserInfo;
 
 /**
 * 成就宣言
@@ -33,6 +35,7 @@ class PlanController extends BaseController
         $id = $data['plan_id'];
         $team_id = $data['team_id'];
         $uid = Yii::$app->user->id;
+        $result = [];
 
         $info = Plan::info($id);
 
@@ -42,9 +45,31 @@ class PlanController extends BaseController
             return Utils::returnMsg(1, '内容不存在');
         }
 
-        $info['detail'] = PlanDetail::getList($id);
+        
+        $user_info = UserInfo::getInfoByUID($info['uid']);
+        $result['user'] = [
+            'real_name' => $user_info->real_name,
+            'gender' => ($user_info->gender == 'F') ? '女' : '男',
+            'birthday' => date('Y年m月d日', strtotime($user_info->birthday)),
+            'phone' => $user_info->phone,
+            'avatar' => $user_info->avatar,
+            'address' => $user_info->address,
+        ];
 
-        return Utils::returnMsg(0, null, $info);
+        //团队立场
+        $teamModel = new Team();
+        $team_info = $teamModel->teamInfo($team_id);
+        $result['detail']['team_ideal'] = $team_info['ideal'];
+        $result['detail']['vow'] = $user_info['vow'];
+        $result['detail']['idea'] = $user_info['idea'];
+
+        //成就宣言
+        $plan_detail = PlanDetail::getList($id);
+        $result['detail']['plan'] = 1;
+        $result['detail']['inspire'] = 2;
+        $result['detail']['social_service'] = 3;
+
+        return Utils::returnMsg(0, null, $result);
     }
 
     public function actionCreate()
