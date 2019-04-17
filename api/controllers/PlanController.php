@@ -2,6 +2,7 @@
 namespace api\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use common\helpers\Utils;
 use api\models\Team;
 use api\models\TeamUser;
@@ -14,6 +15,13 @@ use api\models\UserInfo;
 */
 class PlanController extends BaseController
 {
+    private $type = [
+        1 => '事业',
+        2 => '家庭',
+        3 => '健康',
+        4 => '学习',
+        5 => '人际关系'
+    ];
 
     public function init()
     {
@@ -65,9 +73,47 @@ class PlanController extends BaseController
 
         //成就宣言
         $plan_detail = PlanDetail::getList($id);
-        $result['detail']['plan'] = 1;
-        $result['detail']['inspire'] = 2;
-        $result['detail']['social_service'] = 3;
+
+        //按类型排序
+        ArrayHelper::multisort($plan_detail, 'sub_type');
+
+        $arr = [];
+        $inspire = [];
+        $social_service = [];
+        foreach($plan_detail as $v)
+        {
+            //个人成就
+            if($v['type'] == 1)
+            {
+                $type_id = $v['sub_type'];
+                if(isset($arr[$type_id]))
+                {
+                    $arr[$type_id]['detail'][] = $v;
+                }
+                else
+                {
+                    $arr[$type_id] = [
+                        'name' => $this->type[$type_id],
+                        'detail' => [$v]
+                    ];
+                }
+            }
+
+            //感召
+            if($v['type'] == 2)
+            {
+                $inspire = $v;
+            }
+
+            //社服
+            if($v['type'] == 3)
+            {
+                $social_service = $v;
+            }
+        }
+        $result['detail']['plan'] = $arr;
+        $result['detail']['inspire'] = $inspire;
+        $result['detail']['social_service'] = $social_service;
 
         return Utils::returnMsg(0, null, $result);
     }
