@@ -889,7 +889,7 @@
 				{
 					"name": "创建成就宣言",
 					"request": {
-						"url": "http://zuodao.lg/plan/create",
+						"url": "http://api.zuodao.club/plan/create",
 						"method": "POST",
 						"header": [
 							{
@@ -1169,11 +1169,12 @@
 					"name": "周计划列表",
 					"request": {
 						"url": {
-							"raw": "http://zuodao.lg/week-plan?team_id=41438024747209",
+							"raw": "http://api.zuodao.club/week-plan?team_id=41438024747209",
 							"protocol": "http",
 							"host": [
+								"api",
 								"zuodao",
-								"lg"
+								"club"
 							],
 							"path": [
 								"week-plan"

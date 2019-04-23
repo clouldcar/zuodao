@@ -108,6 +108,7 @@ class WeekPlanController extends BaseController
         parent::checkGet();
         $data = Yii::$app->request->get();
         $uid = Yii::$app->user->id;
+        $result = [];
 
         //检查是否自己的周计划
         $info = WeekPlan::info($data['week_plan_id']);
@@ -115,6 +116,18 @@ class WeekPlanController extends BaseController
         {
             return Utils::returnMsg(1, '非法操作');
         }
+
+        $user_info = UserInfo::getInfoByUID($info['uid']);
+        $result['user'] = [
+            'real_name' => $user_info->real_name,
+            'gender' => ($user_info->gender == 'F') ? '女' : '男',
+            'birthday' => date('Y年m月d日', strtotime($user_info->birthday)),
+            'phone' => $user_info->phone,
+            'avatar' => $user_info->avatar,
+            'address' => $user_info->address,
+        ];
+
+
 
         $detail = WeekPlanDetail::getList($data['week_plan_id']);
 
