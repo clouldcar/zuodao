@@ -69,29 +69,36 @@ class WeekPlanController extends BaseController
 
         $plan_id = $detail['plan_id'];
         //检查是否自己的成就宣言
-        $info = Plan::info($plan_id);
-        if(!$info || $info['uid'] != $uid)
+        $plan_info = Plan::info($plan_id);
+        if(!$plan_info || $plan_info['uid'] != $uid)
         {
             return Utils::returnMsg(1, '非法操作');
         }
 
-        $params = [
-            'id' => Utils::createIncrementId(Utils::ID_TYPE_WEEK_PLAN),
-            'uid' => $uid,
-            'team_id' => $data['team_id'],
-            'plan_id' => $plan_id,
-            'plan_detail_id' => $plan_detail_id,
-            'team_id' => $data['team_id'],
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date']
-        ];
-
-        if(!WeekPlan::add($params))
+        //如果已存在，则不走添加逻辑
+        if($week_plan_info = WeekPlan::infoByPlanId($plan_id))
         {
-            return Utils::returnMsg(1, '添加失败');
+            $week_plan_id = $week_plan_info['id'];
+        }
+        else
+        {
+            $params = [
+                'id' => Utils::createIncrementId(Utils::ID_TYPE_WEEK_PLAN),
+                'uid' => $uid,
+                'team_id' => $data['team_id'],
+                'plan_id' => $plan_id,
+                'plan_detail_id' => $plan_detail_id,
+                'team_id' => $data['team_id'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date']
+            ];
+            if(!WeekPlan::add($params))
+            {
+                return Utils::returnMsg(1, '添加失败');
+            }
+            $week_plan_id = $params['id'];
         }
 
-        $week_plan_id = $params['id'];
         $detail_params = [
             'week_plan_id' => $week_plan_id,
             'target' => $data['target'],
@@ -127,7 +134,7 @@ class WeekPlanController extends BaseController
             'address' => $user_info->address,
         ];
 
-
+        $res = [];
 
         $detail = WeekPlanDetail::getList($data['week_plan_id']);
 
