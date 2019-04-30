@@ -134,11 +134,11 @@ class WeekPlanController extends BaseController
             'address' => $user_info->address,
         ];
 
-        $res = [];
-
         $detail = WeekPlanDetail::getList($data['week_plan_id']);
 
-        return Utils::returnMsg(0, null, $detail);
+        $result['detail'] = $detail;
+
+        return Utils::returnMsg(0, null, $result);
     }
 
     public function actionEdit()

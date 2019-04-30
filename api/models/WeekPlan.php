@@ -97,4 +97,9 @@ class WeekPlan extends \yii\db\ActiveRecord
     {
         return self::find()->where(['id' => $week_plan_id])->one()->toArray();
     }
+
+    public function infoByPlanId($plan_id)
+    {
+        return self::find()->where(['plan_id' => $plan_id])->one()->toArray();
+    }
 }

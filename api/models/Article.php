@@ -54,6 +54,31 @@ class Article extends  \yii\db\ActiveRecord
     }
 
     /*
+     * @name 文章列表
+     * @param team_id
+     * @return array()
+     */
+    public static function getListByTeamId($team_id, $page = 1, $page_size = 20){
+        $query = self::find()
+            ->where(['team_id' => $team_id, 'status' => 0])
+            ->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
+    /*
      * @name 文章信息
      * @param article_id
      * @return array()

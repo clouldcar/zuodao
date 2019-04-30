@@ -1,18 +1,15 @@
 <?php
 namespace api\controllers;
 
-
+use Yii;
 use common\models\CheckAuth;
+use common\helpers\Utils;
 use api\models\Article;
 use api\models\ArticleNotic;
 use api\models\PlatformTeam;
 use api\models\TeamUser;
 
 use api\models\ArticleComments;
-use Yii;
-
-
-
 
 /**
  * 后台平台文章控制器
@@ -27,62 +24,57 @@ use Yii;
 class ArticleController extends BaseController
 {
 
-    public $session;
-    public $user;
-    public $platform_id;
-    public function init()
-    {
-
-        $this->session = \Yii::$app->session;
-
-        $this->user = $this->session->get('user_id');
-        $this->platform_id = $this->session->get('platform_id');
-        $this->user  = 1;
-        if(!$this->user ){
-            exit(json_encode(array('code'=>0,'message'=>'请先登录账号')));
-        }
-        $isAuth = CheckAuth::isAuth();
-
-        if(!$isAuth){
-            exit(json_encode(array('code'=>0,'message'=>'此账号无权限')));
-        }
-
-        parent::init();
-    }
-
     /*
      * @name 文章的创建
      * @param user_id platform_id title content class type send_to feedback_way created_at
      * @return mixed
      */
-    public function actionCreateArticle(){
-        $data = \Yii::$app->request->post();
+    public function actionCreate(){
+        $data = Yii::$app->request->post();
+        $uid = Yii::$app->user->id;
         //验证数据是否有缺失
+        if(empty($data['team_id']) || empty($data['title']) || empty($data['cid']) || empty($data['content']))
+        {
+            return Utils::returnMsg(1, '参数不正确');
+        }
+
+        //判断是否团队成员
+        if(!TeamUser::hasUser($data['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
 
         //向表里插入数据
-        //如果是全平台 那么就不想缓存表里插入数据了 如果不是那么就插入
-        $data['user_id'] = $this->user;
-        $data['platform_id'] = $this->platform_id;
-        $result = (new Article())->addArticle($data);
-        if(!$result){
-            exit(json_encode(array('code'=>0,'message'=>'添加失败')));
+        $data['uid'] = $uid;
+        $result = Article::add($data);
+        if(!$result)
+        {
+            return Utils::returnMsg(1, '添加失败');
         }
-        exit(json_encode(array('code'=>200,'message'=>'添加成功')));
+        
+        return Utils::returnMsg(0, '添加成功');
     }
 
     /*
-     * @name 平台下文章的列表
-     * @param $platform_id
+     * @name 团队下文章的列表
+     * @param $team_id
      * @return mixed
      */
-    public function actionArticleList(){
-        //或者用session
-        $platform_id = \Yii::$app->request->get('platform_id');
-        if(!empty($data['platform_id']) || !isset($data['platform_id'])){
-            exit(json_encode(array('code'=>0,'message'=>'缺少必要参数')));
+    public function actionList(){
+        $data = Yii::$app->request->post();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if($page < 1)
+        {
+            $page = 1;
         }
-        $list = (new Article())->articleList($platform_id);
-        exit(json_encode(array('code'=>0,'data'=> $list?$list:[])));
+        $page_size = 20;
+
+        if(!isset($data['team_id']) || !isset($data['cid'])){
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+        $list = Article::getListByTeamId($data['team_id'], $data['cid'], $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
     /*
