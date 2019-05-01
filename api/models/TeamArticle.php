@@ -28,7 +28,7 @@ class TeamArticle extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['platform_id', 'team_id', 'article_id', 'status'], 'required'],
+            [['team_id', 'article_id'], 'required'],
             [['platform_id', 'team_id', 'article_id'], 'integer'],
             [['status'], 'string', 'max' => 4],
         ];

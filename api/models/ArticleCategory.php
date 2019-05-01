@@ -33,8 +33,8 @@ class ArticleCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'platform_id'], 'required'],
-            [['id', 'platform_id', 'team_id'], 'integer'],
+            [['name', 'type'], 'required'],
+            [['id', 'type', 'platform_id', 'team_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -57,6 +57,16 @@ class ArticleCategory extends \yii\db\ActiveRecord
         $where = [
             'name' => $name,
             'platform_id' => $platform_id,
+            'status' => 0
+        ];
+        return self::find()->where($where)->one();
+    }
+
+    public static function getInfoByTeamId($name, $team_id)
+    {
+        $where = [
+            'name' => $name,
+            'team_id' => $team_id,
             'status' => 0
         ];
         return self::find()->where($where)->one();

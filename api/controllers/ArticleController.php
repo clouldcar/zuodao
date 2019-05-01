@@ -5,9 +5,11 @@ use Yii;
 use common\models\CheckAuth;
 use common\helpers\Utils;
 use api\models\Article;
+use api\models\ArticleCategory;
 use api\models\ArticleNotic;
 use api\models\PlatformTeam;
 use api\models\TeamUser;
+use api\models\TeamArticle;
 
 use api\models\ArticleComments;
 
@@ -44,13 +46,25 @@ class ArticleController extends BaseController
             return Utils::returnMsg(1, '非法操作');
         }
 
+        $team_id = $data['team_id'];
+        unset($data['team_id']);
+
         //向表里插入数据
         $data['uid'] = $uid;
-        $result = Article::add($data);
-        if(!$result)
+        $data['type'] = ArticleCategory::TYPE_ID_TEAM;
+        $article_id = Article::add($data);
+        if(!$article_id)
         {
             return Utils::returnMsg(1, '添加失败');
         }
+
+        $params = [
+            'team_id' => $team_id,
+            'article_id' => $article_id
+        ];
+        $model = new TeamArticle();
+        $model->setAttributes($params);
+        $model->save();
         
         return Utils::returnMsg(0, '添加成功');
     }
