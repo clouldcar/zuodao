@@ -228,18 +228,49 @@
 			]
 		},
 		{
-			"name": "文章",
+			"name": "团队文章",
 			"description": null,
 			"item": [
 				{
 					"name": "发布文章",
 					"request": {
-						"url": "",
+						"url": "http://zuodao.lg/article/create",
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
 						"body": {
-							"mode": "raw",
-							"raw": ""
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "aaa",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "cid",
+									"value": "43565441028447",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "bbb",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
 						"description": null
 					},
@@ -276,7 +307,27 @@
 				{
 					"name": "文章分类列表",
 					"request": {
-						"url": "",
+						"url": {
+							"raw": "http://zuodao.lg/category/list?team_id=41438024747209",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"category",
+								"list"
+							],
+							"query": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -290,12 +341,31 @@
 				{
 					"name": "新建文章分类",
 					"request": {
-						"url": "",
-						"method": "GET",
-						"header": [],
+						"url": "http://zuodao.lg/category/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "advanced-zuodao=kod16pa0pqbdp56o0sv27hrl36; _identity-zuodao=5568493b756cb4e91657c5d74624ecb57b0809a54554a5721698914e7a83dfe1a%3A2%3A%7Bi%3A0%3Bs%3A16%3A%22_identity-zuodao%22%3Bi%3A1%3Bs%3A29%3A%22%5B41275744476381%2Cnull%2C2592000%5D%22%3B%7D; _csrf-zuodao=89192f7f55aec795c1fc98b09f365d338ffc31e0f6448a14cda9d10ec3c5acf3a%3A2%3A%7Bi%3A0%3Bs%3A12%3A%22_csrf-zuodao%22%3Bi%3A1%3Bs%3A32%3A%22x86eJ3YZw7g9wFpSsp0jO0U2XLC98rBq%22%3B%7D",
+								"description": ""
+							}
+						],
 						"body": {
-							"mode": "raw",
-							"raw": ""
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test111",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
 						"description": null
 					},
@@ -1100,7 +1170,7 @@
 								},
 								{
 									"key": "plan_detail_id",
-									"value": "1",
+									"value": "11",
 									"description": "",
 									"type": "text"
 								},
@@ -1118,7 +1188,7 @@
 								},
 								{
 									"key": "target",
-									"value": "3",
+									"value": "1",
 									"description": "",
 									"type": "text"
 								}
