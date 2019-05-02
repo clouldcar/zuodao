@@ -72,10 +72,6 @@ class Plan extends \yii\db\ActiveRecord
         $where = ['id' => $id, 'status' => 0];
         
         $query = self::find()->where($where)->asArray()->one();
-        if($query)
-        {
-            $query['user'] = UserInfo::getInfoByUID($query['uid'], 1)->toArray();
-        }
 
         return $query;
     }

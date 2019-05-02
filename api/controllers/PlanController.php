@@ -53,7 +53,7 @@ class PlanController extends BaseController
             return Utils::returnMsg(1, '内容不存在');
         }
 
-        
+        /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
         $result['user'] = [
             'real_name' => $user_info->real_name,
@@ -114,8 +114,12 @@ class PlanController extends BaseController
         $result['detail']['plan'] = $arr;
         $result['detail']['inspire'] = $inspire;
         $result['detail']['social_service'] = $social_service;
+        */
 
-        return Utils::returnMsg(0, null, $result);
+        $info['basics'] = json_decode($info['basics'], true);
+        $info['objective'] = json_decode($info['objective'], true);
+
+        return Utils::returnMsg(0, null, $info);
     }
 
     public function actionCreate()
