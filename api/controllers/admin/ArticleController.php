@@ -48,6 +48,25 @@ class ArticleController extends BaseController {
 	}
 
 	/*
+		     * @name 运营平台全部文章
+		     * @param $platform_id
+		     * @return mixed
+	*/
+	public function actionList() {
+		$data = Yii::$app->request->get();
+		$page = isset($data['page']) ? $data['page'] : 1;
+
+		if ($page < 1) {
+			$page = 1;
+		}
+		$page_size = 20;
+
+		$list = Article::getList($page, $page_size);
+
+		return Utils::returnMsg(0, null, $list);
+	}
+
+	/*
 		     * @name 文章的创建
 		     * @param user_id platform_id title content class type send_to feedback_way created_at
 		     * @return mixed
