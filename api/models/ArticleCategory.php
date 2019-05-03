@@ -19,6 +19,7 @@ class ArticleCategory extends \yii\db\ActiveRecord
     const TYPE_ID_PLATFORM = 1;
     const TYPE_ID_GRAD = 2;
     const TYPE_ID_TEAM = 3;
+    const TYPE_ID_OPERATE = 4;
     /**
      * @inheritdoc
      */
@@ -67,6 +68,16 @@ class ArticleCategory extends \yii\db\ActiveRecord
         $where = [
             'name' => $name,
             'team_id' => $team_id,
+            'status' => 0
+        ];
+        return self::find()->where($where)->one();
+    }
+
+    public static function getOperateInfo($name)
+    {
+        $where = [
+            'name' => $name,
+            'type' => 4,
             'status' => 0
         ];
         return self::find()->where($where)->one();

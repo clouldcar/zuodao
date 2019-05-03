@@ -87,6 +87,39 @@ class Article extends  \yii\db\ActiveRecord
     }
 
     /*
+     * @name 文章列表
+     * @param cid
+     * @return array()
+     */
+    public static function getListByCId($cid, $page = 1, $page_size = 20){
+        $query = self::find()
+            ->select('id,uid,title,cid,created_at')
+            ->from(self::tableName() . ' as a')
+            ->leftJoin(TeamArticle::tableName() . ' as ta','ta.article_id = a.id')
+            ->where(['a.cid' => $cid, 'a.status' => '0'])
+            ->orderBy('a.id desc');
+
+        $countQuery = clone $query;
+        // echo $countQuery->createCommand()->sql;exit;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+        foreach($list as &$item)
+        {
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+        }
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
+    /*
      * @name 文章信息
      * @param article_id
      * @return array()
