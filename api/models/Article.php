@@ -58,12 +58,16 @@ class Article extends  \yii\db\ActiveRecord
      * @param team_id
      * @return array()
      */
-    public static function getListByTeamId($team_id, $page = 1, $page_size = 20){
+    public static function getListByTeamId($team_id, $cid, $page = 1, $page_size = 20){
         $query = self::find()
-            ->where(['team_id' => $team_id, 'status' => 0])
-            ->orderBy('id desc');
+            ->select('id,uid,title,cid,created_at')
+            ->from(self::tableName() . ' as a')
+            ->leftJoin(TeamArticle::tableName() . ' as ta','ta.article_id = a.id')
+            ->where(['ta.team_id' => $team_id, 'a.cid' => $cid, 'a.status' => '0'])
+            ->orderBy('a.id desc');
 
         $countQuery = clone $query;
+        // echo $countQuery->createCommand()->sql;exit;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
         $pages->setPage($page-1);
 
@@ -71,6 +75,10 @@ class Article extends  \yii\db\ActiveRecord
             ->limit($pages->limit)
             ->asArray()
             ->all();
+        foreach($list as &$item)
+        {
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+        }
 
         return array_merge(
             ['list' => $list], 

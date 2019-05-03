@@ -29,6 +29,25 @@ class PlanController extends BaseController
         parent::checkLogin();
     }
 
+
+
+    public function actionGlobal() 
+    {
+        $uid = Yii::$app->user->id;
+
+        $user_info = UserInfo::getInfoByUID($uid);
+        $result['user'] = [
+            'real_name' => $user_info->real_name,
+            'gender' => ($user_info->gender == 'F') ? '女' : '男',
+            'birthday' => date('Y年m月d日', strtotime($user_info->birthday)),
+            'phone' => $user_info->phone,
+            'avatar' => $user_info->avatar,
+            'address' => $user_info->address,
+            'work' => $user_info->work,
+            'weixin' =>
+        ];
+    }
+
     public function actionIndex()
     {
 
@@ -52,6 +71,9 @@ class PlanController extends BaseController
         {
             return Utils::returnMsg(1, '内容不存在');
         }
+
+        $info['basics'] = json_decode($info['basics'], true);
+        $info['objective'] = json_decode($info['objective'], true);
 
         /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
@@ -116,8 +138,7 @@ class PlanController extends BaseController
         $result['detail']['social_service'] = $social_service;
         */
 
-        $info['basics'] = json_decode($info['basics'], true);
-        $info['objective'] = json_decode($info['objective'], true);
+        
 
         return Utils::returnMsg(0, null, $info);
     }

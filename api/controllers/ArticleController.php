@@ -32,6 +32,7 @@ class ArticleController extends BaseController
      * @return mixed
      */
     public function actionCreate(){
+        parent::checkPost();
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
         //验证数据是否有缺失
@@ -75,7 +76,7 @@ class ArticleController extends BaseController
      * @return mixed
      */
     public function actionList(){
-        $data = Yii::$app->request->post();
+        $data = Yii::$app->request->get();
         $page = isset($data['page']) ? $data['page'] : 1;
         if($page < 1)
         {
@@ -97,7 +98,7 @@ class ArticleController extends BaseController
      * @return mixed
      */
     public function actionArticleInfo(){
-        $id = \Yii::$app->request->get('id');
+        $id = Yii::$app->request->get('id');
         if(!empty($id) || !isset($id)){
             exit(json_encode(array('code'=>0,'message'=>'缺少必要参数')));
         }
