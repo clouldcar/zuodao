@@ -145,6 +145,8 @@ class PlanController extends BaseController
 
     public function actionCreate()
     {
+print_r($_REQUEST);
+exit;
         parent::checkPost();
         $model = new \api\models\Plan();
         $model2 = new \api\models\PlanDetail();

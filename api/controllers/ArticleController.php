@@ -26,6 +26,30 @@ use api\models\ArticleComments;
 class ArticleController extends BaseController
 {
 
+
+
+    /*
+     * @name 团队下文章的列表
+     * @param $team_id
+     * @return mixed
+     */
+    public function actionIndex(){
+        $data = Yii::$app->request->get();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if($page < 1)
+        {
+            $page = 1;
+        }
+        $page_size = 20;
+
+        if(!isset($data['team_id']) || !isset($data['cid'])){
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+        $list = Article::getListByTeamId($data['team_id'], $data['cid'], $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
+    }
+
     /*
      * @name 文章的创建
      * @param user_id platform_id title content class type send_to feedback_way created_at
@@ -68,28 +92,6 @@ class ArticleController extends BaseController
         $model->save();
         
         return Utils::returnMsg(0, '添加成功');
-    }
-
-    /*
-     * @name 团队下文章的列表
-     * @param $team_id
-     * @return mixed
-     */
-    public function actionList(){
-        $data = Yii::$app->request->get();
-        $page = isset($data['page']) ? $data['page'] : 1;
-        if($page < 1)
-        {
-            $page = 1;
-        }
-        $page_size = 20;
-
-        if(!isset($data['team_id']) || !isset($data['cid'])){
-            return Utils::returnMsg(1, '缺少必要参数');
-        }
-        $list = Article::getListByTeamId($data['team_id'], $data['cid'], $page, $page_size);
-
-        return Utils::returnMsg(0, null, $list);
     }
 
     /*
