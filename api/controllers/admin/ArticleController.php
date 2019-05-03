@@ -88,7 +88,7 @@ class ArticleController extends BaseController {
 
 		//向表里插入数据
 		$data['uid'] = Yii::$app->user->id;
-		$data['platform_id'] = $this->platform_id;
+		$data['platform_id'] =  '';//$this->platform_id;
 		$result = Article::add($data);
 		if (!$result) {
 			return Utils::returnMsg(1, '添加失败');
