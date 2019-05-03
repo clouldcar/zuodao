@@ -31,6 +31,7 @@ class PlanController extends BaseController
 
 
 
+    /*
     public function actionGlobal() 
     {
         $uid = Yii::$app->user->id;
@@ -47,6 +48,7 @@ class PlanController extends BaseController
             'weixin' =>
         ];
     }
+    */
 
     public function actionIndex()
     {
@@ -73,7 +75,7 @@ class PlanController extends BaseController
         }
 
         $info['basics'] = json_decode($info['basics'], true);
-        $info['objective'] = json_decode($info['objective'], true);
+        $info['detail'] = json_decode($info['detail'], true);
 
         /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
@@ -145,19 +147,18 @@ class PlanController extends BaseController
 
     public function actionCreate()
     {
-print_r($_REQUEST);
-exit;
         parent::checkPost();
-        $model = new \api\models\Plan();
-        $model2 = new \api\models\PlanDetail();
+        $model = new Plan();
+        $model2 = new PlanDetail();
 
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
-        if(!$data['team_id'])
+        if(!$data['team_id'] || empty($data['data']))
         {
             return Utils::returnMsg(1, '缺少必要参数');
         }
+
 
         //判断是否团队成员
         if(!TeamUser::hasUser($data['team_id'], $uid))
@@ -165,11 +166,31 @@ exit;
             return Utils::returnMsg(1, '非法操作');
         }
 
+        $decode = json_decode($data['data'], true);
+        $detail = $decode['detail'];
+
+        //地址
+        $address = [];
+        if($decode['user']['city'])
+        {
+            foreach($decode['user']['city'] as $city)
+            {
+                $address[] = $city['name'];
+            }
+        }
+
+        $decode['user']['address'] = implode(" ", $address);
+        unset($decode['user']['city']);
+
         $params = [
             'id' => Utils::createIncrementId(Utils::ID_TYPE_PLAN),
             'uid' => $uid,
             'team_id' => $data['team_id'],
-            'title' => $data['title']
+            'basics' => json_encode($decode['user']),
+            'detail' => json_encode($detail['list']),
+            'team_ideal' => $detail['team_ideal'],
+            'vow' => $detail['vow'],
+            'idea' => $detail['idea'],
         ];
 
         if(!Plan::add($params))
@@ -184,6 +205,7 @@ exit;
         $data['name'][感召][0][0]
         $data['name'][社服][0][0]
         */
+        /*
         foreach($data['name'] as $type => $list)
         {
             foreach($list as $sub_type => $item)
@@ -205,6 +227,7 @@ exit;
                 }
             }
         }
+        */
 
         return Utils::returnMsg(0, '添加成功');
     }
