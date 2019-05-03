@@ -83,6 +83,16 @@ class ArticleCategory extends \yii\db\ActiveRecord
         return self::find()->where($where)->one();
     }
 
+    public static function getInfoById($id)
+    {
+        $where = [
+            'id' => $id,
+            'type' => 4,
+            'status' => 0
+        ];
+        return self::find()->where($where)->one();
+    }
+
     public static function getCategories($platform_id, $page, $page_size)
     {
         $query = self::find()->where(['platform_id' => $platform_id, 'status' => 0])->orderBy('id desc');

@@ -5,6 +5,7 @@ use api\controllers\BaseController;
 use api\models\Article;
 use api\models\ArticleComments;
 use api\models\ArticleNotic;
+use api\models\ArticleCategory;
 use common\helpers\Utils;
 use Yii;
 
@@ -62,6 +63,12 @@ class ArticleController extends BaseController {
 		$page_size = 20;
 
 		$list = Article::getList($page, $page_size);
+
+		if ($list['list']) {
+			foreach ($list['list'] as &$item) {
+				$item['category'] = ArticleCategory::getInfoById($item['cid']);
+			}
+		}
 
 		return Utils::returnMsg(0, null, $list);
 	}
