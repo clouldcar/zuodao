@@ -75,6 +75,7 @@ class PlanController extends BaseController
         }
 
         $info['user'] = json_decode($info['basics'], true);
+        unset($info['basics']);
         $info['detail'] = json_decode($info['detail'], true);
 
         /*
