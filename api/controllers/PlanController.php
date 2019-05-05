@@ -100,72 +100,6 @@ class PlanController extends BaseController
             ]
         ];
 
-
-        /*
-        $user_info = UserInfo::getInfoByUID($info['uid']);
-        $result['user'] = [
-            'real_name' => $user_info->real_name,
-            'gender' => ($user_info->gender == 'F') ? '女' : '男',
-            'birthday' => date('Y年m月d日', strtotime($user_info->birthday)),
-            'phone' => $user_info->phone,
-            'avatar' => $user_info->avatar,
-            'address' => $user_info->address,
-        ];
-
-        //团队立场
-        $teamModel = new Team();
-        $team_info = $teamModel->teamInfo($team_id);
-        $result['detail']['team_ideal'] = $team_info['ideal'];
-        $result['detail']['vow'] = $user_info['vow'];
-        $result['detail']['idea'] = $user_info['idea'];
-
-        //成就宣言
-        $plan_detail = PlanDetail::getList($id);
-
-        //按类型排序
-        ArrayHelper::multisort($plan_detail, 'sub_type');
-
-        $arr = [];
-        $inspire = [];
-        $social_service = [];
-        foreach($plan_detail as $v)
-        {
-            //个人成就
-            if($v['type'] == 1)
-            {
-                $type_id = $v['sub_type'];
-                if(isset($arr[$type_id]))
-                {
-                    $arr[$type_id]['detail'][] = $v;
-                }
-                else
-                {
-                    $arr[$type_id] = [
-                        'name' => $this->type[$type_id],
-                        'detail' => [$v]
-                    ];
-                }
-            }
-
-            //感召
-            if($v['type'] == 2)
-            {
-                $inspire = $v;
-            }
-
-            //社服
-            if($v['type'] == 3)
-            {
-                $social_service = $v;
-            }
-        }
-        $result['detail']['plan'] = $arr;
-        $result['detail']['inspire'] = $inspire;
-        $result['detail']['social_service'] = $social_service;
-        */
-
-        
-
         return Utils::returnMsg(0, null, $result);
     }
 
@@ -199,6 +133,8 @@ class PlanController extends BaseController
             'team_ideal' => $detail['team_ideal'],
             'vow' => $detail['vow'],
             'idea' => $detail['idea'],
+            'inspire' => $detail['inspire'],
+            'social_services' => $detail['social_services'],
         ];
 
         if(!Plan::add($params))
