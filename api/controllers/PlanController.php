@@ -74,7 +74,7 @@ class PlanController extends BaseController
             return Utils::returnMsg(1, '内容不存在');
         }
 
-        $info['basics'] = json_decode($info['basics'], true);
+        $info['user'] = json_decode($info['basics'], true);
         $info['detail'] = json_decode($info['detail'], true);
 
         /*
