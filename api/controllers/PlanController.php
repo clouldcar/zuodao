@@ -92,6 +92,8 @@ class PlanController extends BaseController
                 'team_ideal' => $info['team_ideal'],
                 'vow' => $info['vow'],
                 'idea' => $info['idea'],
+                'inspire' => $info['inspire'],
+                'social_services' => $info['social_services'],
                 'personal' => 0,
                 'service' => 0,
                 'impel' => 0,
@@ -170,8 +172,6 @@ class PlanController extends BaseController
     public function actionCreate()
     {
         parent::checkPost();
-        $model = new Plan();
-        $model2 = new PlanDetail();
 
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
@@ -181,7 +181,6 @@ class PlanController extends BaseController
             return Utils::returnMsg(1, '缺少必要参数');
         }
 
-
         //判断是否团队成员
         if(!TeamUser::hasUser($data['team_id'], $uid))
         {
@@ -190,19 +189,6 @@ class PlanController extends BaseController
 
         $decode = json_decode($data['data'], true);
         $detail = $decode['detail'];
-
-        //地址
-        $address = [];
-        if($decode['user']['city'])
-        {
-            foreach($decode['user']['city'] as $city)
-            {
-                $address[] = $city['name'];
-            }
-        }
-
-        $decode['user']['address'] = implode(" ", $address);
-        unset($decode['user']['city']);
 
         $params = [
             'id' => Utils::createIncrementId(Utils::ID_TYPE_PLAN),
@@ -219,37 +205,6 @@ class PlanController extends BaseController
         {
             return Utils::returnMsg(1, '添加失败');
         }
-
-        /*
-        $data['name'][个人成就][事业][0]
-        $data['name'][个人成就][事业][1]
-        $data['name'][个人成就][家庭][0]
-        $data['name'][感召][0][0]
-        $data['name'][社服][0][0]
-        */
-        /*
-        foreach($data['name'] as $type => $list)
-        {
-            foreach($list as $sub_type => $item)
-            {
-                for($i = 0; $i < count($item); $i++)
-                {
-                    $plan_detail = [
-                        'plan_id' => $params['id'],
-                        'type' => $type,
-                        'sub_type' => $sub_type,
-                        'name' => $data['name'][$type][$sub_type][$i],
-                        'target' => $data['target'][$type][$sub_type][$i],
-                        'unit' => $data['unit'][$type][$sub_type][$i],
-                        'weight' => $data['weight'][$type][$sub_type][$i]
-                    ];
-
-
-                    PlanDetail::add($plan_detail);
-                }
-            }
-        }
-        */
 
         return Utils::returnMsg(0, '添加成功');
     }
