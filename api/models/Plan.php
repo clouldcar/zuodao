@@ -78,7 +78,7 @@ class Plan extends \yii\db\ActiveRecord
 
     public static function listByUid($uid, $page = 1, $page_size = 20)
     {
-        $select = 'id,uid,team_id,title,score,ctime';
+        $select = 'id, uid, team_id, title, score, ctime';
         $where = ['uid' => $uid, 'status' => 0];
         $query = self::find()->select($select)->where($where)->orderBy('ctime desc');
 
@@ -95,6 +95,7 @@ class Plan extends \yii\db\ActiveRecord
         foreach($list as &$item)
         {
             $item['user'] = UserInfo::getInfoByUID($uid, 1);
+            $item['title'] = $item['user']['real_name'] . "成就宣言 " . date('Y-m-d', strtotime($item['ctime']));
         }
 
         return array_merge(
