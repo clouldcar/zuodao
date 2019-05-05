@@ -10,12 +10,6 @@ class CommentController extends BaseController
 
 	public $modelClass = 'api\models\ArticleComments';
 
-    public function behaviors()
-    {
-        $behaviors =  parent::behaviors();
-        return $behaviors;
-    }
-
     /**
      * 获得后台展示评论列表
      * @return [type] [description]
@@ -32,31 +26,29 @@ class CommentController extends BaseController
      * 评论
      * @return [type] [description]
      */
-    public function actionAdd()
-    {	
+    public function actionCreate()
+    {
+        parent::checkPost();
+        
+        $data = Yii::$app->request->post();
+        $uid = Yii::$app->user->id;
+
         $model = new ArticleComments();
-        if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post();
-            if ($model->load($data, '') && $model->validate()) {
-            	$model->setAttributes($data);
-            	if ($model->save()) {
-            		$this->returnData = [
-            			'code' => 1,
-            			'msg' => '评论成功',
-            		];
-            	} else {
-            		$this->returnData = [
-            			'code' => 0,
-            			'msg' => '评论失败',
-            		];
-            	}
-            }
-        } else {
-        	$this->returnData = [
-            	'code' => 806,
-            	'msg' => $model->getErrors(),
-            ];
-        } 
+        
+        if ($model->load($data, '') && $model->validate()) {
+        	$model->setAttributes($data);
+        	if ($model->save()) {
+        		$this->returnData = [
+        			'code' => 1,
+        			'msg' => '评论成功',
+        		];
+        	} else {
+        		$this->returnData = [
+        			'code' => 0,
+        			'msg' => '评论失败',
+        		];
+        	}
+        }
 
         return $this->returnData;
     }

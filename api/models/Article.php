@@ -155,7 +155,14 @@ class Article extends \yii\db\ActiveRecord {
 		     * @return array()
 	*/
 	public static function info($id) {
-		return self::find()->where(['id' => $id, 'status' => 0])->one();
+		$info = self::find()->where(['id' => $id, 'status' => 0])->asArray()->one();
+
+		if($info)
+		{
+			$info['user'] = UserInfo::getInfoByUID($info['uid'], 1);
+		}
+
+		return $info;
 	}
 
 	/*

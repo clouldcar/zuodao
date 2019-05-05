@@ -89,13 +89,16 @@ class ArticleController extends BaseController {
 		     * @param article_id
 		     * @return mixed
 	*/
-	public function actionArticleInfo() {
+	public function actionDetail() {
 		$id = Yii::$app->request->get('id');
-		if (!empty($id) || !isset($id)) {
-			exit(json_encode(array('code' => 0, 'message' => '缺少必要参数')));
+
+		if (empty($id) || !isset($id)) 
+		{
+			return Utils::returnMsg(1, '缺少必要参数');
 		}
-		$list = (new Article())->articleInfo($id);
-		exit(json_encode(array('code' => 0, 'data' => $list ? $list : [])));
+		$info = Article::info($id);
+
+		return Utils::returnMsg(0, null, $info);
 	}
 
 	/*
