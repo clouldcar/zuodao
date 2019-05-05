@@ -62,21 +62,42 @@ class PlanController extends BaseController
 
         $data = Yii::$app->request->get();
         $id = $data['plan_id'];
-        $team_id = $data['team_id'];
         $uid = Yii::$app->user->id;
         $result = [];
 
         $info = Plan::info($id);
 
         //鉴权
-        if($info['uid'] != $uid && $info['team_id'] != $team_id)
+        if($info['uid'] != $uid)
         {
             return Utils::returnMsg(1, '内容不存在');
         }
+        
+        //判断是否团队成员
+        if(!TeamUser::hasUser($info['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
 
-        $info['user'] = json_decode($info['basics'], true);
-        unset($info['basics']);
-        $info['detail'] = json_decode($info['detail'], true);
+        $basics = json_decode($info['basics'], true);
+        // if($basics['birthday'])
+        // {
+        //     $basics['birthday'] = date('Y年m月d日', strtotime($basics['birthday']));
+        // }
+        $result = [
+            'id' => $id,
+            'user' => $basics,
+            'detail' => [
+                'list' => json_decode($info['detail'], true),
+                'team_ideal' => $info['team_ideal'],
+                'vow' => $info['vow'],
+                'idea' => $info['idea'],
+                'personal' => 0,
+                'service' => 0,
+                'impel' => 0,
+            ]
+        ];
+
 
         /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
@@ -143,7 +164,7 @@ class PlanController extends BaseController
 
         
 
-        return Utils::returnMsg(0, null, $info);
+        return Utils::returnMsg(0, null, $result);
     }
 
     public function actionCreate()
