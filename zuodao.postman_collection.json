@@ -279,7 +279,33 @@
 				{
 					"name": "文章列表",
 					"request": {
-						"url": "http://zuodao.lg/article/",
+						"url": {
+							"raw": "http://zuodao.lg/article/?team_id=41438024747209&cid=2147483647",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"article",
+								""
+							],
+							"query": [
+								{
+									"key": "team_id",
+									"value": "41438024747209",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "cid",
+									"value": "2147483647",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -293,7 +319,27 @@
 				{
 					"name": "文章详情",
 					"request": {
-						"url": "",
+						"url": {
+							"raw": "http://zuodao.lg/article/detail?id=27",
+							"protocol": "http",
+							"host": [
+								"zuodao",
+								"lg"
+							],
+							"path": [
+								"article",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "27",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -959,7 +1005,7 @@
 				{
 					"name": "创建成就宣言",
 					"request": {
-						"url": "http://api.zuodao.club/plan/create",
+						"url": "http://zuodao.lg/plan/create",
 						"method": "POST",
 						"header": [
 							{
@@ -978,122 +1024,10 @@
 									"type": "text"
 								},
 								{
-									"key": "title",
-									"value": "三阶段个人成就",
+									"key": "data",
+									"value": "{\"user\":{\"city\":[{\"code\":\"110000\",\"name\":\"北京市\"},{\"code\":\"110100\",\"name\":\"市辖区\"}],\"birthday\":\"2019-05-02T16:00:00.000Z\",\"real_name\":\"ddd\",\"gender\":\"male\",\"phone\":\"222\",\"work\":\"dsf\",\"weixin\":\"fdsfds\"},\"detail\":{\"list\":[{\"name\":\"事业\",\"purpose\":\"da\",\"action\":[\"fdas\",\"dasf\"],\"result\":\"da\"}],\"team_ideal\":\"fdsa\",\"vow\":\"fda\",\"idea\":\"fda\"}}",
 									"description": "",
 									"type": "text"
-								},
-								{
-									"key": "name[1][2][]",
-									"value": "做饭",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "target[1][2][]",
-									"value": "3",
-									"description": "目标数量",
-									"type": "text"
-								},
-								{
-									"key": "unit[1][2][0]",
-									"value": "顿",
-									"description": "单位",
-									"type": "text"
-								},
-								{
-									"key": "weight[1][2][]",
-									"value": "30",
-									"description": "权重",
-									"type": "text"
-								},
-								{
-									"key": "name[1][2][]",
-									"value": "看电影",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "target[1][2][]",
-									"value": "1",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "unit[1][2][]",
-									"value": "月",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "weight[1][2][]",
-									"value": "40",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "name[1][1][]",
-									"value": "提升业绩",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "target[1][1][]",
-									"value": "50",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "unit[1][1][]",
-									"value": "万",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "weight[1][1][]",
-									"value": "30",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "name[2][0][]",
-									"value": "感召",
-									"description": ""
-								},
-								{
-									"key": "target[2][0][0]",
-									"value": "3",
-									"description": ""
-								},
-								{
-									"key": "unit[2][0][0]",
-									"value": "人",
-									"description": ""
-								},
-								{
-									"key": "weight[2][0][0]",
-									"value": "20",
-									"description": ""
-								},
-								{
-									"key": "name[3][0][]",
-									"value": "社服",
-									"description": ""
-								},
-								{
-									"key": "target[3][0][]",
-									"value": "3",
-									"description": ""
-								},
-								{
-									"key": "unit[3][0][]",
-									"value": "20",
-									"description": ""
-								},
-								{
-									"key": "weight[3][0][]",
-									"value": "10",
-									"description": ""
 								}
 							]
 						},
@@ -1105,7 +1039,7 @@
 					"name": "成就宣言详情",
 					"request": {
 						"url": {
-							"raw": "http://zuodao.lg/plan/info?plan_id=42708833612796&team_id=41438024747209",
+							"raw": "http://zuodao.lg/plan/info?plan_id=43610451421000&team_id=41438024747209",
 							"protocol": "http",
 							"host": [
 								"zuodao",
@@ -1118,7 +1052,7 @@
 							"query": [
 								{
 									"key": "plan_id",
-									"value": "42708833612796",
+									"value": "43610451421000",
 									"equals": true,
 									"description": ""
 								},
