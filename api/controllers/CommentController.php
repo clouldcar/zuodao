@@ -3,6 +3,7 @@
 namespace api\controllers;
 
 use Yii;
+use common\helpers\Utils;
 use api\models\ArticleComments;
 
 class CommentController extends BaseController
@@ -11,14 +12,16 @@ class CommentController extends BaseController
 	public $modelClass = 'api\models\ArticleComments';
 
     /**
-     * 获得后台展示评论列表
+     * 评论列表
      * @return [type] [description]
      */
     public function actionIndex()
     {
-    	$order = Yii::$app->request->get('order') ? Yii::$app->request->get('order') : 'desc';
-    	$page = Yii::$app->request->get('page') ? Yii::$app->request->get('page') : '1';
-    	$offset = Yii::$app->request->get('offset') ? Yii::$app->request->get('offset') : ArticleComments::PAGESIZE;
+        $data = Yii::$app->request->get();
+
+    	$order = isset($data['order']) ? $data['order'] : 'desc';
+    	$page = isset($data['page']) ? $data['page'] : '1';
+    	$offset = isset($data['offset']) ? $data['offset'] : ArticleComments::PAGESIZE;
         return (new ArticleComments())->commentsList($order, $page, $offset);
     }
 
@@ -35,18 +38,12 @@ class CommentController extends BaseController
 
         $model = new ArticleComments();
         
-        if ($model->load($data, '') && $model->validate()) {
+        if ($model->load($data) && $model->validate()) {
         	$model->setAttributes($data);
         	if ($model->save()) {
-        		$this->returnData = [
-        			'code' => 1,
-        			'msg' => '评论成功',
-        		];
+                return Utils::returnMsg(0, '评论成功');
         	} else {
-        		$this->returnData = [
-        			'code' => 0,
-        			'msg' => '评论失败',
-        		];
+                return Utils::returnMsg(1, '评论失败');
         	}
         }
 
