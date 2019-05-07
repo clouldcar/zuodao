@@ -9,8 +9,6 @@ use api\models\ArticleComments;
 class CommentController extends BaseController
 {	
 
-	public $modelClass = 'api\models\ArticleComments';
-
     /**
      * 评论列表
      * @return [type] [description]
@@ -19,10 +17,18 @@ class CommentController extends BaseController
     {
         $data = Yii::$app->request->get();
 
-    	$order = isset($data['order']) ? $data['order'] : 'desc';
+        $article_id = $data['article_id'];
     	$page = isset($data['page']) ? $data['page'] : '1';
-    	$offset = isset($data['offset']) ? $data['offset'] : ArticleComments::PAGESIZE;
-        return (new ArticleComments())->commentsList($order, $page, $offset);
+        $page_size = 20;
+
+        if(!$article_id)
+        {
+            return Utils::returnMsg(1, '参数有误');
+        }
+
+        $list = ArticleComments::getList($article_id, $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
     /**
@@ -36,18 +42,21 @@ class CommentController extends BaseController
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
+        $data['user_id'] = $uid;
         $model = new ArticleComments();
+        $model->setAttributes($data);
+        if (!$model->validate())
+        {
+            return Utils::returnMsg(1, $model->getErrorSummary(true)[0]);
+        }
         
-        if ($model->load($data) && $model->validate()) {
-        	$model->setAttributes($data);
-        	if ($model->save()) {
-                return Utils::returnMsg(0, '评论成功');
-        	} else {
-                return Utils::returnMsg(1, '评论失败');
-        	}
+        if (!$model->save())
+        {
+            return Utils::returnMsg(1, '评论失败');
         }
 
-        return $this->returnData;
+        return Utils::returnMsg(0, '评论成功');
+
     }
 
 

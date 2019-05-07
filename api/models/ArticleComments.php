@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\data\Pagination;
+use common\helpers\Utils;
 
 /**
  * This is the model class for table "{{%article_comments}}".
@@ -14,10 +16,10 @@ use Yii;
  * @property string $created_at 创建时间
  */
 class ArticleComments extends \yii\db\ActiveRecord
-{	
+{   
 
-	const STATUS_DELETED = 0;
-    const STATUS_ACTIVE  = 1;    
+    const STATUS_DELETED = 1;
+    const STATUS_ACTIVE  = 0;    
     
     const PAGESIZE = 10;
 
@@ -38,8 +40,7 @@ class ArticleComments extends \yii\db\ActiveRecord
             [['user_id', 'article_id', 'content'], 'required'],
             [['article_id'], 'integer'],
             [['content'], 'string'],
-            [['created_at'], 'safe'],
-            [['user_id'], 'string', 'max' => 20],
+            [['created_at'], 'safe']
         ];
     }
 
@@ -63,7 +64,7 @@ class ArticleComments extends \yii\db\ActiveRecord
      */
     public function getUserU()
     {
-    	return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -72,7 +73,7 @@ class ArticleComments extends \yii\db\ActiveRecord
      */
     public function getArticleA()
     {
-    	return $this->hasOne(Article::className(), ['id' => 'article_id']);
+        return $this->hasOne(Article::className(), ['id' => 'article_id']);
     }
 
     /**
@@ -82,27 +83,31 @@ class ArticleComments extends \yii\db\ActiveRecord
      * @param  [type] $offset [description]
      * @return [type]         [description]
      */
-    public function commentsList($order, $page, $offset)
+    public static function getList($article_id, $page = 1, $page_size = 20)
     {
-    	$data = static::find()->joinWith(['UserU', 'ArticleA'])
-    			->select('shop_article_comments.*, shop_article.title, shop_user.username')
-    			->where([
-    				'shop_article.status' => Article::STATUS_ACTIVE,
-    				'shop_article_comments' => ArticleComments::STATUS_ACTIVE,
-    			])
-    			->orderBy('shop_article_comments.created_at '.$order)
-				->offset(($page-1)*$offset)
-                ->limit($offset)
-                ->asArray()
-                ->all();    
 
-        foreach ($data as $key => $value) {
-			unset($value['UserU']);
-            unset($value['ArticleA']);   
-            $result[] = $value;
+        $query = self::find()
+            ->where(['article_id' => $article_id, 'status' => self::STATUS_ACTIVE])
+            ->orderBy('id desc');
+
+        $countQuery = clone $query;
+        // echo $countQuery->createCommand()->sql;exit;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page - 1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        foreach ($list as &$item) {
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
-        return $result;
+        return array_merge(
+            ['list' => $list],
+            Utils::pagination($pages)
+        );
     }
 
     /**
