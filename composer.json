@@ -25,7 +25,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "alibabacloud/client": "^1.0",
         "aliyuncs/oss-sdk-php": "^2.3",
-        "linslin/yii2-curl": "*"
+        "linslin/yii2-curl": "*",
+        "yzalis/identicon": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

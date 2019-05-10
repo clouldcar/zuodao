@@ -78,6 +78,10 @@ class ComposerStaticInit9c4ae0f1e3be1063039c0f96f3fd7424
         array (
             'JmesPath\\' => 9,
         ),
+        'I' => 
+        array (
+            'Identicon\\' => 10,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -216,6 +220,10 @@ class ComposerStaticInit9c4ae0f1e3be1063039c0f96f3fd7424
         'JmesPath\\' => 
         array (
             0 => __DIR__ . '/..' . '/mtdowling/jmespath.php/src',
+        ),
+        'Identicon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yzalis/identicon/src/Identicon',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
