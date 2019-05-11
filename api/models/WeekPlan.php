@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\data\Pagination;
+use common\helpers\Utils;
 
 /**
  * This is the model class for table "week_plan".
@@ -86,9 +88,18 @@ class WeekPlan extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function getList($team_id)
+    public static function getList($team_id, $page = 1, $page_size = 20)
     {
-        $list = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC')->asArray()->all();
+        $query = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
 
         foreach($list as &$item)
         {
@@ -96,12 +107,24 @@ class WeekPlan extends \yii\db\ActiveRecord
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
-        return $list;
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
     }
 
-    public static function getListByUID($uid)
+    public static function getListByUID($uid, $page = 1, $page_size = 20)
     {
-        $list = self::find()->where(['uid' => $uid, 'status' => 0])->orderBy('ctime ASC')->asArray()->all();
+        $query = self::find()->where(['uid' => $uid, 'status' => 0])->orderBy('ctime ASC');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
 
         foreach($list as &$item)
         {
@@ -109,7 +132,10 @@ class WeekPlan extends \yii\db\ActiveRecord
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
-        return $list;
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
     }
 
     public static function info($week_plan_id)

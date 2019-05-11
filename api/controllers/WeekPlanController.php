@@ -25,6 +25,11 @@ class WeekPlanController extends BaseController
         $data = Yii::$app->request->get();
         $uid = Yii::$app->user->id;
 
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page < 1) {
+            $page = 1;
+        }
+
         if(isset($data['team_id']) && !$data['team_id'])
         {
             return Utils::returnMsg(1, '缺少必要参数');
@@ -38,11 +43,11 @@ class WeekPlanController extends BaseController
                 return Utils::returnMsg(1, '非法操作');
             }
 
-            $list = WeekPlan::getList($data['team_id']);
+            $list = WeekPlan::getList($data['team_id'], $page);
         }
         else
         {
-            $list = WeekPlan::getListByUID($uid);
+            $list = WeekPlan::getListByUID($uid, $page);
         }
 
         return Utils::returnMsg(0, null, $list);

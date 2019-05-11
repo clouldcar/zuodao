@@ -55,7 +55,34 @@ class PlanController extends BaseController
 
     public function actionIndex()
     {
+        parent::checkGet();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        $page_size = 20;
 
+        $uid = Yii::$app->user->id;
+
+        if(isset($data['team_id']) && !$data['team_id'])
+        {
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+
+        if(isset($data['team_id']))
+        {
+            //判断是否团队成员
+            if(!TeamUser::hasUser($data['team_id'], $uid))
+            {
+                return Utils::returnMsg(1, '非法操作');
+            }
+
+            $list = Plan::listByTeamId($data['team_id'], $page);
+        }
+        else
+        {
+            $list = Plan::listByUid($uid, $page);
+        }
+
+
+        return Utils::returnMsg(0, null, $list);
     }
 
 
