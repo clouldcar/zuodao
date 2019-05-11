@@ -93,7 +93,7 @@ class PlanController extends BaseController
                 'vow' => $info['vow'],
                 'idea' => $info['idea'],
                 'inspire' => $info['inspire'],
-                'social_services' => $info['social_services'],
+                'social_service' => $info['social_service'],
                 'personal' => 0,
                 'service' => 0,
                 'impel' => 0,
@@ -134,7 +134,7 @@ class PlanController extends BaseController
             'vow' => $detail['vow'],
             'idea' => $detail['idea'],
             'inspire' => $detail['inspire'],
-            'social_services' => $detail['social_services']
+            'social_service' => $detail['social_service']
         ];
 
         if(!Plan::add($params))
