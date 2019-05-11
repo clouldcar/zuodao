@@ -96,8 +96,14 @@ class WeekPlanController extends BaseController
         $uid = Yii::$app->user->id;
         $result = [];
 
+        if(!isset($data['week_plan_id']) || !$data['week_plan_id'])
+        {
+            return Utils::returnMsg(1, '参数有误');
+        }
+
         //检查是否自己的周计划
         $info = WeekPlan::info($data['week_plan_id']);
+
         if(!$info || $info['uid'] != $uid)
         {
             return Utils::returnMsg(1, '信息不存在');
