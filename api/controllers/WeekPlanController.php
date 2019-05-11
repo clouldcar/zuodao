@@ -30,7 +30,7 @@ class WeekPlanController extends BaseController
             return Utils::returnMsg(1, '缺少必要参数');
         }
 
-        if($data['team_id'])
+        if(isset($data['team_id']))
         {
             //判断是否团队成员
             if(!TeamUser::hasUser($data['team_id'], $uid))
