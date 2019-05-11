@@ -9,7 +9,7 @@ use common\models\UploadValidate;
 /*附件*/
 class AttachmentController extends BaseController
 {
-    private $type = ['avatar', 'img'];
+    private $type = ['avatar', 'article'];
     public static function actionUpload()
     {
         parent::checkPost();
@@ -17,16 +17,16 @@ class AttachmentController extends BaseController
         $data = Yii::$app->request->post();
 
 
-        if(!in_array($data['type'], $this->type))
-        {
-            return Utils::returnMsg(1, '类型错误');
-        }
+        // if(!in_array($data['type'], $this->type))
+        // {
+        //     return Utils::returnMsg(1, '类型qaj误');
+        // }
 
         $model = new UploadValidate();
-        $tmp = UploadedFile::getInstanceByName($data['type']);
+        $tmp = UploadedFile::getInstanceByName('img');
         $model->file = $tmp;
         if($model->validate()) {
-            $url = Yii::$app->AliyunOss->upload($tmp, $data['type']);
+            $url = Yii::$app->AliyunOss->upload($tmp->name, $tmp->tempName, $data['type']);
             if($url)
             {
                 return Utils::returnMsg(0, null, $url);

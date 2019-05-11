@@ -25,15 +25,15 @@ class AliyunOss extends Component
      * @param $filepath 文件在本地的绝对路径
      * @return string     上传文件地址
      */
-    public function upload($filename, $type)
+    public function upload($fileName, $filePath, $type)
     {
         $res = '';
         //OSS文件名
-        $object = $this->getFileName($filename, $type);
+        $object = $this->getFileName($fileName, $type);
         $bucket = Yii::$app->params['oss']['bucket'];
         //调用uploadFile方法把服务器文件上传到阿里云oss
         try{
-            if (self::$oss->uploadFile($bucket, $object, $filename)) {
+            if (self::$oss->uploadFile($bucket, $object, $filePath)) {
                 $res = Yii::$app->params['oss']['url'] . $object;
             }
         } catch(OssException $e) {
@@ -49,6 +49,10 @@ class AliyunOss extends Component
         $name = substr(str_shuffle($str), 0, 10) . $this->getExt($file);
         if($type == 'avatar') {
             return 'avatar/' . $name;
+        }
+
+        if($type == 'article') {
+            return 'article/' . $name;
         }
     }
 
