@@ -42,7 +42,7 @@ class CommentController extends BaseController
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
-        $data['user_id'] = $uid;
+        $data['uid'] = $uid;
         $model = new ArticleComments();
         $model->setAttributes($data);
         if (!$model->validate())
@@ -55,6 +55,8 @@ class CommentController extends BaseController
             return Utils::returnMsg(1, '评论失败');
         }
 
+        
+
         return Utils::returnMsg(0, '评论成功');
 
     }
@@ -63,29 +65,26 @@ class CommentController extends BaseController
     /**
      * 删除评论
      */
-    public function actionDelete()
+    public function actionRemove()
     {
         //判断批量删除
-        $ids = Yii::$app->request->get('id', 0);
-        $ids = implode(',', array_unique((array)$ids));
-        if (empty($ids)) {
-            return $this->returnData = [
-                'code' => 802,
-                'msg' => '请选择要删除的数据',
-            ];
+        $id = Yii::$app->request->get('id');
+        $uid = Yii::$app->user->id;
+
+        if(!$id)
+        {
+            return Utils::returnMsg(1, '参数有误');
         }
-        $_where = 'id in (' . $ids . ')';
-        if ((new ArticleComments())->updateCommentStatus($_where)) {
-            return $this->returnData = [
-                'code' => 1,
-                'msg' => '删除评论成功'
-            ];
-        } else {
-            return $this->returnData = [
-                'code' => 0,
-                'msg' => '删除评论失败',
-            ];
+        
+        $info = ArticleComments::info($id);
+        if($info['uid'] != $uid)
+        {
+            return Utils::returnMsg(1, '没有权限');
         }
+
+        ArticleComments::remove($id);
+
+        return Utils::returnMsg(0, '删除成功');
     }
 
 }

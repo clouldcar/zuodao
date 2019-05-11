@@ -31,7 +31,6 @@ class PlanController extends BaseController
 
 
 
-    /*
     public function actionGlobal() 
     {
         $uid = Yii::$app->user->id;
@@ -44,11 +43,12 @@ class PlanController extends BaseController
             'phone' => $user_info->phone,
             'avatar' => $user_info->avatar,
             'address' => $user_info->address,
-            'work' => $user_info->work,
-            'weixin' =>
+            'work' => '',
+            'weixin' => ''
         ];
+
+        return Utils::returnMsg(0, null, $result);
     }
-    */
 
     public function actionIndex()
     {

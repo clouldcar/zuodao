@@ -37,7 +37,7 @@ class ArticleComments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'article_id', 'content'], 'required'],
+            [['uid', 'article_id', 'content'], 'required'],
             [['article_id'], 'integer'],
             [['content'], 'string'],
             [['created_at'], 'safe']
@@ -51,7 +51,7 @@ class ArticleComments extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => '评论者user_id',
+            'uid' => '评论者uid',
             'article_id' => '文章ID',
             'content' => '评论内容',
             'created_at' => '创建时间',
@@ -64,7 +64,7 @@ class ArticleComments extends \yii\db\ActiveRecord
      */
     public function getUserU()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'uid']);
     }
 
     /**
@@ -108,6 +108,17 @@ class ArticleComments extends \yii\db\ActiveRecord
             ['list' => $list],
             Utils::pagination($pages)
         );
+    }
+
+    public static function info($id)
+    {
+        return self::find()->where(['id' => $id, 'status' => 0])->asArray()->one();
+    }
+
+    public static function remove($id)
+    {
+        $sql = "UPDATE " . self::tableName() . " SET status = :status WHERE id = :id";
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED, ':id' => $id])->execute();
     }
 
     /**

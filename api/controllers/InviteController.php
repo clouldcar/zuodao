@@ -5,31 +5,14 @@ use Yii;
 
 class Invite extends BaseController
 {
-	public function behaviors()
+	public function init()
     {
-        $behaviors =  parent::behaviors();
-        return ArrayHelper::merge([
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ], $behaviors);
+        parent::init();
     }
 
 	public function actionTeam()
 	{
-		$teamId = Yii::$app->request->get('id');
+		$data = Yii::$app->request->get();
 		$uid = Yii::$app->identity->id;
 	}
 }

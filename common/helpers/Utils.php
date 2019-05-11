@@ -79,4 +79,12 @@ class Utils {
             ]
         ];
     }
+
+    public static function avatar($uid)
+    {
+        $identicon = new \Identicon\Identicon();
+        $imageData = $identicon->getImageData($uid);
+
+        
+    }
 }
