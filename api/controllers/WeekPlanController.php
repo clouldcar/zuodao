@@ -90,9 +90,10 @@ class WeekPlanController extends BaseController
         $info = WeekPlan::info($data['week_plan_id']);
         if(!$info || $info['uid'] != $uid)
         {
-            return Utils::returnMsg(1, '非法操作');
+            return Utils::returnMsg(1, '信息不存在');
         }
 
+        /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
         $result['user'] = [
             'real_name' => $user_info->real_name,
@@ -106,8 +107,9 @@ class WeekPlanController extends BaseController
         $detail = WeekPlanDetail::getList($data['week_plan_id']);
 
         $result['detail'] = $detail;
+        */
 
-        return Utils::returnMsg(0, null, $result);
+        return Utils::returnMsg(0, null, $info);
     }
 
     public function actionEdit()

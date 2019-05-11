@@ -61,7 +61,7 @@ class Article extends \yii\db\ActiveRecord {
     */
     public static function getListByTeamId($team_id, $cid, $page = 1, $page_size = 20) {
         $query = self::find()
-            ->select('id,uid,title,cid,created_at')
+            ->select('id,uid, cid, title, cover_image, content, created_at')
             ->from(self::tableName() . ' as a')
             ->leftJoin(TeamArticle::tableName() . ' as ta', 'ta.article_id = a.id')
             ->where(['ta.team_id' => $team_id, 'a.cid' => $cid, 'a.status' => '0'])
@@ -77,6 +77,7 @@ class Article extends \yii\db\ActiveRecord {
             ->asArray()
             ->all();
         foreach ($list as &$item) {
+            $item['content'] = substr($item['content'], 0, 60);
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 

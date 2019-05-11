@@ -101,11 +101,15 @@ class WeekPlan extends \yii\db\ActiveRecord
 
     public static function info($week_plan_id)
     {
-        return self::find()->where(['id' => $week_plan_id])->one()->toArray();
+        $info = self::find()->where(['id' => $week_plan_id])->asArray()->one();
+
+        $info['detail'] = json_decode($info['detail'], true);
+
+        return $info;
     }
 
     public function infoByPlanId($plan_id)
     {
-        return self::find()->where(['plan_id' => $plan_id])->one()->toArray();
+        return self::find()->where(['plan_id' => $plan_id])->asArray()->one();
     }
 }
