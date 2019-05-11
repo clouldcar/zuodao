@@ -109,23 +109,14 @@ class WeekPlanController extends BaseController
             return Utils::returnMsg(1, '信息不存在');
         }
 
+        //判断是否团队成员
+        if(!TeamUser::hasUser($info['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '非法操作');
+        }
+
         $info['user'] = UserInfo::getInfoByUID($info['uid'], 1);
-
-        /*
-        $user_info = UserInfo::getInfoByUID($info['uid']);
-        $result['user'] = [
-            'real_name' => $user_info->real_name,
-            'gender' => ($user_info->gender == 'F') ? '女' : '男',
-            'birthday' => date('Y年m月d日', strtotime($user_info->birthday)),
-            'phone' => $user_info->phone,
-            'avatar' => $user_info->avatar,
-            'address' => $user_info->address,
-        ];
-
-        $detail = WeekPlanDetail::getList($data['week_plan_id']);
-
-        $result['detail'] = $detail;
-        */
+        $info['owner'] = ($info['uid'] == $uid) ? true : false;
 
         return Utils::returnMsg(0, null, $info);
     }
