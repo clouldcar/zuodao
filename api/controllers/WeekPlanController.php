@@ -109,6 +109,8 @@ class WeekPlanController extends BaseController
             return Utils::returnMsg(1, '信息不存在');
         }
 
+        $info['user'] = UserInfo::getInfoByUID($info['uid'], 1);
+
         /*
         $user_info = UserInfo::getInfoByUID($info['uid']);
         $result['user'] = [
