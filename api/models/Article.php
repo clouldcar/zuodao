@@ -110,7 +110,8 @@ class Article extends \yii\db\ActiveRecord {
             ->asArray()
             ->all();
         foreach ($list as &$item) {
-            $item['desc'] = substr(strip_tags($item['content']), 0, 60);
+            // $item['desc'] = substr(strip_tags($item['content']), 0, 60);
+            $item['desc'] = 'afdsafdsafdsafas';
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
