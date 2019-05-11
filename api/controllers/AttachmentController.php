@@ -17,10 +17,10 @@ class AttachmentController extends BaseController
         $type = Yii::$app->request->get('type');
 
 
-        if(!in_array($type, $this->type))
-        {
-            return Utils::returnMsg(1, '类型错误');
-        }
+        // if(!in_array($type, $this->type))
+        // {
+        //     return Utils::returnMsg(1, '类型错误');
+        // }
 
         $model = new UploadValidate();
         $tmp = UploadedFile::getInstanceByName('file');
