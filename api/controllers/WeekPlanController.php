@@ -39,14 +39,6 @@ class WeekPlanController extends BaseController
 
         $list = WeekPlan::getList($team_id);
 
-        if($list)
-        {
-            foreach($list as &$item)
-            {
-                $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
-            }
-        }
-
 
         return Utils::returnMsg(0, null, $list);
     }
@@ -74,6 +66,7 @@ class WeekPlanController extends BaseController
             'id' => Utils::createIncrementId(Utils::ID_TYPE_WEEK_PLAN),
             'uid' => $uid,
             'plan_id' => $plan_id,
+            'team_id' => $plan_info['team_id'],
             'start_time' => $data['start_time'][0],
             'end_time' => $data['start_time'][1],
             'detail' => json_encode($data['data'])

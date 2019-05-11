@@ -42,8 +42,8 @@ class WeekPlan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'uid', 'plan_id' 'start_time', 'end_time', 'detail'], 'required'],
-            [['id', 'uid', 'plan_id', 'target', 'result', 'check_uid'], 'integer'],
+            [['id', 'uid', 'plan_id', 'team_id', 'start_time', 'end_time', 'detail'], 'required'],
+            [['id', 'uid', 'plan_id', 'team_id', 'target', 'result', 'check_uid'], 'integer'],
             [['start_time', 'end_time', 'check_time', 'ctime'], 'safe'],
             [['name', 'note1', 'node2'], 'string', 'max' => 255],
             [['unit'], 'string', 'max' => 100],
@@ -88,7 +88,15 @@ class WeekPlan extends \yii\db\ActiveRecord
 
     public static function getList($team_id)
     {
-        return self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC')->asArray()->all();
+        $list = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC')->asArray()->all();
+
+        foreach($list as &$item)
+        {
+            $item['detail'] = json_decode($item['detail'], true);
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+        }
+
+        return $list;
     }
 
     public static function info($week_plan_id)
