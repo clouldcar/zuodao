@@ -69,7 +69,7 @@ class WeekPlanController extends BaseController
             'team_id' => $plan_info['team_id'],
             'start_time' => $data['start_time'][0],
             'end_time' => $data['start_time'][1],
-            'detail' => json_encode($data['data'])
+            'detail' => $data['data']
         ];
         if(!WeekPlan::add($params))
         {

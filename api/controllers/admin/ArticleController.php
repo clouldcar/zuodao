@@ -41,9 +41,18 @@ class ArticleController extends BaseController {
 		$page_size = 20;
 
 		if (!isset($data['cid'])) {
-			return Utils::returnMsg(1, '分类ID不能为空！');
+			$list = Article::getList($page, $page_size);
+			if ($list['list']) {
+				foreach ($list['list'] as &$item) {
+					$item['category'] = ArticleCategory::getInfoById($item['cid']);
+				}
+			}
 		}
-		$list = Article::getListByCId($data['cid'], $page, $page_size);
+		else
+		{
+			$list = Article::getListByCId($data['cid'], $page, $page_size);
+		}
+		
 
 		return Utils::returnMsg(0, null, $list);
 	}
