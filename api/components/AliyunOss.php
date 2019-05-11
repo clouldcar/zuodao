@@ -20,20 +20,20 @@ class AliyunOss extends Component
 
     /**
      * 使用阿里云oss上传文件
-     * @param $file   本地文件信息
+     * @param $filename   本地文件信息
      * @param $type   文件分类
      * @param $filepath 文件在本地的绝对路径
      * @return string     上传文件地址
      */
-    public function upload($file, $type)
+    public function upload($filename, $type)
     {
         $res = '';
         //OSS文件名
-        $object = $this->getFileName($file->name, $type);
+        $object = $this->getFileName($filename, $type);
         $bucket = Yii::$app->params['oss']['bucket'];
         //调用uploadFile方法把服务器文件上传到阿里云oss
         try{
-            if (self::$oss->uploadFile($bucket, $object, $file->tempName)) {
+            if (self::$oss->uploadFile($bucket, $object, $filename)) {
                 $res = Yii::$app->params['oss']['url'] . $object;
             }
         } catch(OssException $e) {

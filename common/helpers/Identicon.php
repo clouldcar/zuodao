@@ -1,6 +1,8 @@
 <?php
 namespace common\helpers;
 
+use Yii;
+
 class Identicon
 {
     private $instance = null;
@@ -17,14 +19,19 @@ class Identicon
     
     public function createImg($filename, $size = 64, $hexaColor = null)
     {
-        $data = $this->getImageUrl($filename, $size, $hexaColor);
-        $url = $this->getObj('TfsClientProxy')->uploadFileContent($data, $filename);
+    	$tmp_file = '/tmp/' . $filename;
+        $imgData = $this->getImageData($filename, $size, $hexaColor);
+        file_put_contents($tmp_file, $imgData);
+        //上传到阿里云OSS
+        $url = Yii::$app->AliyunOss->upload($tmp_file, "avatar");
+        //删除临时文件
+        unlink($tmp_file);
         return $url;
     }
     
-    public function getImageUrl($string, $size = 64, $hexaColor = null)
+    public function getImageData($string, $size = 64, $hexaColor = null)
     {
-        return $this->instance->getImageDataUri($string, $size, $hexaColor);
+        return $this->instance->getImageData($string, $size, $hexaColor);
     }
 
 

@@ -55,19 +55,14 @@ class WeekPlanController extends BaseController
     {
         parent::checkPost();
         $data = Yii::$app->request->post();
-        $plan_detail_id = $data['plan_detail_id'];
+        $plan_id = $data['plan_id'];
         $uid = Yii::$app->user->id;
 
-
-        $detail = PlanDetail::info($plan_detail_id);
-
-        if(!$detail)
+        if(!$data['start_time'] || !$data['plan_id'] || !$data['data'])
         {
-            return Utils::returnMsg(1, '信息不存在');
+            return Utils::returnMsg(1, '参数有误');
         }
 
-
-        $plan_id = $detail['plan_id'];
         //检查是否自己的成就宣言
         $plan_info = Plan::info($plan_id);
         if(!$plan_info || $plan_info['uid'] != $uid)
@@ -75,37 +70,19 @@ class WeekPlanController extends BaseController
             return Utils::returnMsg(1, '非法操作');
         }
 
-        //如果已存在，则不走添加逻辑
-        if($week_plan_info = WeekPlan::infoByPlanId($plan_id))
-        {
-            $week_plan_id = $week_plan_info['id'];
-        }
-        else
-        {
-            $params = [
-                'id' => Utils::createIncrementId(Utils::ID_TYPE_WEEK_PLAN),
-                'uid' => $uid,
-                'team_id' => $data['team_id'],
-                'plan_id' => $plan_id,
-                'plan_detail_id' => $plan_detail_id,
-                'team_id' => $data['team_id'],
-                'start_date' => $data['start_date'],
-                'end_date' => $data['end_date']
-            ];
-            if(!WeekPlan::add($params))
-            {
-                return Utils::returnMsg(1, '添加失败');
-            }
-            $week_plan_id = $params['id'];
-        }
-
-        $detail_params = [
-            'week_plan_id' => $week_plan_id,
-            'target' => $data['target'],
-            'unit' => $detail['unit']
+        $params = [
+            'id' => Utils::createIncrementId(Utils::ID_TYPE_WEEK_PLAN),
+            'uid' => $uid,
+            'plan_id' => $plan_id,
+            'start_time' => $data['start_time'][0],
+            'end_time' => $data['start_time'][1],
+            'end_date' => $data['end_date'],
+            'detail' = json_encode($data['data']),
         ];
-
-        WeekPlanDetail::add($detail_params);
+        if(!WeekPlan::add($params))
+        {
+            return Utils::returnMsg(1, '添加失败');
+        }
 
         return Utils::returnMsg(0, '添加成功');
     }

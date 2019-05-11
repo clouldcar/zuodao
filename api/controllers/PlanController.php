@@ -35,6 +35,9 @@ class PlanController extends BaseController
     {
         $uid = Yii::$app->user->id;
 
+        // $identicon = new \common\helpers\Identicon();
+        // print_r($identicon->createUserImg($uid));exit;
+
         $user_info = UserInfo::getInfoByUID($uid);
         $result['user'] = [
             'real_name' => $user_info->real_name,

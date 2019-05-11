@@ -42,9 +42,9 @@ class WeekPlan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'uid', 'plan_id', 'plan_detail_id', 'team_id'], 'required'],
-            [['id', 'uid', 'plan_id', 'plan_detail_id', 'team_id', 'target', 'result', 'check_uid'], 'integer'],
-            [['start_date', 'end_date', 'check_time', 'ctime'], 'safe'],
+            [['id', 'uid', 'plan_id' 'start_time', 'end_time', 'detail'], 'required'],
+            [['id', 'uid', 'plan_id', 'target', 'result', 'check_uid'], 'integer'],
+            [['start_time', 'end_time', 'check_time', 'ctime'], 'safe'],
             [['name', 'note1', 'node2'], 'string', 'max' => 255],
             [['unit'], 'string', 'max' => 100],
             [['completion_ratio', 'status'], 'string', 'max' => 4],
@@ -60,13 +60,11 @@ class WeekPlan extends \yii\db\ActiveRecord
             'id' => 'ID',
             'uid' => 'Uid',
             'plan_id' => 'Plan ID',
-            'plan_detail_id' => 'Plan Detail ID',
-            'team_id' => 'Team ID',
+            'start_time' => 'Start Date',
+            'end_time' => 'End Date',
             'name' => 'Name',
             'target' => 'Target',
             'unit' => 'Unit',
-            'start_date' => 'Start Date',
-            'end_date' => 'End Date',
             'result' => 'Result',
             'completion_ratio' => '总完成度',
             'note1' => 'Note1',
