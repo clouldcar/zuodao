@@ -110,7 +110,7 @@ class ArticleController extends BaseController {
 		$info = Article::info($id);
 
 		//鉴权
-		if (!$info || $info->platform_id != $this->platform_id) {
+		if (!$info) {
 			return Utils::returnMsg(1, '文章不存在');
 		}
 

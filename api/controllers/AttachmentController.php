@@ -14,22 +14,22 @@ class AttachmentController extends BaseController
     {
         parent::checkPost();
 
-        $data = Yii::$app->request->post();
+        $type = Yii::$app->request->get('type');
 
 
-        // if(!in_array($data['type'], $this->type))
-        // {
-        //     return Utils::returnMsg(1, '类型qaj误');
-        // }
+        if(!in_array($type, $this->type))
+        {
+            return Utils::returnMsg(1, '类型错误');
+        }
 
         $model = new UploadValidate();
-        $tmp = UploadedFile::getInstanceByName('img');
+        $tmp = UploadedFile::getInstanceByName('file');
         $model->file = $tmp;
         if($model->validate()) {
-            $url = Yii::$app->AliyunOss->upload($tmp->name, $tmp->tempName, $data['type']);
+            $url = Yii::$app->AliyunOss->upload($tmp->name, $tmp->tempName, $type);
             if($url)
             {
-                return Utils::returnMsg(0, null, $url);
+                return Utils::returnMsg(0, null, ['image_url' => $url . '/0', 'size' => []]);
             }
             else
             {
