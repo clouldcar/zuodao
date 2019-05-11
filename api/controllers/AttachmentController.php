@@ -9,7 +9,8 @@ use common\models\UploadValidate;
 /*附件*/
 class AttachmentController extends BaseController
 {
-    private $type = ['avatar', 'article'];
+    const TYPE = ['avatar', 'article'];
+
     public static function actionUpload()
     {
         parent::checkPost();
@@ -17,10 +18,10 @@ class AttachmentController extends BaseController
         $type = Yii::$app->request->get('type');
 
 
-        // if(!in_array($type, $this->type))
-        // {
-        //     return Utils::returnMsg(1, '类型错误');
-        // }
+        if(!in_array($type, self::TYPE))
+        {
+            return Utils::returnMsg(1, '类型错误');
+        }
 
         $model = new UploadValidate();
         $tmp = UploadedFile::getInstanceByName('file');

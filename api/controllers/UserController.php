@@ -263,4 +263,5 @@ class UserController extends BaseController
 
         return Utils::returnMsg(0, null, $list);
     }
+
 }

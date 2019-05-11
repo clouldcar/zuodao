@@ -23,22 +23,27 @@ class WeekPlanController extends BaseController
     {
         parent::checkGet();
         $data = Yii::$app->request->get();
-        $team_id = $data['team_id'];
         $uid = Yii::$app->user->id;
 
-        if(!$data['team_id'])
+        if(isset($data['team_id']) && !$data['team_id'])
         {
             return Utils::returnMsg(1, '缺少必要参数');
         }
 
-        //判断是否团队成员
-        if(!TeamUser::hasUser($data['team_id'], $uid))
+        if($data['team_id'])
         {
-            return Utils::returnMsg(1, '非法操作');
+            //判断是否团队成员
+            if(!TeamUser::hasUser($data['team_id'], $uid))
+            {
+                return Utils::returnMsg(1, '非法操作');
+            }
+
+            $list = WeekPlan::getList($data['team_id']);
         }
-
-        $list = WeekPlan::getList($team_id);
-
+        else
+        {
+            $list = WeekPlan::getListByUID($uid);
+        }
 
         return Utils::returnMsg(0, null, $list);
     }

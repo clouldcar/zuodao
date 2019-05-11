@@ -99,6 +99,19 @@ class WeekPlan extends \yii\db\ActiveRecord
         return $list;
     }
 
+    public static function getListByUID($uid)
+    {
+        $list = self::find()->where(['uid' => $uid, 'status' => 0])->orderBy('ctime ASC')->asArray()->all();
+
+        foreach($list as &$item)
+        {
+            $item['detail'] = json_decode($item['detail'], true);
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+        }
+
+        return $list;
+    }
+
     public static function info($week_plan_id)
     {
         $info = self::find()->where(['id' => $week_plan_id])->asArray()->one();
