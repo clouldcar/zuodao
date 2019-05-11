@@ -72,7 +72,7 @@ class Utils {
     {
         return [
             'pagination' => [
-                'total' => $pages->totalCount,
+                'total' => (int)$pages->totalCount,
                 'page_size' => $pages->getPageSize(),
                 'page_count' => $pages->getPageCount(),
                 'current_page' => $pages->getPage()+1
