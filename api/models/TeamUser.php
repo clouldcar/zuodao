@@ -10,6 +10,16 @@ use yii;
 
 class TeamUser extends  \yii\db\ActiveRecord
 {
+     //身份：学员
+    const LEVEL_STUDENT = 0;
+    //教练
+    const LEVEL_COACH  = 1;
+
+    //状态：正常
+    const STATUS_NORMAL = 0;
+    //删除
+    const STATUS_DELETE = 1;
+    //未审核
 
     public static function tableName()
     {

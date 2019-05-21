@@ -26,19 +26,6 @@ use api\models\Plan;
  */
 class TeamController extends BaseController
 {
-    //身份：学员
-    const LEVEL_STUDENT = 0;
-    //教练
-    const LEVEL_COACH  = 1;
-
-    //状态：正常
-    const STATUS_NORMAL = 0;
-    //删除
-    const STATUS_DELETE = 1;
-    //未审核
-    const STATUS_UNAUDITED = 2;
-
-
     public $session;
     public $user;
     public $platform_id;
@@ -96,8 +83,8 @@ class TeamController extends BaseController
         $member = array(
             'team_id' => $data['id'],
             'uid' => $data['uid'],
-            'permissions' => self::LEVEL_STUDENT,
-            'status' => self::STATUS_NORMAL
+            'permissions' => TeamUser::LEVEL_STUDENT,
+            'status' => TeamUser::STATUS_NORMAL
         );
 
         TeamUser::addMember($member);
