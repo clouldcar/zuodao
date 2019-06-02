@@ -44,7 +44,7 @@ class Team extends  \yii\db\ActiveRecord
     //团队基础信息
     public function teamInfo($teamId)
     {
-        $select = 'id,uid,name,platform_name,ideal,logo,visions_map,create_time';
+        $select = 'id,uid,name,platform_name,ideal,logo,visions_map,invite_code,invite_time,create_time';
         $result = $this->find()->select($select)->where(['id' => $teamId, 'status' => 0])->one()->toArray();
         if($result)
         {

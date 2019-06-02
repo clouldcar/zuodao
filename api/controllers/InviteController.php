@@ -6,7 +6,7 @@ use common\helpers\Utils;
 use api\models\Team;
 use api\models\TeamUser;
 
-class Invite extends BaseController
+class InviteController extends BaseController
 {
     public function init()
     {
@@ -18,8 +18,8 @@ class Invite extends BaseController
     public function actionCreateTeamUrl()
     {
         $data = Yii::$app->request->get();
-        $uid = Yii::$app->identity->id;
-        if(!isset($data['team_id'])
+        $uid = Yii::$app->user->id;
+        if(!isset($data['team_id']))
         {
             Utils::returnMsg(1, '参数有误');
         }
@@ -34,14 +34,15 @@ class Invite extends BaseController
         }
 
         //判断是否团队成员
-        if(!TeamUser::hasUser($data['id'], $data['uid']))
+        if(!TeamUser::hasUser($data['team_id'], $uid))
         {
             return Utils::returnMsg(1, '非法操作');
         }
 
         //3天有效期
         $invite_code = $teamInfo['invite_code'];
-        if(empty($teamInfo['invite_time']) || now() - strtotime($teamInfo['invite_time']) > 86400*3)
+        $now = time();
+        if(empty($teamInfo['invite_time']) || $now - strtotime($teamInfo['invite_time']) > 86400*3)
         {
             $invite_code = md5(rand(1, 1000000));
             $params = [
@@ -61,7 +62,7 @@ class Invite extends BaseController
     {
         $data = Yii::$app->request->get();
         $uid = Yii::$app->identity->id;
-        if(!isset($data['team_id'] || !isset($data['code']))
+        if(!isset($data['team_id']) || !isset($data['code']))
         {
             Utils::returnMsg(1, '参数有误');
         }
