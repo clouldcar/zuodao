@@ -56,6 +56,7 @@ class PlanController extends BaseController
     public function actionIndex()
     {
         parent::checkGet();
+        $data = Yii::$app->request->get();
         $page = isset($data['page']) ? $data['page'] : 1;
         $page_size = 20;
 

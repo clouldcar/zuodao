@@ -89,9 +89,6 @@ class UserController extends BaseController
         $model->setAttributes($data);
 
         if ($model->validate() && $model->login()) {
-
-            //设置session
-            // $model->setSession($model->_user->id);
             return Utils::returnMsg(0, "登录成功", ['status' => empty(Yii::$app->user->identity->updated_at)]);
         } else {
             return Utils::returnMsg(1, "登录失败");
