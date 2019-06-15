@@ -55,13 +55,15 @@ class ArticleController extends BaseController {
     public function actionCreate() {
         parent::checkPost();
         $data = Yii::$app->request->post();
+        $source = $data['source'];
+        unset($data['source']);
         $uid = Yii::$app->user->id;
-        if(empty($data['source']) || !in_array($data['source'], $this->source_data))
+        if(empty($source || !in_array($source, $this->source_data))
         {
             return Utils::returnMsg(1, '参数不正确');
         }
 
-        switch ($data['source']) {
+        switch ($source) {
             default:
             case $this->source_data[0]:
                 //team验证数据是否有缺失
@@ -102,7 +104,7 @@ class ArticleController extends BaseController {
         }
 
 
-        if($data['source'] == $this->source_data[0])
+        if($source == $this->source_data[0])
         {
             $params = [
                 'team_id' => $team_id,
