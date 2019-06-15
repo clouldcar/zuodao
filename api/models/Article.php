@@ -12,10 +12,17 @@ use common\helpers\Utils;
 
 class Article extends \yii\db\ActiveRecord {
     const STATUS_ACTIVE = 0;
+
+    //推荐
+    const RECOMMENT_1 = 1;
+    const RECOMMENT_2 = 2;
+    const RECOMMENT_3 = 3;
+    //老P首页
+    const RECOMMENT_4 = 4;
     /*
-             * @name 增加文章
-             * @param
-             * @return mixed
+     * @name 增加文章
+     * @param
+     * @return mixed
     */
     public static function add($param) {
         $db = Yii::$app->db;
@@ -29,10 +36,10 @@ class Article extends \yii\db\ActiveRecord {
     }
 
     /*
-             * @name 文章列表
-             * @param platform_id
-             * @return array()
-             * 是否需要分类显示?
+     * @name 文章列表
+     * @param platform_id
+     * @return array()
+     * 是否需要分类显示?
     */
     public static function getArticles($platform_id, $page = 1, $page_size = 20) {
         $query = self::find()
@@ -55,9 +62,9 @@ class Article extends \yii\db\ActiveRecord {
     }
 
     /*
-             * @name 文章列表
-             * @param team_id
-             * @return array()
+     * @name 文章列表
+     * @param team_id
+     * @return array()
     */
     public static function getListByTeamId($team_id, $cid, $page = 1, $page_size = 20) {
         $query = self::find()
@@ -88,9 +95,9 @@ class Article extends \yii\db\ActiveRecord {
     }
 
     /*
-             * @name 文章列表
-             * @param cid
-             * @return array()
+     * @name 文章列表
+     * @param cid
+     * @return array()
     */
     public static function getListByCId($cid, $page = 1, $page_size = 20) {
         $query = self::find()
@@ -110,8 +117,8 @@ class Article extends \yii\db\ActiveRecord {
             ->asArray()
             ->all();
         foreach ($list as &$item) {
-            // $item['desc'] = substr(strip_tags($item['content']), 0, 60);
-            $item['desc'] = '移动小号手机卡0月租卡无线流量卡电话卡视频卡号码卡4g卡上网卡,中国移动4G无线上网卡24G包年卡路由器随身mifi纯流量卡全国电信';
+            $item['desc'] = substr(strip_tags($item['content']), 0, 60);
+            // $item['desc'] = '移动小号手机卡0月租卡无线流量卡电话卡视频卡号码卡4g卡上网卡,中国移动4G无线上网卡24G包年卡路由器随身mifi纯流量卡全国电信';
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
@@ -119,6 +126,29 @@ class Article extends \yii\db\ActiveRecord {
             ['list' => $list],
             Utils::pagination($pages)
         );
+    }
+    /*
+     * @name 文章列表
+     * @param recomment
+     * @return array()
+    */
+    public static function getListByRecomment($recomment, $limit) {
+        $list = self::find()
+            ->select('id,uid,title,cid,cover_image, content, created_at')
+            ->from(self::tableName() . ' as a')
+            ->leftJoin(TeamArticle::tableName() . ' as ta', 'ta.article_id = a.id')
+            ->where(['a.recomment' => $recomment, 'a.status' => '0'])
+            ->orderBy('a.id desc')
+            ->limit($limit)->asArray()
+            ->all();
+
+        foreach ($list as &$item) {
+            $item['desc'] = substr(strip_tags($item['content']), 0, 260);
+            // $item['desc'] = '移动小号手机卡0月租卡无线流量卡电话卡视频卡号码卡4g卡上网卡,中国移动4G无线上网卡24G包年卡路由器随身mifi纯流量卡全国电信';
+            $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+        }
+
+        return $list;
     }
 
     /*
