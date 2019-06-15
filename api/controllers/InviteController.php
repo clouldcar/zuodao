@@ -61,10 +61,16 @@ class InviteController extends BaseController
     public function actionInTeam()
     {
         $data = Yii::$app->request->get();
-        $uid = Yii::$app->identity->id;
+        $uid = Yii::$app->user->id;
         if(!isset($data['team_id']) || !isset($data['code']))
         {
             Utils::returnMsg(1, '参数有误');
+        }
+
+        //判断是否团队成员
+        if(TeamUser::hasUser($data['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '您已经是本团队成员');
         }
 
         //团队表
@@ -80,6 +86,8 @@ class InviteController extends BaseController
         {
             Utils::returnMsg(1, '邀请码不正确');
         }
+
+
 
 
         $member = array(
