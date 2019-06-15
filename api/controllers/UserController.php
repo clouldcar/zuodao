@@ -147,8 +147,9 @@ class UserController extends BaseController
 
         //修改用户
         $user_model = new User();
-        $user_model->load(['uid' => $uid]);
+        $user_model->load(['id' => $uid]);
         $user_model->setAttributes(['updated_at' => $data['ctime']]);
+        // $user_model->isNewRecord = false;
         $user_model->save();
 
         return Utils::returnMsg(0, "success");
