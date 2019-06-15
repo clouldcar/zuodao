@@ -1,6 +1,8 @@
 <?php
 namespace common\helpers;
 
+use Yii;
+
 class Utils {
     //用户ID
     const ID_TYPE_USER = 31;
@@ -83,8 +85,22 @@ class Utils {
     public static function avatar($uid)
     {
         $identicon = new \Identicon\Identicon();
-        $imageData = $identicon->getImageData($uid);
+        $imageData = $identicon->getImageDataUri($uid);
 
-        
+        $new_file = '';
+
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $imageData, $result))
+        {
+            $type = $result[2];
+            $file_name = time().".{$type}";
+            $file_path = Yii::getAlias("@runtime/tmp/").$file_name;
+
+            file_put_contents($file_path, base64_decode(str_replace($result[1], '', $imageData)));
+
+            $url = Yii::$app->AliyunOss->upload($file_name, $file_path, 'avatar');
+
+            unlink($file_path);
+            return $url;
+        }
     }
 }

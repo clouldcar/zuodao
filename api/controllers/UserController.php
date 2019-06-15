@@ -134,6 +134,11 @@ class UserController extends BaseController
             $model = new UserInfo();
         }
 
+        //默认头像
+        if(!$model->avatar) {
+            $data['avatar'] = Utils::avatar($uid);
+        }
+
         $model->setAttributes($data);
 
         if(!$model->validate())
@@ -146,10 +151,8 @@ class UserController extends BaseController
         }
 
         //修改用户
-        $user_model = new User();
-        $user_model->load(['id' => $uid]);
+        $user_model = User::findIdentity($uid);
         $user_model->setAttributes(['updated_at' => $data['ctime']]);
-        // $user_model->isNewRecord = false;
         $user_model->save();
 
         return Utils::returnMsg(0, "success");
