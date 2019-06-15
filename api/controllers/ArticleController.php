@@ -58,7 +58,7 @@ class ArticleController extends BaseController {
         $source = $data['source'];
         unset($data['source']);
         $uid = Yii::$app->user->id;
-        if(empty($source || !in_array($source, $this->source_data))
+        if(empty($source) || !in_array($source, $this->source_data))
         {
             return Utils::returnMsg(1, '参数不正确');
         }
