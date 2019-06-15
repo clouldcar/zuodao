@@ -101,6 +101,7 @@ class ArticleComments extends \yii\db\ActiveRecord
             ->all();
 
         foreach ($list as &$item) {
+            $item['owner'] Yii::$app->user->id;
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 

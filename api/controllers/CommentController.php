@@ -7,7 +7,7 @@ use common\helpers\Utils;
 use api\models\ArticleComments;
 
 class CommentController extends BaseController
-{	
+{
 
     /**
      * 评论列表
@@ -54,11 +54,8 @@ class CommentController extends BaseController
         {
             return Utils::returnMsg(1, '评论失败');
         }
-
         
-
         return Utils::returnMsg(0, '评论成功');
-
     }
 
 
