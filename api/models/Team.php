@@ -21,16 +21,21 @@ class Team extends  \yii\db\ActiveRecord
      */
     public function teamList($uid){
 
+        $team_ids = [];
         $query = $this->find()
                 ->select('team_id')
                 ->from(TeamUser::tableName())
                 ->where(['uid' => $uid, 'status' => 0])
                 ->asArray()
                 ->all();
+        foreach($query as $item)
+        {
+            $team_ids[] = $item['team_id'];
+        }
 
         //自己创建的
         $select = 'id, uid, name, platform_name, logo, create_time';
-        $where = 'id in(' . implode(',', $query) . ') and status = 0';
+        $where = 'id in(' . implode(',', $team_ids) . ') and status = 0';
         $teamList =  $this->find()
             ->select($select)
             ->from(self::tableName() . ' as t')
