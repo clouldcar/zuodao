@@ -68,7 +68,7 @@ class UserController extends BaseController
             $model->setAttributes($data);
             $model->setPassword($data['password']);
             $model->id = Utils::createIncrementId(Utils::ID_TYPE_USER);
-            print_r($model);exit;
+            
             if ($model->save()) {
                 return Utils::returnMsg(0, "success");
             } else {
@@ -222,6 +222,18 @@ class UserController extends BaseController
         //随机验证码
         $code = mt_rand(100000,999999);
         str_shuffle($code);
+
+        //存储验证码
+        $model = new CheckSms();
+        $params = [
+            'phone' => $data['phone'],
+            'code' => $data['code'],
+            'ctime' => date('Y-m-d H:i:s')
+        ];
+        $model->setAttributes($data);
+        if (!$model->save()) {
+            return Utils::returnMsg(1, "验证码生成失败，请检查参数后重试");
+        }
 
 
         AlibabaCloud::accessKeyClient(
