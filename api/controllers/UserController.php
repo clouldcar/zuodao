@@ -227,10 +227,10 @@ class UserController extends BaseController
         $model = new CheckSms();
         $params = [
             'phone' => $data['phone'],
-            'code' => $data['code'],
+            'code' => $code,
             'ctime' => date('Y-m-d H:i:s')
         ];
-        $model->setAttributes($data);
+        $model->setAttributes($params);
         if (!$model->save()) {
             return Utils::returnMsg(1, "验证码生成失败，请检查参数后重试");
         }
