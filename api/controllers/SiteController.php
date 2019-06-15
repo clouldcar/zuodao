@@ -91,6 +91,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         $model->load(Yii::$app->request->post());
         if ($model->login()) {
+            echo '<pre>';print_r($model);exit;
             return $this->goHome();
         } else {
             $model->password = '';

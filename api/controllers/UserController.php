@@ -92,8 +92,7 @@ class UserController extends BaseController
 
             //设置session
             // $model->setSession($model->_user->id);
-
-            return Utils::returnMsg(0, "登录成功");
+            return Utils::returnMsg(0, "登录成功", empty($model->updated_at));
         } else {
             return Utils::returnMsg(1, "登录失败");
         }
