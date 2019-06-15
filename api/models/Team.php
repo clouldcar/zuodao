@@ -21,18 +21,24 @@ class Team extends  \yii\db\ActiveRecord
      */
     public function teamList($uid){
 
+        $query = $this->find()
+                ->select('team_id')
+                ->from(self::tableName() . ' as t')
+                ->where(['uid' => $uid, 'status' => 0])
+                ->asArray()
+                ->all();
+
         //自己创建的
-        $select = 'u.uid,t.id,t.uid as manager_uid, t.name,t.platform_name,t.logo,t.create_time';
-        $where = ['u.uid' => $uid, 't.status' => 0];
+        $select = 'id, uid, name, platform_name, logo, create_time';
+        $where = ['id in(' . implode(',', $query) . ')', 'status' => 0];
         $teamList =  $this->find()
             ->select($select)
             ->from(self::tableName() . ' as t')
-            ->leftJoin(UserInfo::tableName() . ' as u','t.id = u.team_id')
             ->where($where)
             ->asArray()
             ->all();
 
-        if($teamList) 
+        if($teamList)
         {
             foreach($teamList as &$team)
             {
