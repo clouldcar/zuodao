@@ -119,7 +119,8 @@ class UserController extends BaseController
         }
         unset($data['code']);
 
-        $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['uid'] = $uid;
+        $data['ctime'] = date('Y-m-d H:i:s');
 
         $model = UserInfo::getInfoByPhone($data['phone']);
         //如果user_info中有记录，则替换uid
@@ -143,6 +144,12 @@ class UserController extends BaseController
         if (!$model->save()) {
             return Utils::returnMsg(1, "fail");
         }
+
+        //修改用户
+        $user_model = new User();
+        $user_model->load(['uid' => $uid]);
+        $user_model->setAttributes(['updated_at' => $data['ctime']]);
+        $user_model->save();
 
         return Utils::returnMsg(0, "success");
     }
