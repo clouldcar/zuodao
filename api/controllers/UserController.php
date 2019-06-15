@@ -92,7 +92,7 @@ class UserController extends BaseController
 
             //设置session
             // $model->setSession($model->_user->id);
-            return Utils::returnMsg(0, "登录成功", empty($model->attributes['updated_at']));
+            return Utils::returnMsg(0, "登录成功", empty(Yii::$app->user->identity->updated_at));
         } else {
             return Utils::returnMsg(1, "登录失败");
         }

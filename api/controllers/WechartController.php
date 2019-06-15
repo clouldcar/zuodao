@@ -63,7 +63,7 @@ class WechartController extends BaseController
             $result = Yii::$app->user->login($user, 3600 * 24* 30);
             if($result)
             {
-                if(empty($user->updated_at))
+                if(empty(Yii::$app->user->identity->updated_at))
                 {
                     return $this->redirect(Yii::$app->params['baseUrl'] . '#/member/supplement');
                 }
