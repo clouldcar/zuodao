@@ -72,7 +72,7 @@ class PlanController extends BaseController
             //判断是否团队成员
             if(!TeamUser::hasUser($data['team_id'], $uid))
             {
-                return Utils::returnMsg(1, '非法操作');
+                return Utils::returnMsg(1, '非法操作，您不是此团队成员');
             }
 
             $list = Plan::listByTeamId($data['team_id'], $page);
