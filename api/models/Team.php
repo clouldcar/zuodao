@@ -23,7 +23,7 @@ class Team extends  \yii\db\ActiveRecord
 
         $query = $this->find()
                 ->select('team_id')
-                ->from(self::tableName() . ' as t')
+                ->from(TeamUser::tableName())
                 ->where(['uid' => $uid, 'status' => 0])
                 ->asArray()
                 ->all();
