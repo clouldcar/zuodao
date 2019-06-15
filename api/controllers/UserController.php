@@ -83,7 +83,7 @@ class UserController extends BaseController
         $data = Yii::$app->request->post();
 
         if ($model->isLogin($data['username'])) {
-            return Utils::returnMsg(1, "您已经登录");
+            return Utils::returnMsg(101, "您已经登录");
         }
 
         $model->setAttributes($data);
