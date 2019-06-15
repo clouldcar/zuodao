@@ -28,9 +28,9 @@ class CommentController extends BaseController
 
         $list = ArticleComments::getList($article_id, $page, $page_size);
 
-        foreach($list as &$item)
+        foreach($list['list'] as &$item)
         {
-            $item['owner'] Yii::$app->user->id;
+            $item['owner'] = Yii::$app->user->id;
         }
 
         return Utils::returnMsg(0, null, $list);
