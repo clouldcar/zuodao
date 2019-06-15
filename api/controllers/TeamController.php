@@ -12,6 +12,7 @@ use yii\filters\Cors;
 use api\models\Team;
 use api\models\TeamUser;
 use api\models\Plan;
+use api\models\ArticleCategory;
 
 
 /**
@@ -35,6 +36,21 @@ class TeamController extends BaseController
         parent::init();
 
         parent::checkLogin();
+    }
+
+    public function actionGlobal()
+    {
+        parent::checkGet();
+        $data = Yii::$app->request->get();
+        $uid = Yii::$app->user->id;
+        $type = ArticleCategory::TYPE_ID_TEAM;
+
+        $category = ArticleCategory::getCategoriesByType($type, 1, 10);
+        $result = [
+            'categories' => $category['list']
+        ];
+
+        return Utils::returnMsg(0, null, $result);
     }
 
 
