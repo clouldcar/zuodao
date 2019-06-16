@@ -173,7 +173,7 @@ class Article extends \yii\db\ActiveRecord {
     public static function getListByType($type, $page = 1, $page_size = 20)
     {
         $query = self::find()
-            ->select('a.id,a.uid,title,cid,cover_image, created_at')
+            ->select('a.id,a.uid,title,cid,cover_image,recommend, created_at')
             ->from(self::tableName() . ' as a')
             ->leftJoin(ArticleCategory::tableName() . ' as c', 'c.id = a.cid')
             ->where(['c.type' => $type, 'a.status' => '0', 'c.status' => '0'])
