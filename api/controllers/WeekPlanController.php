@@ -177,7 +177,7 @@ class WeekPlanController extends BaseController
 
         $detail_params = [
             'check_uid' => $uid,
-            'node' => $data['node'],
+            'note' => $data['note'],
             'pass' => $data['pass'],
             'check_time' => date('Y-m-d')
         ];
