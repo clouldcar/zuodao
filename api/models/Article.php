@@ -137,17 +137,25 @@ class Article extends \yii\db\ActiveRecord {
      * @param recomment
      * @return array()
     */
-    public static function getListByRecommend($recommend, $limit) {
-        $list = self::find()
+    public static function getListByRecommend($recommend, $page = 1, $page_size = 20) {
+        $query = self::find()
             ->select('id,uid,title,cid,cover_image, content, created_at')
             ->from(self::tableName() . ' as a')
             ->leftJoin(TeamArticle::tableName() . ' as ta', 'ta.article_id = a.id')
             ->where("a.recommend like '%" . $recommend . "%' and a.status = 0")
-            ->orderBy('a.id desc')
-            ->limit($limit)->asArray()
+            ->orderBy('a.id desc');
+
+        $countQuery = clone $query;
+        // echo $countQuery->createCommand()->sql;exit;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page - 1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
             ->all();
 
-        foreach ($list as &$item) {
+        foreach ($list['list'] as &$item) {
             $item['desc'] = Utils::truncateUtf8String(strip_tags($item['content']), 240);
             unset($item['content']);
             // $item['desc'] = '移动小号手机卡0月租卡无线流量卡电话卡视频卡号码卡4g卡上网卡,中国移动4G无线上网卡24G包年卡路由器随身mifi纯流量卡全国电信';

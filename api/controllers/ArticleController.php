@@ -47,6 +47,25 @@ class ArticleController extends BaseController {
         return Utils::returnMsg(0, null, $list);
     }
 
+    public function actionRecommend()
+    {
+        $data = Yii::$app->request->get();
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if ($page < 1) {
+            $page = 1;
+        }
+        $page_size = 20;
+
+        if (!isset($data['type'])) {
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+
+        $list = Article::getListByRecommend($data['type'], $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
+
+    }
+
     /*
      * @name 文章的创建
      * @param user_id platform_id title content class type send_to feedback_way created_at
