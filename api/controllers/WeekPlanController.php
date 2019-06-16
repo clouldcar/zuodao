@@ -126,25 +126,24 @@ class WeekPlanController extends BaseController
         parent::checkPost();
         $data = Yii::$app->request->post();
         $week_plan_id = $data['week_plan_id'];
-        $week_plan_detail_id = $data['week_plan_detail_id'];
         $uid = Yii::$app->user->id;
 
         //检查是否自己的周计划
-        $info = WeekPlan::info($data['week_plan_id']);
+        $info = WeekPlan::info($week_plan_id);
         if(!$info || $info['uid'] != $uid)
         {
-            return Utils::returnMsg(1, '非法操作');
+            return Utils::returnMsg(1, '信息不存在');
         }
 
         $params = [
-            'rate' => $data['rate'],
-            'note1' => $data['note1']
+            'score' => $data['score1'],
+            'note' => $data['note']
         ];
 
         WeekPlan::edit($params, $week_plan_id);
 
         $detail_params = [
-            'score' => $data['score']
+            'score' => $data['score2']
         ];
         Plan::edit($detail_params, $info['plan_id']);
 
@@ -155,21 +154,14 @@ class WeekPlanController extends BaseController
     {
         parent::checkPost();
         $data = Yii::$app->request->post();
-        $plan_detail_id = $data['plan_detail_id'];
-        $week_plan_detail_id = $data['week_plan_detail_id'];
+        $week_plan_id = $data['week_plan_id'];
         $uid = Yii::$app->user->id;
 
         //检查是否自己团队的周计划
-        $detail = WeekPlanDetail::info($week_plan_detail_id);
-        if(!$detail)
-        {
-            return Utils::returnMsg(1, '信息不存在');
-        }
-
         $info = WeekPlan::info($plan_detail_id);
         if(!$info)
         {
-            return Utils::returnMsg(1, '非法操作');
+            return Utils::returnMsg(1, '信息不存在');
         }
 
         if($info['uid'] == $uid)
@@ -185,10 +177,32 @@ class WeekPlanController extends BaseController
 
         $detail_params = [
             'check_uid' => $uid,
-            'node2' => $data['node2'],
+            'node' => $data['node'],
             'check_time' => date('Y-m-d')
         ];
-        WeekPlanDetail::edit($detail_params, $week_plan_detail_id);
+
+        //检查是否已检视，如已检视，则覆盖；未检视，则追加
+        $check_data = json_decode($info['check_data'], true);
+
+        $is_set = 0;
+        foreach($check_data as $item)
+        {
+            if($item['check_uid'] == $uid)
+            {
+                $item = $detail_params;
+                $is_set = 1;
+                break;
+            }
+        }
+        if(!$is_set)
+        {
+            $check_data[] = $detail_params;
+        }
+
+        $params = [
+            'check_data' => json_encode($check_data)
+        ];
+        WeekPlan::edit($params, $plan_detail_id);
 
         return Utils::returnMsg(0, '修改成功');
     }
