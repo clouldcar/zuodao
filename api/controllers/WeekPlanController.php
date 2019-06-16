@@ -183,10 +183,14 @@ class WeekPlanController extends BaseController
         ];
 
         //检查是否已检视，如已检视，则覆盖；未检视，则追加
-        $check_data = json_decode($info['check_data'], true);
+        $check_data = [];
+        if($info['check_data']) 
+        {
+            $check_data = json_decode($info['check_data'], true);
+        }
 
         $is_set = 0;
-        foreach($check_data as $item)
+        if($check_data) foreach($check_data as $item)
         {
             if($item['check_uid'] == $uid)
             {
