@@ -11,6 +11,7 @@ use api\models\Article;
 use api\models\ArticleComments;
 use api\models\ArticleNotic;
 use api\models\ArticleCategory;
+use api\models\UserInfo;
 
 /**
  * 后台平台文章控制器
@@ -233,6 +234,7 @@ class ArticleController extends BaseController {
 
         if ($list) {
             foreach ($list as &$item) {
+                $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
                 $item['category'] = ArticleCategory::getInfoById($item['cid']);
             }
         }

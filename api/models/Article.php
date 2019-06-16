@@ -140,7 +140,7 @@ class Article extends \yii\db\ActiveRecord {
             ->select('id,uid,title,cid,cover_image, content, created_at')
             ->from(self::tableName() . ' as a')
             ->leftJoin(TeamArticle::tableName() . ' as ta', 'ta.article_id = a.id')
-            ->where(['a.recomment' => $recomment, 'a.status' => '0'])
+            ->where("a.recommend like '%" . $recommend . "%' and a.status = 0")
             ->orderBy('a.id desc')
             ->limit($limit)->asArray()
             ->all();
