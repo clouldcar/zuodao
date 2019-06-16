@@ -54,7 +54,7 @@ class ArticleController extends BaseController {
         if ($page < 1) {
             $page = 1;
         }
-        $page = isset($data['page_size']) ? $data['page_size'] : 20;
+        $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
         if (!isset($data['type'])) {
             return Utils::returnMsg(1, '缺少必要参数');
