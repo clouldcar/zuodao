@@ -158,7 +158,7 @@ class WeekPlanController extends BaseController
         $uid = Yii::$app->user->id;
 
         //检查是否自己团队的周计划
-        $info = WeekPlan::info($plan_detail_id);
+        $info = WeekPlan::info($week_plan_id);
         if(!$info)
         {
             return Utils::returnMsg(1, '信息不存在');
@@ -203,7 +203,7 @@ class WeekPlanController extends BaseController
         $params = [
             'check_data' => json_encode($check_data)
         ];
-        WeekPlan::edit($params, $plan_detail_id);
+        WeekPlan::edit($params, $week_plan_id);
 
         return Utils::returnMsg(0, '修改成功');
     }
