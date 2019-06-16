@@ -137,7 +137,8 @@ class WeekPlanController extends BaseController
         }
 
         $params = [
-            'target' => $data['target']
+            'rate' => $data['rate'],
+            'note1' => $data['note1']
         ];
 
         WeekPlan::edit($params, $week_plan_id);

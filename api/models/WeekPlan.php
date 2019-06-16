@@ -88,6 +88,15 @@ class WeekPlan extends \yii\db\ActiveRecord
         return true;
     }
 
+    public static function($params, $week_plan_id)
+    {
+        $res = Yii::$app->db->createCommand()->update(self::tableName(), $params, "id=:id", [':id' => $week_plan_id])->execute();
+        if (!$res) {
+            return false;
+        }
+        return true;
+    }
+
     public static function getList($team_id, $page = 1, $page_size = 20)
     {
         $query = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC');

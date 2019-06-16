@@ -95,7 +95,7 @@ class Plan extends \yii\db\ActiveRecord
         foreach($list as &$item)
         {
             $item['user'] = UserInfo::getInfoByUID($uid, 1);
-            $item['title'] = $item['user']['real_name'] . "成就宣言 " . date('Y-m-d', strtotime($item['ctime']));
+            $item['title'] = $item['user']['real_name'] . "的成就宣言";
         }
 
         return array_merge(
@@ -123,6 +123,7 @@ class Plan extends \yii\db\ActiveRecord
         foreach($list as &$item)
         {
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+            $item['title'] = $item['user']['real_name'] . "的成就宣言";
         }
 
         return array_merge(
