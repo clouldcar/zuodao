@@ -27,9 +27,8 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 平台下文章的列表
-		     * @param $platform_id
-		     * @return mixed
+     * @name 文章的列表
+     * @return mixed
 	*/
 	public function actionIndex() {
 		$data = Yii::$app->request->get();
@@ -41,7 +40,7 @@ class ArticleController extends BaseController {
 		$page_size = 20;
 
 		if (!isset($data['cid'])) {
-			$list = Article::getList($page, $page_size);
+			$list = Article::getListByType(Article::TYPE_4, $page, $page_size);
 			if ($list['list']) {
 				foreach ($list['list'] as &$item) {
 					$item['category'] = ArticleCategory::getInfoById($item['cid']);
@@ -58,9 +57,9 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 运营平台全部文章
-		     * @param $platform_id
-		     * @return mixed
+     * @name 运营平台全部文章
+     * @param $platform_id
+     * @return mixed
 	*/
 	public function actionList() {
 		$data = Yii::$app->request->get();
@@ -83,9 +82,9 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 文章的创建
-		     * @param user_id platform_id title content class type send_to feedback_way created_at
-		     * @return mixed
+     * @name 文章的创建
+     * @param user_id platform_id title content class type send_to feedback_way created_at
+     * @return mixed
 	*/
 	public function actionCreate() {
 		parent::checkPost();
@@ -105,9 +104,9 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 文章的展示
-		     * @param article_id
-		     * @return mixed
+     * @name 文章的展示
+     * @param article_id
+     * @return mixed
 	*/
 	public function actionInfo() {
 		parent::checkGet();
@@ -127,9 +126,9 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 文章的编辑
-		     * @param 修改参数 和 必要的文章id
-		     * @return mixed
+     * @name 文章的编辑
+     * @param 修改参数 和 必要的文章id
+     * @return mixed
 	*/
 	public function actionEdit() {
 		parent::checkPost();
@@ -179,9 +178,9 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 通知列表
-		     * @name article_id
-		     * @return mixed
+     * @name 通知列表
+     * @name article_id
+     * @return mixed
 	*/
 	public function actionNoticeList() {
 		$article_id = \Yii::$app->request->get('article_id');
@@ -196,10 +195,10 @@ class ArticleController extends BaseController {
 	}
 
 	/*
-		     * @name 用户确认 用户 通知
-		     * @type 1 用户已读
-		     *       2 用户确认
-		     * @return mixed
+     * @name 用户确认 用户 通知
+     * @type 1 用户已读
+     *       2 用户确认
+     * @return mixed
 	*/
 	public function actionConfirmNotice() {
 		$data = \Yii::$app->request->post();

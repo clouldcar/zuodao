@@ -19,6 +19,9 @@ class Article extends \yii\db\ActiveRecord {
     const RECOMMENT_3 = 3;
     //老P首页
     const RECOMMENT_4 = 4;
+
+
+    const TYPE_4 = 4;
     /*
      * @name 增加文章
      * @param
@@ -151,10 +154,35 @@ class Article extends \yii\db\ActiveRecord {
         return $list;
     }
 
+    public static function getListByType($type, $page = 1, $page_size = 20)
+    {
+        $query = self::find()
+            ->select('a.id,a.uid,title,cid,cover_image, created_at')
+            ->from(self::tableName() . ' as a')
+            ->leftJoin(ArticleCategory::tableName() . ' as c', 'c.id = a.cid')
+            ->where(['c.type' => $type, 'a.status' => '0', 'c.status' => '0'])
+            ->orderBy('a.id desc');
+
+        $countQuery = clone $query;
+        // echo $countQuery->createCommand()->sql;exit;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page - 1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list],
+            Utils::pagination($pages)
+        );
+    }
+
     /*
-             * @name 文章列表
-             * @param cid
-             * @return array()
+     * @name 文章列表
+     * @param cid
+     * @return array()
     */
     public static function getList($page = 1, $page_size = 20) {
         $query = self::find()
