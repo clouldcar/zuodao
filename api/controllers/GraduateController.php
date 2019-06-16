@@ -21,9 +21,9 @@ class GraduateController extends BaseController
         $type = ArticleCategory::TYPE_ID_GRAD;
 
         $category = ArticleCategory::getCategoriesByType($type, 1, 10);
-        $recomment = Article::getListByRecomment(Article::RECOMMENT_4, 3);
+        $recommend = Article::getListByRecommend(Article::RECOMMENT_4, 3);
         $result = [
-            'recomment' => $recomment,
+            'recomment' => $recommend,
             'categories' => $category['list']
         ];
 

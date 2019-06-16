@@ -135,7 +135,7 @@ class Article extends \yii\db\ActiveRecord {
      * @param recomment
      * @return array()
     */
-    public static function getListByRecomment($recomment, $limit) {
+    public static function getListByRecommend($recommend, $limit) {
         $list = self::find()
             ->select('id,uid,title,cid,cover_image, content, created_at')
             ->from(self::tableName() . ' as a')
@@ -153,6 +153,8 @@ class Article extends \yii\db\ActiveRecord {
 
         return $list;
     }
+
+    //已推荐列表
 
     public static function getListByType($type, $page = 1, $page_size = 20)
     {

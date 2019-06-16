@@ -20,7 +20,6 @@ class CategoryController extends BaseController {
 
 	public function init() {
 		parent::init();
-		parent::checkPlatformUser();
 	}
 
 	public function actionCreate() {
