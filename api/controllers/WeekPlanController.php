@@ -119,6 +119,13 @@ class WeekPlanController extends BaseController
         $info['owner'] = ($info['uid'] == $uid) ? true : false;
 
         $check_data = json_decode($info['check_data'], true);
+        if($check_data)
+        {
+            foreach ($check_data as &$item) {
+                $item['user'] = UserInfo::getInfoByUID($item['check_uid'], 1);
+            }
+        }
+
         $info['check_data'] = $check_data;
 
         return Utils::returnMsg(0, null, $info);
