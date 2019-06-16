@@ -99,7 +99,7 @@ class WeekPlan extends \yii\db\ActiveRecord
 
     public static function getList($team_id, $page = 1, $page_size = 20)
     {
-        $query = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime ASC');
+        $query = self::find()->where(['team_id' => $team_id, 'status' => 0])->orderBy('ctime desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
@@ -125,7 +125,7 @@ class WeekPlan extends \yii\db\ActiveRecord
 
     public static function getListByUID($uid, $page = 1, $page_size = 20)
     {
-        $query = self::find()->where(['uid' => $uid, 'status' => 0])->orderBy('ctime ASC');
+        $query = self::find()->where(['uid' => $uid, 'status' => 0])->orderBy('ctime desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
