@@ -118,6 +118,9 @@ class WeekPlanController extends BaseController
         $info['user'] = UserInfo::getInfoByUID($info['uid'], 1);
         $info['owner'] = ($info['uid'] == $uid) ? true : false;
 
+        $check_data = json_decode($info['check_data'], true);
+        $info['check_data'] = $check_data;
+
         return Utils::returnMsg(0, null, $info);
     }
 
@@ -137,7 +140,8 @@ class WeekPlanController extends BaseController
 
         $params = [
             'score' => $data['score1'],
-            'note' => $data['note']
+            'note' => $data['note'],
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         WeekPlan::edit($params, $week_plan_id);
