@@ -67,6 +67,15 @@ class Plan extends \yii\db\ActiveRecord
         return true;
     }
 
+    public static function edit($params, $plan_id)
+    {
+        $res = Yii::$app->db->createCommand()->update(self::tableName(), $params, "id=:id", [':id' => $plan_id])->execute();
+        if (!$res) {
+            return false;
+        }
+        return true;
+    }
+
     public static function info($id)
     {
         $where = ['id' => $id, 'status' => 0];

@@ -144,11 +144,9 @@ class WeekPlanController extends BaseController
         WeekPlan::edit($params, $week_plan_id);
 
         $detail_params = [
-            'result' => $data['result'],
-            'completion_ratio' => $data['completion_ratio'],
-            'note1' => $data['note1']
+            'score' => $data['score']
         ];
-        WeekPlanDetail::edit($detail_params, $week_plan_detail_id);
+        Plan::edit($detail_params, $info['plan_id']);
 
         return Utils::returnMsg(0, '修改成功');
     }

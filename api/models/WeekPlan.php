@@ -88,7 +88,7 @@ class WeekPlan extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function($params, $week_plan_id)
+    public static function edit($params, $week_plan_id)
     {
         $res = Yii::$app->db->createCommand()->update(self::tableName(), $params, "id=:id", [':id' => $week_plan_id])->execute();
         if (!$res) {
@@ -114,6 +114,7 @@ class WeekPlan extends \yii\db\ActiveRecord
         {
             $item['detail'] = json_decode($item['detail'], true);
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+            $item['title'] = $item['user']['real_name'] . "的周计划";
         }
 
         return array_merge(
@@ -139,6 +140,7 @@ class WeekPlan extends \yii\db\ActiveRecord
         {
             $item['detail'] = json_decode($item['detail'], true);
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
+            $item['title'] = $item['user']['real_name'] . "的周计划";
         }
 
         return array_merge(
