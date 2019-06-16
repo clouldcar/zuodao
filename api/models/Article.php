@@ -155,14 +155,17 @@ class Article extends \yii\db\ActiveRecord {
             ->asArray()
             ->all();
 
-        foreach ($list['list'] as &$item) {
+        if($list) foreach ($list as &$item) {
             $item['desc'] = Utils::truncateUtf8String(strip_tags($item['content']), 240);
             unset($item['content']);
             // $item['desc'] = '移动小号手机卡0月租卡无线流量卡电话卡视频卡号码卡4g卡上网卡,中国移动4G无线上网卡24G包年卡路由器随身mifi纯流量卡全国电信';
             $item['user'] = UserInfo::getInfoByUID($item['uid'], 1);
         }
 
-        return $list;
+        return array_merge(
+            ['list' => $list],
+            Utils::pagination($pages)
+        );
     }
 
     //已推荐列表
