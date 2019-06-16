@@ -190,7 +190,7 @@ class WeekPlanController extends BaseController
         }
 
         $is_set = 0;
-        if($check_data) foreach($check_data as $item)
+        if($check_data) foreach($check_data as &$item)
         {
             if($item['check_uid'] == $uid)
             {
