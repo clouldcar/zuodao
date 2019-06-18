@@ -28,28 +28,28 @@ class Team extends  \yii\db\ActiveRecord
                 ->where(['uid' => $uid, 'status' => 0])
                 ->asArray()
                 ->all();
-        foreach($query as $item)
+        if($query) foreach($query as $item)
         {
             $team_ids[] = $item['team_id'];
         }
 
-        //自己创建的
-        $select = 'id, uid, name, platform_name, logo, create_time';
-        $where = 'id in(' . implode(',', $team_ids) . ') and status = 0';
-        $teamList =  $this->find()
-            ->select($select)
-            ->from(self::tableName() . ' as t')
-            ->where($where)
-            ->asArray()
-            ->all();
-
-        if($teamList)
+        if($team_ids)
         {
-            foreach($teamList as &$team)
-            {
-                $team['total'] = TeamUser::find()->where(['team_id' => $team['id']])->count();
-                $team['manager'] = UserInfo::find()->select('uid,real_name,avatar')->where(['uid' => $team['uid']])->one()->toArray();
-            }
+            //自己创建的
+            $select = 'id, uid, name, platform_name, logo, create_time';
+            $where = 'id in(' . implode(',', $team_ids) . ') and status = 0';
+            $teamList =  $this->find()
+                ->select($select)
+                ->from(self::tableName() . ' as t')
+                ->where($where)
+                ->asArray()
+                ->all();
+        }
+
+        if($teamList) foreach($teamList as &$team)
+        {
+            $team['total'] = TeamUser::find()->where(['team_id' => $team['id']])->count();
+            $team['manager'] = UserInfo::find()->select('uid,real_name,avatar')->where(['uid' => $team['uid']])->one()->toArray();
         }
 
         return $teamList;
