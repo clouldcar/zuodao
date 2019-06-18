@@ -22,6 +22,7 @@ class Team extends  \yii\db\ActiveRecord
     public function teamList($uid){
 
         $team_ids = [];
+        $teamList = [];
         $query = $this->find()
                 ->select('team_id')
                 ->from(TeamUser::tableName())
