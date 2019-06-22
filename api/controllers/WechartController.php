@@ -65,11 +65,11 @@ class WechartController extends BaseController
             {
                 if(empty(Yii::$app->user->identity->updated_at))
                 {
-                    return $this->redirect(Yii::$app->params['baseUrl'] . '/member/supplement');
+                    return $this->redirect(Yii::$app->params['baseUrl'] . 'member/supplement');
                 }
                 else
                 {
-                    return $this->redirect(Yii::$app->params['baseUrl'] . '/');
+                    return $this->redirect(Yii::$app->params['baseUrl']);
                 }
             }
             else
@@ -93,7 +93,7 @@ class WechartController extends BaseController
         {
             $model->addUser($insertData);
             Yii::$app->user->login($model, 3600 * 24* 30);
-            return $this->redirect(Yii::$app->params['baseUrl'] . '#/member/supplement');
+            return $this->redirect(Yii::$app->params['baseUrl'] . 'member/supplement');
         }
 
         die('登录失败');
