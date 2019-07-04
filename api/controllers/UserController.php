@@ -164,6 +164,7 @@ class UserController extends BaseController
         $user_model = User::findIdentity($uid);
         $user_model->setAttributes([
             'updated_at' => $data['ctime'],
+            'username' => $data['phone'],
             'password' => Yii::$app->security->generatePasswordHash($pwd)
         ]);
         $user_model->save();
