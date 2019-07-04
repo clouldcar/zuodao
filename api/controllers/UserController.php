@@ -106,6 +106,19 @@ class UserController extends BaseController
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
+        //密码验证及加密
+        $pwd = $data['pwd'];
+        $confrm_pwd = $data['confrm_pwd'];
+        if(count($pwd) < 6) {
+            return Utils::returnMsg('1', '密码长度不能小于6位');
+        }
+        if($confrm_pwd <> $pwd) {
+            return Utils::returnMsg('1', '两次密码输入不一致');
+        }
+        unset($data['pwd']);
+        unset($data['confrm_pwd']);
+        
+
         $code = $data['code'];
         //短信验证
         $result = CheckSms::get($data['phone']);
@@ -149,7 +162,10 @@ class UserController extends BaseController
 
         //修改用户
         $user_model = User::findIdentity($uid);
-        $user_model->setAttributes(['updated_at' => $data['ctime']]);
+        $user_model->setAttributes([
+            'updated_at' => $data['ctime'],
+            'password' => Yii::$app->security->generatePasswordHash($pwd)
+        ]);
         $user_model->save();
 
         return Utils::returnMsg(0, "success");
