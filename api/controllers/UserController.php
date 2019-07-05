@@ -145,7 +145,8 @@ class UserController extends BaseController
         }
 
         //默认头像
-        if(!$model->avatar) {
+        if(!$model->avatar) 
+        {
             $data['avatar'] = Utils::avatar($uid);
         }
 
@@ -156,7 +157,8 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "参数有误");
         }
 
-        if (!$model->save()) {
+        if (!$model->save()) 
+        {
             return Utils::returnMsg(1, "fail");
         }
 
@@ -180,14 +182,12 @@ class UserController extends BaseController
     {
         parent::checkLogin();
         parent::checkPost();
+        $uid = Yii::$app->user->id;
 
         $data = Yii::$app->request->post();
-        $model = User::findIdentity($data['id']);
+        $model = User::findIdentity($uid);
         if (!$model || !$model->status) {
-            return $this->returnData = [
-                'code' => 803,
-                'msg' => '该用户不存在',
-            ];
+            return Utils::returnMsg(1, "该用户不存在");
         }
         $data['updated_at'] = date('Y-m-d H:i:s');
         //判断是否需要重置密码
@@ -197,12 +197,11 @@ class UserController extends BaseController
         }
         unset($data['password']);
         $model->setAttributes($data);
-        if ($model->save()) {
-            return Utils::returnMsg(0, "success");
-        }else {
+        if (!$model->save()) {
             return Utils::returnMsg(1, "fail");
         }
-        return $this->returnData;
+        
+        return Utils::returnMsg(0, "success");
     }
 
 
