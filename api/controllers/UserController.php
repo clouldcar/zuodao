@@ -106,17 +106,18 @@ class UserController extends BaseController
         $data = Yii::$app->request->post();
         $uid = Yii::$app->user->id;
 
+
         //密码验证及加密
-        $pwd = $data['pwd'];
-        $confrm_pwd = $data['confrm_pwd'];
+        $pwd = $data['password'];
+        $confrim_pwd = $data['repassword'];
         if(count($pwd) < 6) {
             return Utils::returnMsg('1', '密码长度不能小于6位');
         }
-        if($confrm_pwd <> $pwd) {
+        if($confrim_pwd <> $pwd) {
             return Utils::returnMsg('1', '两次密码输入不一致');
         }
-        unset($data['pwd']);
-        unset($data['confrm_pwd']);
+        unset($data['password']);
+        unset($data['repassword']);
         
 
         $code = $data['code'];
@@ -157,7 +158,7 @@ class UserController extends BaseController
             return Utils::returnMsg(1, "参数有误");
         }
 
-        if (!$model->save()) 
+        if (!$model->save())
         {
             return Utils::returnMsg(1, "fail");
         }
@@ -185,6 +186,44 @@ class UserController extends BaseController
         $uid = Yii::$app->user->id;
 
         $data = Yii::$app->request->post();
+
+        $model = User::findIdentity($uid);
+        if (!$model || !$model->status) {
+            return Utils::returnMsg(1, "该用户不存在");
+        }
+
+        //密码验证及加密
+        $pwd = $data['password'];
+        $confrim_pwd = $data['repassword'];
+        if(strlen($pwd) < 6) {
+            return Utils::returnMsg('1', '密码长度不能小于6位');
+        }
+        if($confrim_pwd <> $pwd) {
+            return Utils::returnMsg('1', '两次密码输入不一致');
+        }
+
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        //判断是否需要重置密码
+        if (!empty($data['password'])) {
+            $model->generateAuthKey();
+            $model->setPassword($data['password']);
+        }
+        if (!$model->save()) {
+            return Utils::returnMsg(1, "fail");
+        }
+        
+        return Utils::returnMsg(0, "success");
+    }
+
+
+    /*
+    public function actionEdit()
+    {
+        parent::checkLogin();
+        parent::checkPost();
+        $uid = Yii::$app->user->id;
+
+        $data = Yii::$app->request->post();
         $model = User::findIdentity($uid);
         if (!$model || !$model->status) {
             return Utils::returnMsg(1, "该用户不存在");
@@ -203,6 +242,7 @@ class UserController extends BaseController
         
         return Utils::returnMsg(0, "success");
     }
+    */
 
 
     public function actionLogout()

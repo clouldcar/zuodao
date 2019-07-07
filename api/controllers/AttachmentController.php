@@ -9,7 +9,7 @@ use common\models\UploadValidate;
 /*附件*/
 class AttachmentController extends BaseController
 {
-    const TYPE = ['avatar', 'article'];
+    const TYPE = ['avatar', 'article', 'cover'];
 
     public static function actionUpload()
     {
