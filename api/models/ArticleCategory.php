@@ -103,7 +103,7 @@ class ArticleCategory extends \yii\db\ActiveRecord {
 	}
 
 	public static function getCategoriesByType($type, $page, $page_size) {
-		$query = self::find()->select('id,name')->where(['type' => $type, 'status' => 0])->orderBy('ctime asc');
+		$query = self::find()->select('id,name,icon')->where(['type' => $type, 'status' => 0])->orderBy('ctime asc');
 
 		$countQuery = clone $query;
 		$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
