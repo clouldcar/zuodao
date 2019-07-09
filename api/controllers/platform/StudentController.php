@@ -8,6 +8,7 @@ use api\controllers\BaseController;
 use api\models\User;
 use api\models\UserInfo;
 use api\models\Student;
+use api\models\Students;
 
 class StudentController extends BaseController
 {
@@ -37,7 +38,7 @@ class StudentController extends BaseController
         }
         $page_size = 20;
 
-        $list = UserInfo::getPlatformUsers($this->platform_id, $page, $page_size);
+        $list = Students::getUsersByPlatform($this->platform_id, $page, $page_size);
 
         return Utils::returnMsg(0, null, $list);
     }
@@ -52,7 +53,7 @@ class StudentController extends BaseController
         $data = Yii::$app->request->post();
 
         //检查学员是否存在
-        $user_info = UserInfo::getPlatformUserByPhone($data['phone'], $this->platform_id);
+        $user_info = Students::getUserByPhone($data['phone'], $this->platform_id);
         if($user_info)
         {
             return Utils::returnMsg(1, '学员已存在');
