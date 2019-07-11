@@ -26,7 +26,7 @@ class StudentController extends BaseController
      * @return [type] [description]
      */
     public function actionIndex()
-    {   
+    {
         parent::checkGet();
 
         $data = Yii::$app->request->get();
