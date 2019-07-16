@@ -8,6 +8,7 @@ use api\controllers\BaseController;
 
 use api\models\CommunicationRecord;
 use api\models\UserInfo;
+use api\models\Students;
 
 /**
 * 学员沟通记录
@@ -44,7 +45,7 @@ class RecordController extends BaseController
             foreach($data['list'] as &$item)
             {
                 $item['staff'] = UserInfo::getInfoByUID($item['staff_uid'], 1);
-                $item['student'] = UserInfo::getInfoByUID($item['uid'], 1);
+                $item['student'] = Students::getUserBasicByUID($this->platform_id, $item['uid']);
             }
         }
 
@@ -62,7 +63,7 @@ class RecordController extends BaseController
         $data = Yii::$app->request->post();
 
         //鉴权
-        $user = UserInfo::getPlatformUserByUID($data['uid'], $this->platform_id);
+        $user = Students::getUserByUID($this->platform_id, $data['uid']);
         if(!$user)
         {
             return Utils::returnMsg(1, '非法操作');
@@ -112,7 +113,7 @@ class RecordController extends BaseController
         }
 
         $info['staff'] = UserInfo::getInfoByUID($info['staff_uid'], 1);
-        $info['student'] = UserInfo::getInfoByUID($info['uid'], 1);
+        $info['student'] = Students::getUserBasicByUID($this->platform_id, $info['uid']);
 
         return Utils::returnMsg(0, null, $info);
     }
@@ -134,7 +135,7 @@ class RecordController extends BaseController
         }
 
         //鉴权
-        $user = UserInfo::getPlatformUserByUID($data['uid'], $this->platform_id);
+        $user = Students::getUserByUID($this->platform_id, $data['uid']);
         if(!$user)
         {
             return Utils::returnMsg(1, '非法操作');
@@ -158,6 +159,7 @@ class RecordController extends BaseController
     /**
      * 删除沟通记录
      */
+    /*
     public function actionDelete()
     {
         //判断批量删除
@@ -183,5 +185,6 @@ class RecordController extends BaseController
             ];
         }
     }
+    */
 
 }

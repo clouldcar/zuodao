@@ -70,35 +70,16 @@ class StudentController extends BaseController
             $uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
-        $params = [
+        $params = array_merge([
             'uid' => $uid,
+            'platform_id' => $this->platform_id,
             'real_name' => $data['real_name'],
             'phone' => $data['phone'],
-            'platform_id' => $this->platform_id,
             'ctime' => date('Y-m-d H:i:s')
-        ];
+        ], $data);
 
-        if(isset($data['grade']) && !empty($data['grade']))
-        {
-            $params['grade'] = $data['grade'];
-        }
 
-        if(isset($data['team_id']) && $data['team_id'] !== '')
-        {
-            $params['team_id'] = $data['team_id'];
-        }
-
-        if(isset($data['birthday']) && !empty($data['birthday']))
-        {
-            $params['birthday'] = $data['birthday'];
-        }
-
-        if(isset($data['city']) && !empty($data['city']))
-        {
-            $params['city'] = $data['city'];
-        }
-
-        $model = new UserInfo();
+        $model = new Students();
         $model->setAttributes($params);
 
         if ($model->validate() && $model->save()) {
@@ -114,7 +95,7 @@ class StudentController extends BaseController
 
         $uid = Yii::$app->request->get('uid');
 
-        $info = UserInfo::getPlatformUserByUID($uid, $this->platform_id);
+        $info = Students::getUserByUID($this->platform_id, $uid);
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
@@ -138,43 +119,13 @@ class StudentController extends BaseController
         }
 
         //检查学员是否存在
-        $user_info = UserInfo::getPlatformUserByUID($data['uid'], $this->platform_id);
+        $user_info = Students::getUserByUID($this->platform_id, $data['uid']);
         
         if(!$user_info)
         {
             return Utils::returnMsg(1, '学员不存在');
         }
 
-        if(isset($data['real_name']) && !empty($data['real_name']))
-        {
-            $user_info->real_name = $data['real_name'];
-        }
-
-        if(isset($data['phone']) && !empty($data['phone']))
-        {
-            $user_info->phone = $data['phone'];
-        }
-
-        if(isset($data['grade']) && !empty($data['grade']))
-        {
-            $user_info->grade = $data['grade'];
-        }
-
-        if(isset($data['team_id']) && $data['team_id'] !== '')
-        {
-            $user_info->team_id = $data['team_id'];
-        }
-
-        if(isset($data['birthday']) && !empty($data['birthday']))
-        {
-            $user_info->birthday = $data['birthday'];
-        }
-
-        if(isset($data['city']) && !empty($data['city']))
-        {
-            $user_info->city = $data['city'];
-        }
-       
         if(!$user_info->validate()) 
         {
             return Utils::returnMsg(1, '修改失败');
@@ -191,33 +142,25 @@ class StudentController extends BaseController
     /**
      * 删除学员
      */
-    public function actionDelete()
+    public function actionRemove()
     {
         //判断批量删除
-        $ids = Yii::$app->request->get('stu_uid', 0);
-        $ids = implode(',', array_unique((array)$ids));
-        if (empty($ids)) {
-            return $this->returnData = [
-                'code' => 802,
-                'msg' => '请选择要删除的数据',
-            ];
+        $data = Yii::$app->request->post();
+
+        $info = Students::getUserByUID($this->platform_id, $uid);
+        if(!$info)
+        {
+            return Utils::returnMsg(1, '记录不存在');
         }
-        $_where = 'id in (' . $ids . ')';
-        $where = 'stu_uid in (' . $ids . ')';
-        if ((new User())->updateUserStatus($_where) && (new Student())->updateStudentStatus($where)) {
-            return $this->returnData = [
-                'code' => 1,
-                'msg' => '删除学员成功'
-            ];
-        } else {
-            return $this->returnData = [
-                'code' => 0,
-                'msg' => '删除学员失败',
-            ];
-        }
+
+        $info->status = 1;
+
+        if(!$info->save()) 
+        {
+            return Utils::returnMsg(1, '删除学员成功');
+        } 
+        
+        return Utils::returnMsg(0, '删除学员成功');  
     }
-
-
-
 
 }

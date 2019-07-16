@@ -116,4 +116,42 @@ class Students extends \yii\db\ActiveRecord
 
         return self::find()->where($where)->orderBy('id desc')->one();
     }
+
+
+    public static function getUserBasicByUID($platform_id, $uid) 
+    {
+        $select = 'uid, real_name, phone, gender, avatar';
+        $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];
+
+        return self::find()->select($select)->where($where)->orderBy('id desc')->one();
+    }
+
+    public static function getUserByUID($platform_id, $uid) 
+    {
+        $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];
+
+        return self::find()->where($where)->orderBy('id desc')->one();
+    }
+
+    /**
+     * 检查是否为本平台学员
+     */
+    public static function checkPlatformUser($platform_id, $ids)
+    {
+        $query = self::find()->where(['in', 'id', $ids]);
+
+        $result = true;
+        
+        foreach($query->each() as $user){
+            // 数据从服务端中以 100 个为一组批量获取，
+            // 但是 $user 代表 user 表里的一行数据
+            if($user['platform_id'] != $platform_id)
+            {
+                $result = false;
+                break;
+            }
+        }
+
+        return $result;
+    }
 }
