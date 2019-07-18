@@ -118,8 +118,22 @@ class TemporaryController extends \yii\web\Controller
         } else {
             return Utils::returnMsg(1, '修改失败');
         }
+    }
 
+    public function actionSearch()
+    {
+        parent::checkGet();
 
+        $data = Yii::$app->request->get();
+
+        if(!isset($data['key']) && !$data['key'])
+        {
+            return Utils::returnMsg(1, '参数有误');
+        }
+
+        $list = Temporary::search($this->platform_id, $data['key']);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
 }

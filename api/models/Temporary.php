@@ -74,4 +74,17 @@ class Temporary extends \yii\db\ActiveRecord
 
         return self::find()->where($where)->orderBy('id desc')->one();
     }
+
+    public static function search($platform_id, $key)
+    {
+        $select = 'uid, real_name, phone';
+        $where = ['platform_id' => $platform_id, 'status' => 0];
+
+        return self::find()
+            ->select($select)
+            ->where($where)
+            ->andFilterWhere(['like', 'real_name', $key])
+            ->andFilterWhere(['like', 'phone', $key])
+            ->all();
+    }
 }
