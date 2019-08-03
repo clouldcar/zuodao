@@ -131,9 +131,9 @@ class StudentController extends BaseController
             return Utils::returnMsg(1, '学员不存在');
         }
 
-        $user_info->setAttributes($data);
+        $ret = Students::edit($data['uid'], $data);
 
-        if(!$user_info->save()) 
+        if(!$ret) 
         {
             return Utils::returnMsg(1, '修改失败');
         } 

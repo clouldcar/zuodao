@@ -152,6 +152,12 @@ class Students extends \yii\db\ActiveRecord
         return self::find()->where($where)->orderBy('id desc')->one();
     }
 
+    public static function edit($uid, $data)
+    {
+        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid)->execute();
+        return $result;
+    }
+
     /**
      * 检查是否为本平台学员
      */
