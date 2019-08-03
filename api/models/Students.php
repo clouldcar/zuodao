@@ -35,6 +35,26 @@ use common\helpers\Utils;
  */
 class Students extends \yii\db\ActiveRecord
 {
+
+    const GRADE_TEXT = [
+        0 => '未上课',
+        1 => '一阶段未上课',
+        2 => '一阶段毕业',
+        3 => '二阶段未上课',
+        4 => '二阶段毕业',
+        5 => '三阶段未上课',
+        6 => '三阶段毕业',
+    ];
+
+    const GENDER_TEXT = [
+        'F' => '女',
+        'M' => '男'
+    ];
+
+    const MARRIAGE_TEXT = [
+        0 => '未婚',
+        1 => '已婚',
+    ];
     /**
      * @inheritdoc
      */

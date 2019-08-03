@@ -96,11 +96,15 @@ class StudentController extends BaseController
 
         $uid = Yii::$app->request->get('uid');
 
-        $info = Students::getUserByUID($this->platform_id, $uid);
+        $info = Students::getUserByUID($this->platform_id, $uid)->asArray();
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
         }
+
+        $info['grade_text'] = Students::GRADE_TEXT[$info['grade']];
+        $info['gender_text'] = Students::GENDER_TEXT[$info['gender']];
+        $info['marriage_text'] = Students::MARRIAGE_TEXT[$info['marriage']];
 
         return Utils::returnMsg(0, null, $info);
     }
@@ -127,10 +131,7 @@ class StudentController extends BaseController
             return Utils::returnMsg(1, '学员不存在');
         }
 
-        if(!$user_info->validate()) 
-        {
-            return Utils::returnMsg(1, '修改失败');
-        }
+        $user_info->setAttributes($data);
 
         if(!$user_info->save()) 
         {
