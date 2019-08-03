@@ -75,7 +75,7 @@ class TemporaryController extends BaseController
     {
         parent::checkGet();
 
-        $data = Yii::$app->request->get();
+        $uid = Yii::$app->request->get('uid');
 
         $info = Temporary::getInfo($this->platform_id, $uid)->toArray();
         if(!$info)
