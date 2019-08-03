@@ -29,7 +29,7 @@ class TemporaryController extends BaseController
         $page_size = 20;
 
         $list = Temporary::getUsers($this->platform_id, $page, $page_size);
-        if($list['list']) foreach($list['list'] as $item)
+        if($list['list']) foreach($list['list'] as &$item)
         {
             $item = $this->completion($item);
         }
