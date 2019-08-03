@@ -68,6 +68,25 @@ class Temporary extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getUsers($platform_id, $page, $page_size)
+    {
+        $query = self::find()->where(['platform_id' => $platform_id])->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
     public static function getInfo($platform_id, $uid)
     {
         $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];

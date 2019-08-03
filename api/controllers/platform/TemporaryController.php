@@ -7,7 +7,7 @@ use api\models\User;
 use api\models\Temporary;
 
 //外部人员管理
-class TemporaryController extends \yii\web\Controller
+class TemporaryController extends BaseController
 {
     public function init()
     {
@@ -17,7 +17,20 @@ class TemporaryController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if($page < 1)
+        {
+            $page = 1;
+        }
+        $page_size = 20;
+
+        $list = Temporary::getUsers($this->platform_id, $page, $page_size);
+
+        return Utils::returnMsg(0, null, $list);
     }
 
     public function actionCreate()
