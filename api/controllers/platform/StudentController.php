@@ -64,15 +64,15 @@ class StudentController extends BaseController
         $user = User::findByUsername($data['phone']);
         if($user)
         {
-            $uid = $user->id;
+            $student_uid = $user->id;
         }
         else
         {
-            $uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
+            $student_uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
         $params = array_merge([
-            'uid' => $uid,
+            'uid' => $student_uid,
             'platform_id' => $this->platform_id,
             'real_name' => $data['real_name'],
             'phone' => $data['phone'],
