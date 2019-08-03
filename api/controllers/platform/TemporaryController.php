@@ -47,10 +47,10 @@ class TemporaryController extends BaseController
             $data['skilful'] = implode(',', $data['skilful']);
         }
 
-        if(isset($data['identity']) && $data['identity'])
-        {
-            $data['identity'] = implode(',', $data['identity']);
-        }
+        // if(isset($data['identity']) && $data['identity'])
+        // {
+        //     $data['identity'] = implode(',', $data['identity']);
+        // }
         //查询是否是会员
         $user = User::findByUsername($data['phone']);
         if($user)
