@@ -25,6 +25,24 @@ use common\helpers\Utils;
  */
 class Temporary extends \yii\db\ActiveRecord
 {
+    const GENDER_TEXT = [
+        'F' => '女',
+        'M' => '男'
+    ];
+
+    const SKILFUL_TEXT = [
+        1 => '一阶段',
+        2 => '二阶段',
+        3 => '三阶段',
+    ];
+
+    const IDENTITY_TEXT = [
+        1 => '导师',
+        2 => '总教练', 
+        3 => '教练',
+        4 => '团长',
+        5 => '助教'
+    ];
     /**
      * @inheritdoc
      */
@@ -94,6 +112,12 @@ class Temporary extends \yii\db\ActiveRecord
         $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];
 
         return self::find()->where($where)->orderBy('id desc')->one();
+    }
+
+    public static function edit($uid, $data)
+    {
+        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid])->execute();
+        return $result;
     }
 
     public static function search($platform_id, $key)

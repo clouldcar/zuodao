@@ -77,10 +77,29 @@ class TemporaryController extends BaseController
 
         $data = Yii::$app->request->get();
 
-        $info = Temporary::getInfo($this->platform_id, $uid);
+        $info = Temporary::getInfo($this->platform_id, $uid)->toArray();
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
+        }
+
+        $info['grade_text'] = Temporary::GRADE_TEXT[$info['grade']];
+        if($info['skilful']) {
+            $skilful = [];
+            foreach($info['skilful'] as $v)
+            {
+                $skilful[] = Temporary::GRADE_TEXT[$v];
+            }
+            $info['skilful_text'] = implode(', ', $skilful);
+        }
+
+        if($info['identity']) {
+            $identity = [];
+            foreach($info['identity'] as $v)
+            {
+                $identity[] = Temporary::GRADE_TEXT[$v];
+            }
+            $info['skilful_text'] = implode(', ', $identity);
         }
 
         return Utils::returnMsg(0, null, $info);
@@ -103,14 +122,14 @@ class TemporaryController extends BaseController
             $data['identity'] = implode(',', $data['identity']);
         }
 
-        $model = new Temporary();
-        $model->setAttributes($data);
-        if ($model->validate() && $model->save()) {
-            return Utils::returnMsg(0, '修改成功');
-        } else {
+        $ret = Temporary::edit($data['uid'], $data);
+
+        if (!$ret) {
             return Utils::returnMsg(1, '修改失败');
+            
         }
 
+        return Utils::returnMsg(0, '修改成功');
     }
 
     public function actionRemove()
