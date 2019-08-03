@@ -86,7 +86,7 @@ class TemporaryController extends BaseController
         $info['gender_text'] = Temporary::GENDER_TEXT[$info['gender']];
         if($info['skilful']) {
             $skilful = [];
-            foreach($info['skilful'] as $v)
+            foreach(explode(',', $info['skilful']) as $v)
             {
                 $skilful[] = Temporary::SKILFUL_TEXT[$v];
             }
@@ -95,7 +95,7 @@ class TemporaryController extends BaseController
 
         if($info['identity']) {
             $identity = [];
-            foreach($info['identity'] as $v)
+            foreach(explode(',', $info['identity']) as $v)
             {
                 $identity[] = Temporary::IDENTITY_TEXT[$v];
             }
