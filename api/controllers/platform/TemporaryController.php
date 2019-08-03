@@ -88,7 +88,7 @@ class TemporaryController extends BaseController
             $skilful = [];
             foreach($info['skilful'] as $v)
             {
-                $skilful[] = Temporary::GRADE_TEXT[$v];
+                $skilful[] = Temporary::SKILFUL_TEXT[$v];
             }
             $info['skilful_text'] = implode(', ', $skilful);
         }
@@ -97,7 +97,7 @@ class TemporaryController extends BaseController
             $identity = [];
             foreach($info['identity'] as $v)
             {
-                $identity[] = Temporary::GRADE_TEXT[$v];
+                $identity[] = Temporary::IDENTITY_TEXT[$v];
             }
             $info['skilful_text'] = implode(', ', $identity);
         }
