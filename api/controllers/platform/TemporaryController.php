@@ -117,10 +117,10 @@ class TemporaryController extends BaseController
             $data['skilful'] = implode(',', $data['skilful']);
         }
 
-        if(isset($data['identity']) && $data['identity'])
-        {
-            $data['identity'] = implode(',', $data['identity']);
-        }
+        // if(isset($data['identity']) && $data['identity'])
+        // {
+        //     $data['identity'] = implode(',', $data['identity']);
+        // }
 
         $ret = Temporary::edit($data['uid'], $data);
 
