@@ -96,7 +96,7 @@ class StudentController extends BaseController
 
         $uid = Yii::$app->request->get('uid');
 
-        $info = Students::getUserByUID($this->platform_id, $uid)->asArray();
+        $info = Students::getUserByUID($this->platform_id, $uid)->toArray();
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
