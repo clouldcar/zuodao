@@ -71,13 +71,13 @@ class StudentController extends BaseController
             $student_uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
-        $params = array_merge([
+        $params = array_merge($data, [
             'uid' => $student_uid,
             'platform_id' => $this->platform_id,
             'real_name' => $data['real_name'],
             'phone' => $data['phone'],
             'ctime' => date('Y-m-d H:i:s')
-        ], $data);
+        ]);
 
 
         $model = new Students();
