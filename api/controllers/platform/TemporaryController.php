@@ -29,6 +29,10 @@ class TemporaryController extends BaseController
         $page_size = 20;
 
         $list = Temporary::getUsers($this->platform_id, $page, $page_size);
+        if($list['list']) foreach($list['list'] as $item)
+        {
+            $item = $this->completion($item);
+        }
 
         return Utils::returnMsg(0, null, $list);
     }
@@ -83,6 +87,14 @@ class TemporaryController extends BaseController
             return Utils::returnMsg(1, '记录不存在');
         }
 
+        $info = $this->completion($info);
+
+        return Utils::returnMsg(0, null, $info);
+
+    }
+
+    private function completion($info)
+    {
         $info['gender_text'] = Temporary::GENDER_TEXT[$info['gender']];
         if($info['skilful']) {
             $skilful = [];
@@ -102,8 +114,7 @@ class TemporaryController extends BaseController
             $info['identity_text'] = implode(', ', $identity);
         }
 
-        return Utils::returnMsg(0, null, $info);
-
+        return $info;
     }
 
     public function actionEdit()
