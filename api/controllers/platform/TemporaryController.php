@@ -99,7 +99,7 @@ class TemporaryController extends BaseController
             {
                 $identity[] = Temporary::IDENTITY_TEXT[$v];
             }
-            $info['skilful_text'] = implode(', ', $identity);
+            $info['identity_text'] = implode(', ', $identity);
         }
 
         return Utils::returnMsg(0, null, $info);
