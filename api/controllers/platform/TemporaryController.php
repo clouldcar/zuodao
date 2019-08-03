@@ -83,7 +83,7 @@ class TemporaryController extends BaseController
             return Utils::returnMsg(1, '记录不存在');
         }
 
-        $info['gender_text'] = Temporary::GRADE_TEXT[$info['gender']];
+        $info['gender_text'] = Temporary::GENDER_TEXT[$info['gender']];
         if($info['skilful']) {
             $skilful = [];
             foreach($info['skilful'] as $v)
