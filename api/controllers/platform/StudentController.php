@@ -51,6 +51,7 @@ class StudentController extends BaseController
         parent::checkPost();
 
         $data = Yii::$app->request->post();
+        $uid = Yii::$app->user->id;
 
         //检查学员是否存在
         $user_info = Students::getUserByPhone($data['phone'], $this->platform_id);
