@@ -154,7 +154,7 @@ class Students extends \yii\db\ActiveRecord
 
     public static function edit($uid, $data)
     {
-        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid)->execute();
+        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid])->execute();
         return $result;
     }
 
