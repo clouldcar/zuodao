@@ -10,6 +10,14 @@ use yii;
 
 class TeamUser extends  \yii\db\ActiveRecord
 {
+    const IDENTITY_TEXT = [
+        0 => '学员',
+        1 => '导师',
+        2 => '总教练', 
+        3 => '教练',
+        4 => '团长',
+        5 => '助教'
+    ];
      //身份：学员
     const LEVEL_STUDENT = 0;
     //教练

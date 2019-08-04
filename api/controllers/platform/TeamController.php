@@ -124,6 +124,11 @@ class TeamController extends BaseController
 
         $result = PlatformTeamUser::getUsers($this->platform_id, $data['team_id'], $filter, $page, $page_size);
 
+        if($result['list']) foreach ($$result['list'] as &$item) 
+        {
+            $item['identity_text'] = TeamUser::IDENTITY_TEXT($item['identity']);
+        }
+
         return Utils::returnMsg(0, null, $result);
     }
 
