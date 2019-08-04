@@ -183,7 +183,7 @@ class TeamController extends BaseController
 
         $params = ['identity' => $data['identity']];
 
-        PlatformTeamUser::updateUser($this->platform_id, $data['ids'], $params);
+        PlatformTeamUser::updateUser($this->platform_id, $data['team_id'], $data['ids'], $params);
 
         return Utils::returnMsg(0, 'success');
     }
