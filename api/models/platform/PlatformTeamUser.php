@@ -87,7 +87,7 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
         return $result;
     }
 
-    public static function PlatformTeamUser($platform_id, $ids)
+    public static function updateUser($platform_id, $ids)
     {
         foreach($ids as $uid)
         {
