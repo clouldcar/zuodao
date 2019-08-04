@@ -122,12 +122,6 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
                 ->update(self::tableName(), $params, ['platform_id' => $platform_id, 'team_id' => $team_id, 'uid' => $uid])
                 ->execute();
                 
-            if($params['identity'])
-            {
-                Yii::$app->db->createCommand()
-                ->update(Students::tableName(), $params, ['platform_id' => $platform_id, 'uid' => $uid])
-                ->execute();
-            }
         }
 
         return true;
