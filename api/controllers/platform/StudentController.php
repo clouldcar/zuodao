@@ -38,7 +38,17 @@ class StudentController extends BaseController
         }
         $page_size = 20;
 
-        $list = Students::getUsersByPlatform($this->platform_id, $page, $page_size);
+        $filter = [];
+        if(isset($data['team_id']))
+        {
+            $filter['team_id'] = $data['team_id'];
+        }
+        if(isset($data['grade']))
+        {
+            $filter['grade'] = $data['grade'];
+        }
+
+        $list = Students::getUsersByPlatform($this->platform_id, $filter, $page, $page_size);
 
         return Utils::returnMsg(0, null, $list);
     }

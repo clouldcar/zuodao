@@ -110,9 +110,28 @@ class Students extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getUsersByPlatform($platform_id, $page, $page_size)
+    public static function getUsersByPlatform($platform_id, $filter = [], $page, $page_size)
     {
-        $query = self::find()->where(['platform_id' => $platform_id])->orderBy('id desc');
+        $where = ['platform_id' => $platform_id];
+        if($filter['team_id'])
+        {
+            $where['team_id'] = $filter['team_id'];
+        }
+        $query = self::find()->where($where);
+        if($filter['grade'] && $filter['grade'] == 1)
+        {
+            $query = $query->addWhere(['or', 'grade=1', 'grade=2']);
+        }
+        if($filter['grade'] && $filter['grade'] == 2)
+        {
+            $query = $query->addWhere(['or', 'grade=3', 'grade=4']);
+        }
+        if($filter['grade'] && $filter['grade'] == 3)
+        {
+            $query = $query->addWhere(['or', 'grade=5', 'grade=6']);
+        }
+
+        $query = $query->orderBy('id desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
