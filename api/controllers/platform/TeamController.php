@@ -5,7 +5,8 @@ use Yii;
 use common\helpers\Utils;
 use api\controllers\BaseController;
 use api\models\Team;
-use api\models\UserInfo;
+use api\models\TeamUser;
+use api\models\platform\PlatformTeamUser;
 
 class TeamController extends BaseController
 {
@@ -124,7 +125,8 @@ class TeamController extends BaseController
         //     $filter['grade'] = $data['grade'];
         // }
 
-        $result = UserInfo::getTeamUsers($data['team_id'], $page, $page_size);
+
+        $result = PlatformTeamUser::getUsers($this->platform_id, $data['team_id'], $filter, $page, $page_size);
 
         return Utils::returnMsg(0, null, $result);
     }
