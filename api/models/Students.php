@@ -120,18 +120,18 @@ class Students extends \yii\db\ActiveRecord
         $query = self::find()->where($where);
         if($filter['grade'] && $filter['grade'] == 1)
         {
-            $query = $query->addWhere(['or', 'grade=1', 'grade=2']);
+            $query->addWhere(['or', 'grade=1', 'grade=2']);
         }
         if($filter['grade'] && $filter['grade'] == 2)
         {
-            $query = $query->addWhere(['or', 'grade=3', 'grade=4']);
+            $query->addWhere(['or', 'grade=3', 'grade=4']);
         }
         if($filter['grade'] && $filter['grade'] == 3)
         {
-            $query = $query->addWhere(['or', 'grade=5', 'grade=6']);
+            $query->addWhere(['or', 'grade=5', 'grade=6']);
         }
 
-        $query = $query->orderBy('id desc');
+        $query->orderBy('id desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
