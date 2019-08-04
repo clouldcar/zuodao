@@ -113,7 +113,7 @@ class TeamController extends BaseController
 
         $data = Yii::$app->request->get();
         $page = isset($data['page']) ? $data['page'] : 1;
-        $page_size = 20;
+        $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
         $filter = [];
         if($data['grade'])
@@ -158,6 +158,36 @@ class TeamController extends BaseController
         return Utils::returnMsg(0, 'success');
     }
 
+    public function actionEditUser()
+    {
+        parent::checkPost();
+
+        $data = Yii::$app->request->post();
+        if(!$data['ids'])
+        {
+            return Utils::returnMsg(1, '参数错误');
+        }
+
+        //检查是否为本平台学员
+        if(!PlatformTeamUser::checkPlatformkUser($this->platform_id, $data['ids']))
+        {
+            return Utils::returnMsg(1, '学员信息有误');
+        }
+
+        //检查是否本平台团队
+        $info = Team::getInfoById($data['team_id']);
+        if($info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '团队信息有误');
+        }
+
+        $params = ['identity' => $data['identity']];
+
+        PlatformTeamUser::updateUser($this->platform_id, $data['ids'], $params);
+
+        return Utils::returnMsg(0, 'success');
+    }
+
     //批量删除团队成员
     public function actionRemoveUser()
     {
@@ -181,7 +211,8 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '团队信息有误');
         }
 
-        PlatformTeamUser::updateUser($this->platform_id, $data['ids']);
+        $params = ['status' => 1];
+        PlatformTeamUser::updateUser($this->platform_id, $data['team_id'], $data['ids'], $params);
 
         return Utils::returnMsg(0, 'success');
     }

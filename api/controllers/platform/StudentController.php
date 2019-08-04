@@ -36,7 +36,7 @@ class StudentController extends BaseController
         {
             $page = 1;
         }
-        $page_size = 20;
+        $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
         $filter = [];
         if(isset($data['grade']))
