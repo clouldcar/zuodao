@@ -113,23 +113,28 @@ class Students extends \yii\db\ActiveRecord
     public static function getUsersByPlatform($platform_id, $filter = [], $page, $page_size)
     {
         $where = ['platform_id' => $platform_id];
-        if($filter['team_id'])
-        {
-            $where['team_id'] = $filter['team_id'];
-        }
+        
         $query = self::find()->where($where);
-        if($filter['grade'] && $filter['grade'] == 1)
+        if($filter)
         {
-            $query->addWhere(['or', 'grade=1', 'grade=2']);
+            if($filter['grade'] && $filter['grade'] == 0)
+            {
+                $query->andWhere(['and', 'grade=0']);
+            }
+            if($filter['grade'] && $filter['grade'] == 1)
+            {
+                $query->andWhere(['or', 'grade=1', 'grade=2']);
+            }
+            if($filter['grade'] && $filter['grade'] == 2)
+            {
+                $query->andWhere(['or', 'grade=3', 'grade=4']);
+            }
+            if($filter['grade'] && $filter['grade'] == 3)
+            {
+                $query->andWhere(['or', 'grade=5', 'grade=6']);
+            }
         }
-        if($filter['grade'] && $filter['grade'] == 2)
-        {
-            $query->addWhere(['or', 'grade=3', 'grade=4']);
-        }
-        if($filter['grade'] && $filter['grade'] == 3)
-        {
-            $query->addWhere(['or', 'grade=5', 'grade=6']);
-        }
+        
 
         $query->orderBy('id desc');
 
