@@ -103,7 +103,7 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
                 ->update(
                     Students::tableName(),
                     ['grade' => $grade],
-                    ['platform_id' => $platform_id, 'team_id' => $team_id, 'uid' => $uid, 'status' => 0]
+                    ['platform_id' => $platform_id, 'uid' => $uid, 'status' => 0]
                 )
                 ->execute();
         }
