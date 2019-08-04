@@ -87,6 +87,28 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
         return $result;
     }
 
+    public static function addTeamUser($platform_id, $ids, $team_id, $grade)
+    {
+        foreach($ids as $uid)
+        {
+            Yii::$app->db->createCommand()
+                ->insert(
+                    self::tableName(), 
+                    ['platform_id' => $platform_id, 'team_id' => $team_id, 'uid' => $uid, 'grade' => $grade]
+                )
+                ->execute();
+
+
+            Yii::$app->db->createCommand()
+                ->update(
+                    Students::tableName(),
+                    ['grade' => $grade],
+                    ['platform_id' => $platform_id, 'team_id' => $team_id, 'uid' => $uid, 'status' => 0]
+                )
+                ->execute();
+        }
+    }
+
     public static function updateUser($platform_id, $ids)
     {
         foreach($ids as $uid)
