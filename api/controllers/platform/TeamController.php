@@ -169,7 +169,7 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '参数错误');
         }
         //检查是否为本平台学员
-        if(!UserInfo::checkPlatformkUser($this->platform_id, $data['ids']))
+        if(!PlatformTeamUser::checkPlatformkUser($this->platform_id, $data['ids']))
         {
             return Utils::returnMsg(1, '学员信息有误');
         }
@@ -181,7 +181,7 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '团队信息有误');
         }
 
-        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, 0);
+        PlatformTeamUser::updateUser($this->platform_id, $data['ids']);
 
         return Utils::returnMsg(0, 'success');
     }
