@@ -126,7 +126,7 @@ class TeamController extends BaseController
 
         if($result['list']) foreach ($result['list'] as &$item) 
         {
-            $item['identity_text'] = TeamUser::IDENTITY_TEXT($item['identity']);
+            $item['identity_text'] = TeamUser::IDENTITY_TEXT[$item['identity']];
         }
 
         return Utils::returnMsg(0, null, $result);
