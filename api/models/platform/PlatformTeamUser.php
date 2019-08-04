@@ -15,35 +15,39 @@ use api\models\Students;
 class PlatformTeamUser extends  \yii\db\ActiveRecord
 {
 
-	public static function tableName()
+    public static function tableName()
     {
         return '{{%team_user}}';
     }
 
-    public static function getUsers($platform_id, $team_id, $filer = [], $page = 1, $page_size = 20)
+    public static function getUsers($platform_id, $team_id, $filter = [], $page = 1, $page_size = 20)
     {
-    	$query = self::find()
+        $query = self::find()
             ->from(self::tableName() . ' as tu')
             ->leftJoin(Students::tableName() . ' as s','s.uid=tu.uid')
-            ->select('tu.uid, tu.grade, tu.identity, s.real_name.s.avatar')
+            ->select('tu.uid, tu.grade, tu.identity, s.real_name, s.avatar')
             ->where(['tu.team_id' => $team_id, 'tu.status' => 0, 's.status' => 0]);
         
         //条件
-        if($filer['grade'] == 1)
+        if($filter)
         {
-        	$query->addWhere('or', 'tu.grade=1', 'tu.grade=2');
-        }
+            if($filter['grade'] == 1)
+            {
+                $query->addWhere('or', 'tu.grade=1', 'tu.grade=2');
+            }
 
-        if($filter['grade'] && $filter['grade'] == 2)
-        {
-            $query->andWhere(['or', 'grade=3', 'grade=4']);
+            if($filter['grade'] && $filter['grade'] == 2)
+            {
+                $query->andWhere(['or', 'grade=3', 'grade=4']);
+            }
+            if($filter['grade'] && $filter['grade'] == 3)
+            {
+                $query->andWhere(['or', 'grade=5', 'grade=6']);
+            }
         }
-        if($filter['grade'] && $filter['grade'] == 3)
-        {
-            $query->andWhere(['or', 'grade=5', 'grade=6']);
-        }
+        
 
-        $query->orderBy('id desc');
+        $query->orderBy('tu.id desc');
 
         //分页
         $countQuery = clone $query;
