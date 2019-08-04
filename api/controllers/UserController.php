@@ -13,6 +13,7 @@ use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
 use api\models\UserInfo;
+use api\models\Stuends;
 use api\models\Plan;
 
 
@@ -130,27 +131,26 @@ class UserController extends BaseController
         }
         unset($data['code']);
 
-        $data['uid'] = $uid;
-        $data['ctime'] = date('Y-m-d H:i:s');
-
-        $model = UserInfo::getInfoByPhone($data['phone']);
-        //如果user_info中有记录，则替换uid
-        if($model)
+        $students = Stuends::getInfoByPhone($data['phone']);
+        //如果Stuends中有记录，则替换uid
+        if($students)
         {
-            $model->isNewRecord = false;
-            $data['id'] = $model->uid;
+            $data['uid'] = $students->uid;
         }
         else
         {
-            $model = new UserInfo();
+            $data['uid'] = $uid;
         }
 
         //默认头像
         if(!$model->avatar) 
         {
-            $data['avatar'] = Utils::avatar($uid);
+            $data['avatar'] = Utils::avatar($data['id']);
         }
 
+        $data['ctime'] = date('Y-m-d H:i:s');
+
+        $model = new UserInfo();
         $model->setAttributes($data);
 
         if(!$model->validate())
@@ -166,6 +166,7 @@ class UserController extends BaseController
         //修改用户
         $user_model = User::findIdentity($uid);
         $user_model->setAttributes([
+            'id' => $data['uid'],
             'updated_at' => $data['ctime'],
             'username' => $data['phone'],
             'password' => Yii::$app->security->generatePasswordHash($pwd)

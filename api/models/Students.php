@@ -152,6 +152,11 @@ class Students extends \yii\db\ActiveRecord
         return self::find()->where($where)->orderBy('id desc')->one();
     }
 
+    public static function getInfoByPhone($phone){
+        $where = ['phone' => $phone, 'status' => 0];
+        return self::find()->where()->orderBy('id desc')->one();
+    }
+
     public static function edit($uid, $data)
     {
         $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid])->execute();

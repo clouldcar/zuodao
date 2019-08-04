@@ -43,7 +43,12 @@ class TeamController extends BaseController
             'name' => $data['name'],
             'uid' => Yii::$app->user->id,
             'platform_id' => $this->platform_id,
-            'start_date' => $data['start_date']
+            'start_date1' => $data['start_date1'],
+            'end_date1' => $data['end_date1'],
+            'start_date2' => $data['start_date2'],
+            'end_date2' => $data['end_date2'],
+            'start_date3' => $data['start_date3'],
+            'end_date3' => $data['end_date3'],
         );
 
         $model = new Team();
