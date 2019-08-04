@@ -117,7 +117,7 @@ class Students extends \yii\db\ActiveRecord
         $query = self::find()->where($where);
         if($filter)
         {
-            if($filter['grade'] && $filter['grade'] == 0)
+            if(isset($filter['grade']) && $filter['grade'] == 0)
             {
                 $query->andWhere(['and', 'grade=0']);
             }
