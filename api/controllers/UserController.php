@@ -173,6 +173,8 @@ class UserController extends BaseController
         ]);
         $user_model->save();
 
+        Yii::$app->user->login($user_model, 3600 * 24* 30);
+
         return Utils::returnMsg(0, "success");
     }
 
