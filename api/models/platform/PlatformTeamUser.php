@@ -92,7 +92,7 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
         foreach($ids as $uid)
         {
             Yii::$app->db->createCommand()
-                ->update(slef::tableName(), ['status' => 1], ['platform_id' => $platform_id, 'uid' => $uid])
+                ->update(self::tableName(), ['status' => 1], ['platform_id' => $platform_id, 'uid' => $uid])
                 ->execute();
         }
 
