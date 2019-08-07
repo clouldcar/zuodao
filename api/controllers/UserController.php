@@ -143,7 +143,7 @@ class UserController extends BaseController
         }
 
         //默认头像
-        if(!$model->avatar) 
+        if(!$students->avatar) 
         {
             $data['avatar'] = Utils::avatar($data['id']);
         }
