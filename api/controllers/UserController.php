@@ -13,7 +13,7 @@ use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
 use api\models\UserInfo;
-use api\models\Stuends;
+use api\models\Students;
 use api\models\Plan;
 
 
@@ -131,7 +131,7 @@ class UserController extends BaseController
         }
         unset($data['code']);
 
-        $students = Stuends::getInfoByPhone($data['phone']);
+        $students = Students::getInfoByPhone($data['phone']);
         //如果Stuends中有记录，则替换uid
         if($students)
         {
