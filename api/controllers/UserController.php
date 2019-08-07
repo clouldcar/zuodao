@@ -111,7 +111,7 @@ class UserController extends BaseController
         //密码验证及加密
         $pwd = $data['password'];
         $confrim_pwd = $data['repassword'];
-        if(count($pwd) < 6) {
+        if(strlen($pwd) < 6) {
             return Utils::returnMsg('1', '密码长度不能小于6位');
         }
         if($confrim_pwd <> $pwd) {

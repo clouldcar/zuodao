@@ -37,6 +37,7 @@ class Temporary extends \yii\db\ActiveRecord
     ];
 
     const IDENTITY_TEXT = [
+        0 => '学员',
         1 => '导师',
         2 => '总教练', 
         3 => '教练',
