@@ -143,10 +143,7 @@ class UserController extends BaseController
         }
 
         //默认头像
-        if(!$students->avatar) 
-        {
-            $data['avatar'] = Utils::avatar($data['id']);
-        }
+        $data['avatar'] = Utils::avatar($data['id']);
 
         $data['ctime'] = date('Y-m-d H:i:s');
 
