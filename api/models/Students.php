@@ -178,7 +178,7 @@ class Students extends \yii\db\ActiveRecord
 
     public static function getInfoByPhone($phone){
         $where = ['phone' => $phone, 'status' => 0];
-        return self::find()->where()->orderBy('id desc')->one();
+        return self::find()->where($where)->orderBy('id desc')->one();
     }
 
     public static function edit($uid, $data)
