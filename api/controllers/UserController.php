@@ -123,17 +123,17 @@ class UserController extends BaseController
 
         $code = $data['code'];
         //短信验证
-        $result = CheckSms::get($data['phone']);
-        $time = time();
-        if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
-        {
-            return Utils::returnMsg('1', '短信验证码不正确或已过期');
-        }
+        // $result = CheckSms::get($data['phone']);
+        // $time = time();
+        // if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
+        // {
+        //     return Utils::returnMsg('1', '短信验证码不正确或已过期');
+        // }
         unset($data['code']);
 
         $data['ctime'] = date('Y-m-d H:i:s');
 
-        
+
         $students = Students::getInfoByPhone($data['phone']);
         if($students)
         {
@@ -151,8 +151,10 @@ class UserController extends BaseController
             'password' => Yii::$app->security->generatePasswordHash($pwd)
         ]);
         $user_model->save();
+        
+        return Utils::returnMsg(0, "success");
 
-        Yii::$app->user->login($user_model, 3600 * 24* 30);
+        // Yii::$app->user->login($user_model, 3600 * 24* 30);
 
         //默认头像
         $data['avatar'] = Utils::avatar($data['uid']);
