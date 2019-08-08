@@ -5,7 +5,8 @@ use Yii;
 use common\helpers\Utils;
 use api\controllers\BaseController;
 use api\models\Team;
-use api\models\UserInfo;
+use api\models\TeamUser;
+use api\models\platform\PlatformTeamUser;
 
 class TeamController extends BaseController
 {
@@ -62,7 +63,7 @@ class TeamController extends BaseController
             'start_date2' => $data['start_date2'],
             'end_date2'   => $data['end_date2'],
             'start_date3' => $data['start_date3'],
-            'end_date3'   => $data['end_date3'],
+            'end_date3'   => $data['end_date3']
         );
 
         $model = new Team();
@@ -190,19 +191,21 @@ class TeamController extends BaseController
 
         $data = Yii::$app->request->get();
         $page = isset($data['page']) ? $data['page'] : 1;
-        $page_size = 20;
+        $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
-        // $filter = [];
-        // if($data['team_id'])
-        // {
-        //     $filter['team_id'] = $data['team_id'];
-        // }
-        // if($data['grade'])
-        // {
-        //     $filter['grade'] = $data['grade'];
-        // }
+        $filter = [];
+        if($data['grade'])
+        {
+            $filter['grade'] = $data['grade'];
+        }
 
-        $result = UserInfo::getTeamUsers($data['team_id'], $page, $page_size);
+
+        $result = PlatformTeamUser::getUsers($this->platform_id, $data['team_id'], $filter, $page, $page_size);
+
+        if($result['list']) foreach ($result['list'] as &$item) 
+        {
+            $item['identity_text'] = TeamUser::IDENTITY_TEXT[$item['identity']];
+        }
 
         return Utils::returnMsg(0, null, $result);
     }
@@ -222,7 +225,7 @@ class TeamController extends BaseController
         	return Utils::returnMsg(1, '参数错误');
         }
         //检查是否为本平台学员
-        if(!UserInfo::checkPlatformkUser($this->platform_id, $data['ids']))
+        if(!PlatformTeamUser::checkPlatformkUser($this->platform_id, $data['ids']))
         {
         	return Utils::returnMsg(1, '学员信息有误');
         }
@@ -233,7 +236,37 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '团队信息有误');
         }
 
-        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, $data['team_id'], $grade);
+        PlatformTeamUser::addTeamUser($this->platform_id, $data['ids'], $data['team_id'], $grade);
+
+        return Utils::returnMsg(0, 'success');
+    }
+
+    public function actionEditUser()
+    {
+        parent::checkPost();
+
+        $data = Yii::$app->request->post();
+        if(!$data['ids'])
+        {
+            return Utils::returnMsg(1, '参数错误');
+        }
+
+        //检查是否为本平台学员
+        if(!PlatformTeamUser::checkPlatformkUser($this->platform_id, $data['ids']))
+        {
+            return Utils::returnMsg(1, '学员信息有误');
+        }
+
+        //检查是否本平台团队
+        $info = Team::getInfoById($data['team_id']);
+        if($info->platform_id != $this->platform_id)
+        {
+            return Utils::returnMsg(1, '团队信息有误');
+        }
+
+        $params = ['identity' => $data['identity']];
+
+        PlatformTeamUser::updateUser($this->platform_id, $data['team_id'], $data['ids'], $params);
 
         return Utils::returnMsg(0, 'success');
     }
@@ -249,7 +282,7 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '参数错误');
         }
         //检查是否为本平台学员
-        if(!UserInfo::checkPlatformkUser($this->platform_id, $data['ids']))
+        if(!PlatformTeamUser::checkPlatformkUser($this->platform_id, $data['ids']))
         {
             return Utils::returnMsg(1, '学员信息有误');
         }
@@ -261,7 +294,8 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '团队信息有误');
         }
 
-        UserInfo::updateTeamInfo($data['ids'], $this->platform_id, 0);
+        $params = ['status' => 1];
+        PlatformTeamUser::updateUser($this->platform_id, $data['team_id'], $data['ids'], $params);
 
         return Utils::returnMsg(0, 'success');
     }

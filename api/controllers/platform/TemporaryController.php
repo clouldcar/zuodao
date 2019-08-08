@@ -7,7 +7,7 @@ use api\models\User;
 use api\models\Temporary;
 
 //外部人员管理
-class TemporaryController extends \yii\web\Controller
+class TemporaryController extends BaseController
 {
     public function init()
     {
@@ -17,7 +17,24 @@ class TemporaryController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        parent::checkGet();
+
+        $data = Yii::$app->request->get();
+
+        $page = isset($data['page']) ? $data['page'] : 1;
+        if($page < 1)
+        {
+            $page = 1;
+        }
+        $page_size = 20;
+
+        $list = Temporary::getUsers($this->platform_id, $page, $page_size);
+        if($list['list']) foreach($list['list'] as &$item)
+        {
+            $item = $this->completion($item);
+        }
+
+        return Utils::returnMsg(0, null, $list);
     }
 
     public function actionCreate()
@@ -34,10 +51,10 @@ class TemporaryController extends \yii\web\Controller
             $data['skilful'] = implode(',', $data['skilful']);
         }
 
-        if(isset($data['identity']) && $data['identity'])
-        {
-            $data['identity'] = implode(',', $data['identity']);
-        }
+        // if(isset($data['identity']) && $data['identity'])
+        // {
+        //     $data['identity'] = implode(',', $data['identity']);
+        // }
         //查询是否是会员
         $user = User::findByUsername($data['phone']);
         if($user)
@@ -62,16 +79,42 @@ class TemporaryController extends \yii\web\Controller
     {
         parent::checkGet();
 
-        $data = Yii::$app->request->get();
+        $uid = Yii::$app->request->get('uid');
 
-        $info = Temporary::getInfo($this->platform_id, $uid);
+        $info = Temporary::getInfo($this->platform_id, $uid)->toArray();
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
         }
 
+        $info = $this->completion($info);
+
         return Utils::returnMsg(0, null, $info);
 
+    }
+
+    private function completion($info)
+    {
+        $info['gender_text'] = Temporary::GENDER_TEXT[$info['gender']];
+        if($info['skilful']) {
+            $skilful = [];
+            foreach(explode(',', $info['skilful']) as $v)
+            {
+                $skilful[] = Temporary::SKILFUL_TEXT[$v];
+            }
+            $info['skilful_text'] = implode(', ', $skilful);
+        }
+
+        if($info['identity']) {
+            $identity = [];
+            foreach(explode(',', $info['identity']) as $v)
+            {
+                $identity[] = Temporary::IDENTITY_TEXT[$v];
+            }
+            $info['identity_text'] = implode(', ', $identity);
+        }
+
+        return $info;
     }
 
     public function actionEdit()
@@ -85,19 +128,19 @@ class TemporaryController extends \yii\web\Controller
             $data['skilful'] = implode(',', $data['skilful']);
         }
 
-        if(isset($data['identity']) && $data['identity'])
-        {
-            $data['identity'] = implode(',', $data['identity']);
-        }
+        // if(isset($data['identity']) && $data['identity'])
+        // {
+        //     $data['identity'] = implode(',', $data['identity']);
+        // }
 
-        $model = new Temporary();
-        $model->setAttributes($data);
-        if ($model->validate() && $model->save()) {
-            return Utils::returnMsg(0, '修改成功');
-        } else {
+        $ret = Temporary::edit($data['uid'], $data);
+
+        if (!$ret) {
             return Utils::returnMsg(1, '修改失败');
+            
         }
 
+        return Utils::returnMsg(0, '修改成功');
     }
 
     public function actionRemove()

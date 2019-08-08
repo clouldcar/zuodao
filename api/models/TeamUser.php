@@ -10,6 +10,14 @@ use yii;
 
 class TeamUser extends  \yii\db\ActiveRecord
 {
+    const IDENTITY_TEXT = [
+        0 => '学员',
+        1 => '导师',
+        2 => '总教练', 
+        3 => '教练',
+        4 => '团长',
+        5 => '助教'
+    ];
      //身份：学员
     const LEVEL_STUDENT = 0;
     //教练
@@ -88,7 +96,7 @@ class TeamUser extends  \yii\db\ActiveRecord
         $list = self::find()
             ->from(self::tableName() . ' as t')
             ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
-            ->select('u.uid, u.real_name, u.avatar, t.permissions, t.create_time')
+            ->select('u.uid, u.real_name, u.avatar, t.identity, t.create_time')
             ->where(['t.team_id'=>$teamId]);
 
 

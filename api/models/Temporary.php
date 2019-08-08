@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\data\Pagination;
+use common\helpers\Utils;
 
 /**
  * This is the model class for table "temporary".
@@ -23,6 +25,25 @@ use Yii;
  */
 class Temporary extends \yii\db\ActiveRecord
 {
+    const GENDER_TEXT = [
+        'F' => '女',
+        'M' => '男'
+    ];
+
+    const SKILFUL_TEXT = [
+        1 => '一阶段',
+        2 => '二阶段',
+        3 => '三阶段',
+    ];
+
+    const IDENTITY_TEXT = [
+        0 => '学员',
+        1 => '导师',
+        2 => '总教练', 
+        3 => '教练',
+        4 => '团长',
+        5 => '助教'
+    ];
     /**
      * @inheritdoc
      */
@@ -68,11 +89,36 @@ class Temporary extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getUsers($platform_id, $page, $page_size)
+    {
+        $query = self::find()->where(['platform_id' => $platform_id])->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page-1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list], 
+            Utils::pagination($pages)
+        );
+    }
+
     public static function getInfo($platform_id, $uid)
     {
         $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];
 
         return self::find()->where($where)->orderBy('id desc')->one();
+    }
+
+    public static function edit($uid, $data)
+    {
+        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid])->execute();
+        return $result;
     }
 
     public static function search($platform_id, $key)

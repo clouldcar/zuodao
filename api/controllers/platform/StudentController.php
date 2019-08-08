@@ -36,9 +36,15 @@ class StudentController extends BaseController
         {
             $page = 1;
         }
-        $page_size = 20;
+        $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
-        $list = Students::getUsersByPlatform($this->platform_id, $page, $page_size);
+        $filter = [];
+        if(isset($data['grade']))
+        {
+            $filter['grade'] = $data['grade'];
+        }
+
+        $list = Students::getUsersByPlatform($this->platform_id, $filter, $page, $page_size);
 
         return Utils::returnMsg(0, null, $list);
     }
@@ -51,6 +57,7 @@ class StudentController extends BaseController
         parent::checkPost();
 
         $data = Yii::$app->request->post();
+        $uid = Yii::$app->user->id;
 
         //检查学员是否存在
         $user_info = Students::getUserByPhone($data['phone'], $this->platform_id);
@@ -63,20 +70,20 @@ class StudentController extends BaseController
         $user = User::findByUsername($data['phone']);
         if($user)
         {
-            $uid = $user->id;
+            $student_uid = $user->id;
         }
         else
         {
-            $uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
+            $student_uid = Utils::createIncrementId(Utils::ID_TYPE_USER);
         }
 
-        $params = array_merge([
-            'uid' => $uid,
+        $params = array_merge($data, [
+            'uid' => $student_uid,
             'platform_id' => $this->platform_id,
             'real_name' => $data['real_name'],
             'phone' => $data['phone'],
             'ctime' => date('Y-m-d H:i:s')
-        ], $data);
+        ]);
 
 
         $model = new Students();
@@ -95,11 +102,15 @@ class StudentController extends BaseController
 
         $uid = Yii::$app->request->get('uid');
 
-        $info = Students::getUserByUID($this->platform_id, $uid);
+        $info = Students::getUserByUID($this->platform_id, $uid)->toArray();
         if(!$info)
         {
             return Utils::returnMsg(1, '记录不存在');
         }
+
+        $info['grade_text'] = Students::GRADE_TEXT[$info['grade']];
+        $info['gender_text'] = Students::GENDER_TEXT[$info['gender']];
+        $info['marriage_text'] = Students::MARRIAGE_TEXT[$info['marriage']];
 
         return Utils::returnMsg(0, null, $info);
     }
@@ -126,12 +137,9 @@ class StudentController extends BaseController
             return Utils::returnMsg(1, '学员不存在');
         }
 
-        if(!$user_info->validate()) 
-        {
-            return Utils::returnMsg(1, '修改失败');
-        }
+        $ret = Students::edit($data['uid'], $data);
 
-        if(!$user_info->save()) 
+        if(!$ret) 
         {
             return Utils::returnMsg(1, '修改失败');
         } 

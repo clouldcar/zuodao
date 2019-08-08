@@ -13,6 +13,7 @@ use api\models\LoginForm;
 use api\models\CheckSms;
 use api\models\User;
 use api\models\UserInfo;
+use api\models\Students;
 use api\models\Plan;
 
 
@@ -110,7 +111,7 @@ class UserController extends BaseController
         //密码验证及加密
         $pwd = $data['password'];
         $confrim_pwd = $data['repassword'];
-        if(count($pwd) < 6) {
+        if(strlen($pwd) < 6) {
             return Utils::returnMsg('1', '密码长度不能小于6位');
         }
         if($confrim_pwd <> $pwd) {
@@ -130,27 +131,23 @@ class UserController extends BaseController
         }
         unset($data['code']);
 
-        $data['uid'] = $uid;
-        $data['ctime'] = date('Y-m-d H:i:s');
-
-        $model = UserInfo::getInfoByPhone($data['phone']);
-        //如果user_info中有记录，则替换uid
-        if($model)
+        $students = Students::getInfoByPhone($data['phone']);
+        //如果Stuends中有记录，则替换uid
+        if($students)
         {
-            $model->isNewRecord = false;
-            $data['id'] = $model->uid;
+            $data['uid'] = $students->uid;
         }
         else
         {
-            $model = new UserInfo();
+            $data['uid'] = $uid;
         }
 
         //默认头像
-        if(!$model->avatar) 
-        {
-            $data['avatar'] = Utils::avatar($uid);
-        }
+        $data['avatar'] = Utils::avatar($data['uid']);
 
+        $data['ctime'] = date('Y-m-d H:i:s');
+
+        $model = new UserInfo();
         $model->setAttributes($data);
 
         if(!$model->validate())
@@ -166,11 +163,14 @@ class UserController extends BaseController
         //修改用户
         $user_model = User::findIdentity($uid);
         $user_model->setAttributes([
+            'id' => $data['uid'],
             'updated_at' => $data['ctime'],
             'username' => $data['phone'],
             'password' => Yii::$app->security->generatePasswordHash($pwd)
         ]);
         $user_model->save();
+
+        Yii::$app->user->login($user_model, 3600 * 24* 30);
 
         return Utils::returnMsg(0, "success");
     }

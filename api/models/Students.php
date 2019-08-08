@@ -35,6 +35,26 @@ use common\helpers\Utils;
  */
 class Students extends \yii\db\ActiveRecord
 {
+
+    const GRADE_TEXT = [
+        0 => '未上课',
+        1 => '一阶段未上课',
+        2 => '一阶段毕业',
+        3 => '二阶段未上课',
+        4 => '二阶段毕业',
+        5 => '三阶段未上课',
+        6 => '三阶段毕业',
+    ];
+
+    const GENDER_TEXT = [
+        'F' => '女',
+        'M' => '男'
+    ];
+
+    const MARRIAGE_TEXT = [
+        0 => '未婚',
+        1 => '已婚',
+    ];
     /**
      * @inheritdoc
      */
@@ -49,13 +69,12 @@ class Students extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'age', 'reference', 'ctime'], 'required'],
-            [['id', 'platform_id', 'age', 'reference'], 'integer'],
+            [['uid', 'age', 'ctime'], 'required'],
+            [['uid', 'platform_id', 'age', 'reference'], 'integer'],
             [['ctime'], 'safe'],
             [['grade', 'status'], 'string', 'max' => 4],
             [['phone', 'real_name', 'gender', 'birthday', 'minorities', 'marriage', 'city'], 'string', 'max' => 100],
-            [['avatar', 'qualifications', 'pin', 'email', 'qq', 'wchart', 'work', 'job', 'address'], 'string', 'max' => 255],
-            [['id'], 'unique'],
+            [['avatar', 'qualifications', 'pin', 'email', 'qq', 'wchart', 'work', 'job', 'address'], 'string', 'max' => 255]
         ];
     }
 
@@ -91,9 +110,33 @@ class Students extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getUsersByPlatform($platform_id, $page, $page_size)
+    public static function getUsersByPlatform($platform_id, $filter = [], $page, $page_size)
     {
-        $query = self::find()->where(['platform_id' => $platform_id])->orderBy('id desc');
+        $where = ['platform_id' => $platform_id];
+        
+        $query = self::find()->where($where);
+        if($filter)
+        {
+            if(isset($filter['grade']) && $filter['grade'] == 0)
+            {
+                $query->andWhere(['and', 'grade=0']);
+            }
+            if($filter['grade'] && $filter['grade'] == 1)
+            {
+                $query->andWhere(['or', 'grade=1', 'grade=2']);
+            }
+            if($filter['grade'] && $filter['grade'] == 2)
+            {
+                $query->andWhere(['or', 'grade=3', 'grade=4']);
+            }
+            if($filter['grade'] && $filter['grade'] == 3)
+            {
+                $query->andWhere(['or', 'grade=5', 'grade=6']);
+            }
+        }
+        
+
+        $query->orderBy('id desc');
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
@@ -131,6 +174,17 @@ class Students extends \yii\db\ActiveRecord
         $where = ['uid' => $uid, 'platform_id' => $platform_id, 'status' => 0];
 
         return self::find()->where($where)->orderBy('id desc')->one();
+    }
+
+    public static function getInfoByPhone($phone){
+        $where = ['phone' => $phone, 'status' => 0];
+        return self::find()->where($where)->orderBy('id desc')->one();
+    }
+
+    public static function edit($uid, $data)
+    {
+        $result = Yii::$app->db->createCommand()->update(self::tableName(), $data, "uid=:uid", [':uid' => $uid])->execute();
+        return $result;
     }
 
     /**
