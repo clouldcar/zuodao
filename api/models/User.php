@@ -56,15 +56,23 @@ class User extends \common\models\User
         return array_merge($userInfo, $userWithPlatformInfo, $userWithTeamInfo);
     }
 
+    public static function getUserByPhone($phone)
+    {
+        return self::find()->where([
+            'phone' => $phone,
+            'status' => 0
+        ])->one();
+    }
+
    /**
     * 批量修改用户是否激活状态
     * @param  [type] $where [description]
     * @return [type]        [description]
     */
-    public function updateUserStatus($where)
+    public static function deleteUser($uid)
     {
-        $sql = "UPDATE `shop_user` SET status = :status WHERE ".$where;
-        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED])->execute();
+        $sql = "UPDATE " . self::tableName() . " SET status = :status WHERE id = :uid";
+        return Yii::$app->db->createCommand($sql, [':status' => static::STATUS_DELETED, ':uid' => $uid])->execute();
     }
 
     /*
