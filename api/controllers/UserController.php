@@ -283,7 +283,7 @@ class UserController extends BaseController
 
     public function actionSmsCode()
     {
-        parent::checkLogin();
+        // parent::checkLogin();
         parent::checkPost();
         
         $data = Yii::$app->request->post();
