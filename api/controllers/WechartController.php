@@ -56,7 +56,7 @@ class WechartController extends BaseController
         $result = json_decode($response);
 
         //检查用户表
-        $user = User::findOne(['wx_unionid' => $result->unionid]);
+        $user = User::findOne(['wx_unionid' => $result->unionid, 'status' => 0]);
 
         //已存在->登录
         if ($user) {

@@ -133,68 +133,43 @@ class UserController extends BaseController
 
         $data['ctime'] = date('Y-m-d H:i:s');
 
-        $user = User::getUserByPhone($data['phone']);
-        if($user)
+        
+        $students = Students::getInfoByPhone($data['phone']);
+        if($students)
         {
-            $wx_unionid = Yii::$app->user->identity->wx_unionid;
-
-            $user->setAttributes([
-                'updated_at' => $data['ctime'],
-                'wx_unionid' => $wx_unionid
-            ]);
-            $user->save();
-
-            //删除扫码的用户数据
-            User::deleteUser($uid);
-
-            Yii::$app->user->login($user, 3600 * 24* 30);
-
+            $data['uid'] = $students->uid;
+        }else {
+            $data['uid'] = $uid;
         }
-        else
+
+        //修改用户
+        $user_model = User::findIdentity($uid);
+        $user_model->setAttributes([
+            'id' => $data['uid'],
+            'updated_at' => $data['ctime'],
+            'username' => $data['phone'],
+            'password' => Yii::$app->security->generatePasswordHash($pwd)
+        ]);
+        $user_model->save();
+
+        Yii::$app->user->login($user_model, 3600 * 24* 30);
+
+        //默认头像
+        $data['avatar'] = Utils::avatar($data['uid']);
+
+        $model = new UserInfo();
+        $model->setAttributes($data);
+
+        if(!$model->validate())
         {
-            $students = Students::getInfoByPhone($data['phone']);
-            if($students)
-            {
-                $data['uid'] = $students->uid;
-            }else {
-                $data['uid'] = $uid;
-            }
-
-            //修改用户
-            $user_model = User::findIdentity($uid);
-            $user_model->setAttributes([
-                'id' => $data['uid'],
-                'updated_at' => $data['ctime'],
-                'username' => $data['phone'],
-                'password' => Yii::$app->security->generatePasswordHash($pwd)
-            ]);
-            $user_model->save();
-
-            Yii::$app->user->login($user_model, 3600 * 24* 30);
-
-            //默认头像
-            $data['avatar'] = Utils::avatar($data['uid']);
-
-            $model = new UserInfo();
-            $model->setAttributes($data);
-
-            if(!$model->validate())
-            {
-                return Utils::returnMsg(1, "参数有误");
-            }
-
-            if (!$model->save())
-            {
-                return Utils::returnMsg(1, "fail");
-            }
-
-
+            return Utils::returnMsg(1, "参数有误");
         }
-        
 
-        
+        if (!$model->save())
+        {
+            return Utils::returnMsg(1, "fail");
+        }
 
-        
 
         return Utils::returnMsg(0, "success");
     }
