@@ -51,6 +51,13 @@ class TeamUser extends  \yii\db\ActiveRecord
         return true;
     }
 
+    public static function batchAddMember($data)
+    {
+        $col = ['platform_id', 'team_id', 'uid', 'grade', 'permissions'];
+        $num = Yii::$app->db->createCommand()->batchInsert(self::tableName(), $col, $data)->execute();
+        return $num;
+    }
+
     /*
     * @name 增加成员
     */

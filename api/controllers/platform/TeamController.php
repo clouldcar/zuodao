@@ -15,6 +15,20 @@ class TeamController extends BaseController
         parent::checkPlatformUser();
     }
 
+    public function actionGlobal()
+    {
+        $result['category'] = [
+            0 => '学员',
+            1 => '导师',
+            2 => '总教练',
+            3 => '教练', 
+            4 => '团长',
+            5 => '助教'
+        ];
+
+        return Utils::returnMsg(0, null, $result);
+    }
+
 	public function actionIndex()
 	{
 		parent::checkGet();
@@ -41,9 +55,14 @@ class TeamController extends BaseController
 
         $params = array(
             'name' => $data['name'],
-            'uid' => Yii::$app->user->id,
+            'uid'  => Yii::$app->user->id,
             'platform_id' => $this->platform_id,
-            'start_date' => $data['start_date']
+            'start_date1' => $data['start_date1'],
+            'end_date1'   => $data['end_date1'],
+            'start_date2' => $data['start_date2'],
+            'end_date2'   => $data['end_date2'],
+            'start_date3' => $data['start_date3'],
+            'end_date3'   => $data['end_date3'],
         );
 
         $model = new Team();
@@ -53,6 +72,70 @@ class TeamController extends BaseController
         {
             return Utils::returnMsg(1, '创建失败');
         }
+        $team_id = Yii::app()->db->getLastInsertID();
+
+        //添加成员grade1、2、3 or members = ['grade' => 1、2、3, 'uid'=>1, 'identity' => 1]
+        $insert_data = [];
+        /*
+        if(isset($data['members']) && $data['members'])
+        {
+            foreach($data['members'] as $item) 
+            {
+                $insert_data[] = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'uid' => $item['uid'],
+                    'grade' => $item['grade'],
+                    'permissions' => $item['permissions']
+                ];
+            }
+        }
+        */
+
+        
+        //一阶段
+        if(isset($data['grade1']) && $data['grade1'])
+        {
+            foreach($data['grade1'] as $item) 
+            {
+                $insert_data[] = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'uid' => $item['uid'],
+                    'grade' => 1,
+                    'permissions' => $item['permissions']
+                ];
+            }
+        }
+        //二阶段
+        if(isset($data['grade2']) && $data['grade2'])
+        {
+            foreach($data['grade2'] as $item) 
+            {
+                $insert_data[] = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'uid' => $item['uid'],
+                    'grade' => 2,
+                    'permissions' => $item['permissions']
+                ];
+            }
+        }
+        //三阶段
+        if(isset($data['grade3']) && $data['grade3'])
+        {
+            foreach($data['grade3'] as $item) 
+            {
+                $insert_data[] = [
+                    'platform_id' => $this->platform_id,
+                    'team_id' => $team_id,
+                    'uid' => $item['uid'],
+                    'grade' => 3,
+                    'permissions' => $item['permissions']
+                ];
+            }
+        }
+        TeamUser::batchAddMember($insert_data);
 
         return Utils::returnMsg(0, '创建成功');
     }
