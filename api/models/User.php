@@ -59,7 +59,7 @@ class User extends \common\models\User
     public static function getUserByPhone($phone)
     {
         return self::find()->where([
-            'phone' => $phone,
+            'username' => $phone,
             'status' => 0
         ])->one();
     }
