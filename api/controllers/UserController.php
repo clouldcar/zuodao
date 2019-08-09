@@ -144,15 +144,10 @@ class UserController extends BaseController
 
         //修改用户
         $user_model = User::findIdentity($uid);
-        $user_model->setAttributes([
-            'id' => $data['uid'],
-            'updated_at' => $data['ctime'],
-            'username' => $data['phone'],
-            'password' => Yii::$app->security->generatePasswordHash($pwd)
-        ]);
+        $user_model->updated_at = $data['ctime'];
+        $user_model->username = $data['phone'];
+        $user_model->password = Yii::$app->security->generatePasswordHash($pwd);
         $user_model->save();
-        
-        return Utils::returnMsg(0, "success");
 
         // Yii::$app->user->login($user_model, 3600 * 24* 30);
 
