@@ -123,12 +123,12 @@ class UserController extends BaseController
 
         $code = $data['code'];
         //短信验证
-        // $result = CheckSms::get($data['phone']);
-        // $time = time();
-        // if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
-        // {
-        //     return Utils::returnMsg('1', '短信验证码不正确或已过期');
-        // }
+        $result = CheckSms::get($data['phone']);
+        $time = time();
+        if(!$result || $result[0]['code'] != $data['code'] || $time - strtotime($result[0]['ctime']) > 300)
+        {
+            return Utils::returnMsg('1', '短信验证码不正确或已过期');
+        }
         unset($data['code']);
 
         $data['ctime'] = date('Y-m-d H:i:s');
