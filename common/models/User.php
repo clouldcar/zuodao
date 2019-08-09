@@ -8,8 +8,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const SIGNSTATUS_FRONTEND = 1;
     const SIGNSTATUS_BACKEND = 2;
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE  = 1;
+    const STATUS_DELETED = 1;
+    const STATUS_ACTIVE  = 0;
     public $auth_key;
     
     public static function tableName()

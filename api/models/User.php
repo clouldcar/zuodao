@@ -7,9 +7,6 @@ use Yii;
 class User extends \common\models\User
 {
 
-    const STATUS_DELETED = 1;
-    const STATUS_OK = 0;
-
     /**
      * @inheritdoc
      */
@@ -63,7 +60,7 @@ class User extends \common\models\User
     {
         return self::find()->where([
             'username' => $phone,
-            'status' => self::STATUS_OK
+            'status' => self::STATUS_ACTIVE
         ])->one();
     }
 
