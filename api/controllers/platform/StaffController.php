@@ -68,6 +68,13 @@ class StaffController extends BaseController
 		parent::checkPost();
 
 		$data = Yii::$app->request->post();
+
+        $user = UserInfo::getInfoByUID($data['uid']);
+        if(!$user)
+        {
+            return Utils::returnMsg(1, "此用户不存在");
+        }
+
 		$model = new PlatformUser();
 		if($model->isExists($data['uid'], $this->platform_id))
 		{
@@ -77,8 +84,7 @@ class StaffController extends BaseController
 		$params = [
             'uid'    => $data['uid'],
             'platform_id'   => $this->platform_id,
-            'permissions'=> $data['permissions'],
-            'status'     => self::PLATFORM_STATUS
+            'permissions'=> $data['permissions']
         ];
 
         $platform = $model->addStaff($params);

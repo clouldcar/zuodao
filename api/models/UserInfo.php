@@ -86,7 +86,7 @@ class UserInfo extends \yii\db\ActiveRecord
     //$type 0全部,1基础信息
     public static function getInfoByUID($uid, $type = 0)
     {
-        $query = self::find()->where(['uid' => $uid]);
+        $query = self::find()->where(['uid' => $uid, 'status' => 0]);
 
         if($type == 1)
         {
@@ -103,16 +103,16 @@ class UserInfo extends \yii\db\ActiveRecord
     //$type 0全部,1基础信息
     public static function getInfoByPhone($phone, $type = 0)
     {
-        $query = self::find()->where(['phone' => $phone]);
+        $query = self::find()->where(['phone' => $phone, 'status' => 0]);
 
         if($type == 1)
         {
-            $query = $query->select('uid, real_name, avatar');
+            $query->select('uid, real_name, avatar');
         }
 
-        $query = $query->orderBy('id desc')->one();
+        $query->orderBy('id desc');
 
-        return $query;
+        return $query->one();
     }
 
     public static function getPlatformUserByPhone($phone, $platform_id)
