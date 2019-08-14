@@ -73,7 +73,7 @@ class TeamController extends BaseController
         {
             return Utils::returnMsg(1, '创建失败');
         }
-        $team_id = Yii::app()->db->getLastInsertID();
+        $team_id = Yii::$app->db->getLastInsertID();
 
         //添加成员grade1、2、3 or members = ['grade' => 1、2、3, 'uid'=>1, 'identity' => 1]
         $insert_data = [];
