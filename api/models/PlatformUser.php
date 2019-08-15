@@ -72,14 +72,13 @@ class PlatformUser extends  \yii\db\ActiveRecord
      * @param platform_id 平台id $type  用户权限控制 0为所有用户
      * @return array()
      */
-    public function getUsers($platform_id, $type, $filter, $page = 1, $page_size = 20){
+    public function getUsers($platform_id, $type, $page = 1, $page_size = 20){
         $where = [];
 
         if($type)
         {
             $where = ['p.permissions' => $type];
         }
-
 
         $query = $this->find()
             ->from(self::tableName() . ' as p')
@@ -89,25 +88,6 @@ class PlatformUser extends  \yii\db\ActiveRecord
         if($where)
         {
             $query = $query->andWhere($where);
-        }
-        if($filter)
-        {
-            if(isset($filter['grade']) && $filter['grade'] == 0)
-            {
-                $query->andWhere(['and', 'p.grade=0']);
-            }
-            if($filter['grade'] && $filter['grade'] == 1)
-            {
-                $query->andWhere(['or', 'p.grade=1', 'p.grade=2']);
-            }
-            if($filter['grade'] && $filter['grade'] == 2)
-            {
-                $query->andWhere(['or', 'p.grade=3', 'p.grade=4']);
-            }
-            if($filter['grade'] && $filter['p.grade'] == 3)
-            {
-                $query->andWhere(['or', 'p.grade=5', 'p.grade=6']);
-            }
         }
 
         $countQuery = clone $query;

@@ -38,11 +38,11 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
 
             if($filter['grade'] && $filter['grade'] == 2)
             {
-                $query->andWhere(['or', 'grade=3', 'grade=4']);
+                $query->andWhere(['or', 'tu.grade=3', 'tu.grade=4']);
             }
             if($filter['grade'] && $filter['grade'] == 3)
             {
-                $query->andWhere(['or', 'grade=5', 'grade=6']);
+                $query->andWhere(['or', 'tu.grade=5', 'tu.grade=6']);
             }
         }
         
