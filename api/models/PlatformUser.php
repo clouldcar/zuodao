@@ -94,19 +94,19 @@ class PlatformUser extends  \yii\db\ActiveRecord
         {
             if(isset($filter['grade']) && $filter['grade'] == 0)
             {
-                $query->andWhere(['and', 'grade=0']);
+                $query->andWhere(['and', 'p.grade=0']);
             }
             if($filter['grade'] && $filter['grade'] == 1)
             {
-                $query->andWhere(['or', 'grade=1', 'grade=2']);
+                $query->andWhere(['or', 'p.grade=1', 'p.grade=2']);
             }
             if($filter['grade'] && $filter['grade'] == 2)
             {
-                $query->andWhere(['or', 'grade=3', 'grade=4']);
+                $query->andWhere(['or', 'p.grade=3', 'p.grade=4']);
             }
-            if($filter['grade'] && $filter['grade'] == 3)
+            if($filter['grade'] && $filter['p.grade'] == 3)
             {
-                $query->andWhere(['or', 'grade=5', 'grade=6']);
+                $query->andWhere(['or', 'p.grade=5', 'p.grade=6']);
             }
         }
 
