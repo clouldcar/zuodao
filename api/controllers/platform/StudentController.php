@@ -9,6 +9,7 @@ use api\models\User;
 use api\models\UserInfo;
 use api\models\Student;
 use api\models\Students;
+use api\models\platform\PlatformTeamUser;
 
 class StudentController extends BaseController
 {
@@ -90,6 +91,17 @@ class StudentController extends BaseController
         $model->setAttributes($params);
 
         if ($model->validate() && $model->save()) {
+            //加入到团队
+            if(isset($data['team_id']) && $data['team_id'])
+            {
+                PlatformTeamUser::addTeamUser(
+                    $this->platform_id, 
+                    [$student_uid], 
+                    $data['team_id'], 
+                    $data['grade']
+                );
+            }
+            
             return Utils::returnMsg(0, '添加学员成功');
         } else {
             return Utils::returnMsg(1, '添加学员失败');
@@ -142,7 +154,7 @@ class StudentController extends BaseController
         if(!$ret) 
         {
             return Utils::returnMsg(1, '修改失败');
-        } 
+        }
         
         return Utils::returnMsg(0, '修改成功');  
     }

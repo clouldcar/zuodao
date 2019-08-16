@@ -50,7 +50,7 @@ class Team extends  \yii\db\ActiveRecord
         if($teamList) foreach($teamList as &$team)
         {
             $team['total'] = TeamUser::find()->where(['team_id' => $team['id']])->count();
-            $team['manager'] = UserInfo::find()->select('uid,real_name,avatar')->where(['uid' => $team['uid']])->one()->asArray();
+            $team['manager'] = UserInfo::find()->select('uid,real_name,avatar')->where(['uid' => $team['uid']])->one()->toArray();
         }
 
         return $teamList;
