@@ -164,7 +164,7 @@ class PlanController extends BaseController
             'team_ideal' => $detail['team_ideal'],
             'vow' => $detail['vow'],
             'idea' => $detail['idea'],
-            'inspire' => $detail['inspire'],
+            'inspire' => $detail['impel'],
             'social_service' => $detail['social_service']
         ];
 
