@@ -97,7 +97,7 @@ class TeamUser extends  \yii\db\ActiveRecord
             ->from(self::tableName() . ' as t')
             ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
             ->select('u.uid, u.real_name, u.avatar, t.identity, t.create_time')
-            ->where(['t.team_id'=>$teamId]);
+            ->where(['t.team_id'=>$teamId, 't.status' => 0, 'u.status' => 0]);
 
 
         if($limit)
