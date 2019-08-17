@@ -199,7 +199,6 @@ class TeamController extends BaseController
             $filter['grade'] = $data['grade'];
         }
 
-
         $result = PlatformTeamUser::getUsers($this->platform_id, $data['team_id'], $filter, $page, $page_size);
 
         if($result['list']) foreach ($result['list'] as &$item) 

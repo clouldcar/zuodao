@@ -84,7 +84,7 @@ class PlatformUser extends  \yii\db\ActiveRecord
             ->from(self::tableName() . ' as p')
             ->leftJoin(UserInfo::tableName() . ' as u','u.uid = p.uid')
             ->select('p.uid, p.permissions, p.create_time, u.real_name, u.avatar')
-            ->where(['p.platform_id' => $platform_id, 'p.status' => 0]);
+            ->where(['p.platform_id' => $platform_id, 'p.status' => 0, 'u.status' => 0]);
         if($where)
         {
             $query = $query->andWhere($where);
