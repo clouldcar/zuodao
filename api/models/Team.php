@@ -68,7 +68,7 @@ class Team extends  \yii\db\ActiveRecord
         $result = $this->find()->select($select)->where(['id' => $teamId, 'status' => 0])->one()->toArray();
         if($result)
         {
-            $result['total'] = TeamUser::find()->where(['team_id' => $teamId])->count();
+            $result['total'] = count(TeamUser::membersList($teamId));
 
             $result['manager'] = UserInfo::getInfoByUID($result['uid'], 1);
         }
