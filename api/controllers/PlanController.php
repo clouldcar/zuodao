@@ -98,13 +98,7 @@ class PlanController extends BaseController
 
         $info = Plan::info($id);
 
-        //鉴权
-        if($info['uid'] != $uid)
-        {
-            return Utils::returnMsg(1, '内容不存在');
-        }
-        
-        //判断是否团队成员
+        //鉴权，判断是否团队成员
         if(!TeamUser::hasUser($info['team_id'], $uid))
         {
             return Utils::returnMsg(1, '非法操作');
