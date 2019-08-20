@@ -147,7 +147,7 @@ class WeekPlanController extends BaseController
 
         $params = [
             'score' => $data['score1'],
-            'note' => $data['note'],
+            'note' => isset($data['note']) ? $data['note'] : '',
             'updated_at' => date('Y-m-d H:i:s')
         ];
 
