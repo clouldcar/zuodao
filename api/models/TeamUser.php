@@ -126,7 +126,7 @@ class TeamUser extends  \yii\db\ActiveRecord
 
     public static function hasUser($teamId, $uid)
     {
-        return self::find()->where(['team_id' => $teamId, 'uid' => $uid])->count();
+        return self::find()->where(['team_id' => $teamId, 'grade' => 6, 'uid' => $uid])->count();
     }
 
 
