@@ -26,7 +26,7 @@ class Team extends  \yii\db\ActiveRecord
         $query = $this->find()
                 ->select('team_id')
                 ->from(TeamUser::tableName())
-                ->where(['uid' => $uid, 'status' => 0])
+                ->where(['uid' => $uid, 'grade' => 6, 'status' => 0])
                 ->asArray()
                 ->all();
         if($query) foreach($query as $item)

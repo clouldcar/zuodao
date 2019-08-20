@@ -92,7 +92,7 @@ class UserController extends BaseController
         if ($model->validate() && $model->login()) {
             return Utils::returnMsg(0, "登录成功", ['status' => empty(Yii::$app->user->identity->updated_at)]);
         } else {
-            return Utils::returnMsg(1, "登录失败");
+            return Utils::returnMsg(1, "账号不存在或密码错误");
         }
     }
 
