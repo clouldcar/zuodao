@@ -78,6 +78,19 @@ class UserController extends BaseController
         }
     }
 
+    public function actionInfo()
+    {
+        parent::checkLogin();
+        parent::checkGet();
+
+        $uid = Yii::$app->user->id;
+
+        $info = UserInfo::getInfoByUID($uid, 1);
+
+        return Utils::returnMsg(0, null, $info);
+
+    }
+
     public function actionLogin()
     {
         $model = new LoginForm();

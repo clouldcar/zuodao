@@ -46,10 +46,11 @@ class TemporaryController extends BaseController
         $data['platform_id'] = $this->platform_id;
         $data['ctime'] = date('Y-m-d H:i:s');
 
-        if(isset($data['skilful']) && $data['skilful'])
+        if(is_array($data['skilful']))
         {
             $data['skilful'] = implode(',', $data['skilful']);
         }
+            
 
         // if(isset($data['identity']) && $data['identity'])
         // {
