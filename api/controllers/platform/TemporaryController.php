@@ -105,6 +105,7 @@ class TemporaryController extends BaseController
                 $skilful[] = Temporary::SKILFUL_TEXT[$v];
             }
             $info['skilful_text'] = implode(', ', $skilful);
+            $info['skilful'] = $skilful;
         }
 
         if($info['identity']) {
