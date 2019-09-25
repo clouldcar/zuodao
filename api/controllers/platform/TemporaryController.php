@@ -46,8 +46,9 @@ class TemporaryController extends BaseController
         $data['platform_id'] = $this->platform_id;
         $data['ctime'] = date('Y-m-d H:i:s');
 
-        if(is_array($data['skilful']))
+        if(!empty($data['skilful']))
         {
+            $skilful = json_decode($data['skilful'], true);
             $data['skilful'] = implode(',', $data['skilful']);
         }
             
