@@ -40,6 +40,14 @@ class StudentController extends BaseController
         $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
         $filter = [];
+        if(isset($data['uid']))
+        {
+            $filter['uid'] = $data['uid'];
+        }
+        if(isset($data['q']))
+        {
+            $filter['real_name'] = $data['q'];
+        }
         if(isset($data['grade']))
         {
             $filter['grade'] = $data['grade'];

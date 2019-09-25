@@ -133,6 +133,16 @@ class Students extends \yii\db\ActiveRecord
             {
                 $query->andWhere(['or', 'grade=5', 'grade=6']);
             }
+
+            if($filter['uid'])
+            {
+                $query->andWhere(['and', 'uid='.$filter['uid']]);
+            }
+
+            if($filter['real_name'])
+            {
+                $query->andWhere(['and', "real_name like '%" . $filter['uid'] . "%'"]);
+            }
         }
         
 
