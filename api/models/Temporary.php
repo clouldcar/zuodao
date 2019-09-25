@@ -58,7 +58,7 @@ class Temporary extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'platform_id', 'real_name', 'phone', 'gender', 'minorities', 'graduate', 'designation', 'skilful', 'identity', 'ctime'], 'required'],
+            [['uid', 'platform_id', 'real_name', 'phone', 'gender', 'minorities', 'skilful', 'identity', 'ctime'], 'required'],
             [['uid', 'platform_id'], 'integer'],
             [['ctime'], 'safe'],
             [['real_name', 'phone', 'gender', 'minorities', 'skilful', 'identity'], 'string', 'max' => 100],
