@@ -100,11 +100,13 @@ class TemporaryController extends BaseController
         $info['gender_text'] = Temporary::GENDER_TEXT[$info['gender']];
         if($info['skilful']) {
             $skilful = [];
+            $skilful_text = [];
             foreach(explode(',', $info['skilful']) as $v)
             {
-                $skilful[] = Temporary::SKILFUL_TEXT[$v];
+                $skilful[] = $v;
+                $skilful_text[] = Temporary::SKILFUL_TEXT[$v];
             }
-            $info['skilful_text'] = implode(', ', $skilful);
+            $info['skilful_text'] = implode(', ', $skilful_text);
             $info['skilful'] = $skilful;
         }
 
