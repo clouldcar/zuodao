@@ -69,7 +69,7 @@ class Students extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'age', 'ctime'], 'required'],
+            [['uid', 'real_name', 'phone', 'ctime'], 'required'],
             [['uid', 'platform_id', 'age', 'reference'], 'integer'],
             [['ctime'], 'safe'],
             [['grade', 'status'], 'string', 'max' => 4],
