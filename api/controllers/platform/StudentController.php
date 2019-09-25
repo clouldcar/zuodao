@@ -120,9 +120,9 @@ class StudentController extends BaseController
             return Utils::returnMsg(1, '记录不存在');
         }
 
-        $info['grade_text'] = Students::GRADE_TEXT[$info['grade']];
-        $info['gender_text'] = Students::GENDER_TEXT[$info['gender']];
-        $info['marriage_text'] = Students::MARRIAGE_TEXT[$info['marriage']];
+        $info['grade_text'] = $info['grade'] ? Students::GRADE_TEXT[$info['grade']] : '';
+        $info['gender_text'] = $info['gender'] ? Students::GENDER_TEXT[$info['gender']] : '';
+        $info['marriage_text'] = $info['marriage'] ? Students::MARRIAGE_TEXT[$info['marriage']] : '';
 
         return Utils::returnMsg(0, null, $info);
     }
