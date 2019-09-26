@@ -167,7 +167,7 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '团队信息有误');
         }
 
-        PlatformTeamUser::addTeamUser($this->platform_id, $data['ids'], $data['team_id'], $grade);
+        PlatformTeamUser::addTeamUser($this->platform_id, $data['ids'], $data['team_id'], $info['grade']);
 
         return Utils::returnMsg(0, 'success');
     }
