@@ -126,7 +126,7 @@ class TeamController extends BaseController
         $page_size = isset($data['page_size']) ? $data['page_size'] : 20;
 
         $filter = [];
-        if($data['grade'])
+        if(isset($data['grade']) && !empty($data['grade']))
         {
             $filter['grade'] = $data['grade'];
         }
