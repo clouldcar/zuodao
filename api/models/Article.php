@@ -234,6 +234,9 @@ class Article extends \yii\db\ActiveRecord {
     */
     public static function info($id) {
         $info = self::find()->where(['id' => $id, 'status' => 0])->asArray()->one();
+        $info['cid'] = (int) $info['cid'];
+        $info['type'] = (int) $info['type'];
+        $info['send_to'] = (int) $info['send_to'];
 
         if($info)
         {
