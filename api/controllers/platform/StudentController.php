@@ -44,13 +44,17 @@ class StudentController extends BaseController
         {
             $filter['uid'] = $data['uid'];
         }
-        if(isset($data['q']))
+        if(isset($data['real_name']))
         {
-            $filter['real_name'] = $data['q'];
+            $filter['real_name'] = $data['real_name'];
         }
         if(isset($data['grade']))
         {
             $filter['grade'] = $data['grade'];
+        }
+        if(isset($data['is_pay']))
+        {
+            $filter['is_pay'] = $data['is_pay'];
         }
 
         $list = Students::getUsersByPlatform($this->platform_id, $filter, $page, $page_size);

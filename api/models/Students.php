@@ -121,15 +121,15 @@ class Students extends \yii\db\ActiveRecord
             {
                 $query->andWhere(['and', 'grade=0']);
             }
-            if($filter['grade'] && $filter['grade'] == 1)
+            if(isset($filter['grade']) && $filter['grade'] == 1)
             {
                 $query->andWhere(['or', 'grade=1', 'grade=2']);
             }
-            if($filter['grade'] && $filter['grade'] == 2)
+            if(isset($filter['grade']) && $filter['grade'] == 2)
             {
                 $query->andWhere(['or', 'grade=3', 'grade=4']);
             }
-            if($filter['grade'] && $filter['grade'] == 3)
+            if(isset($filter['grade']) && $filter['grade'] == 3)
             {
                 $query->andWhere(['or', 'grade=5', 'grade=6']);
             }
@@ -142,6 +142,11 @@ class Students extends \yii\db\ActiveRecord
             if($filter['real_name'])
             {
                 $query->andWhere(['and', "real_name like '%" . $filter['uid'] . "%'"]);
+            }
+
+            if($filter['is_pay'])
+            {
+                $query->andWhere(['and', "is_pay = " . $filter['is_pay']]);
             }
         }
         
