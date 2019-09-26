@@ -146,7 +146,7 @@ class Students extends \yii\db\ActiveRecord
 
             if(isset($filter['real_name']) && !empty($filter['real_name']))
             {
-                $query->andWhere(['and', "real_name like '%" . $filter['uid'] . "%'"]);
+                $query->andWhere(['and', "real_name like '%" . $filter['real_name'] . "%'"]);
             }
 
             if(isset($filter['is_pay']) && !empty($filter['is_pay']))
