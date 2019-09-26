@@ -31,16 +31,16 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
         //条件
         if($filter)
         {
-            if($filter['grade'] == 1)
+            if(isset($filter['real_name']) && $filter['grade'] == 1)
             {
                 $query->andWhere(['or', 'tu.grade=1', 'tu.grade=2']);
             }
 
-            if($filter['grade'] && $filter['grade'] == 2)
+            if(isset($filter['real_name']) && $filter['grade'] == 2)
             {
                 $query->andWhere(['or', 'tu.grade=3', 'tu.grade=4']);
             }
-            if($filter['grade'] && $filter['grade'] == 3)
+            if(isset($filter['real_name']) && $filter['grade'] == 3)
             {
                 $query->andWhere(['or', 'tu.grade=5', 'tu.grade=6']);
             }
