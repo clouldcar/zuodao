@@ -109,7 +109,7 @@ class ArticleController extends BaseController
             }
         }
         */
-        if(!$result){
+        if(!$article_id){
             return Utils::returnMsg(1, '添加失败');
         }
         return Utils::returnMsg(0, '添加成功');

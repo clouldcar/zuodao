@@ -149,8 +149,6 @@ class TeamController extends BaseController
 
         $data = Yii::$app->request->post();
 
-        $grade = (isset($data['grade']) && $data['grade'] !== '') ? $data['grade'] : null;
-
         if(!$data['ids'])
         {
         	return Utils::returnMsg(1, '参数错误');
