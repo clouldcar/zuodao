@@ -130,6 +130,10 @@ class TeamController extends BaseController
         {
             $filter['grade'] = $data['grade'];
         }
+        if(isset($data['real_name']) && !empty($data['real_name']))
+        {
+            $filter['real_name'] = $data['real_name'];
+        }
 
         $result = PlatformTeamUser::getUsers($this->platform_id, $data['team_id'], $filter, $page, $page_size);
 

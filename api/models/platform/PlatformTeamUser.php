@@ -44,6 +44,11 @@ class PlatformTeamUser extends  \yii\db\ActiveRecord
             {
                 $query->andWhere(['or', 'tu.grade=5', 'tu.grade=6']);
             }
+
+            if(isset($filter['real_name']) && !empty($filter['real_name']))
+            {
+                $query->andWhere(['and', "s.real_name like '%" . $filter['real_name'] . "%'"]);
+            }
         }
         
 
