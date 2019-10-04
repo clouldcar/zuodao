@@ -22,6 +22,18 @@ class Article extends \yii\db\ActiveRecord {
 
 
     const TYPE_4 = 4;
+
+
+    const SEND_TEXT = [
+        0 => '不限',
+        1 => '团队',
+        2 => '毕业专区'
+    ];
+
+    const TYPE_TEXT = [
+        0 => '文章',
+        1 => '通知'
+    ];
     /*
      * @name 增加文章
      * @param
@@ -57,6 +69,12 @@ class Article extends \yii\db\ActiveRecord {
             ->limit($pages->limit)
             ->asArray()
             ->all();
+
+        foreach($list as &$item)
+        {
+            $item['send_to_text'] = self::SEND_TEXT[$item['send_to']];
+            $item['type_text'] = self::TYPE_TEXT[$item['type']];
+        }
 
         return array_merge(
             ['list' => $list],
