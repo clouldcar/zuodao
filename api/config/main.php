@@ -28,6 +28,7 @@ return [
     'modules' => [],
     'components' => [
         'request' => [
+            'enableCsrfCookie' => false,
             'csrfParam' => '_csrf-zuodao',
         ],
         'user' => [
