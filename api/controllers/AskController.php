@@ -5,7 +5,7 @@ namespace api\controllers;
 use Yii;
 use api\models\Question;
 
-class AskController extends BaseController {
+class AskController extends BaseController
 {
     public function beforeAction($action)
     {
@@ -22,6 +22,19 @@ class AskController extends BaseController {
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionInfo()
+    {
+        parent::checkGet();
+        $data = Yii::$app->request->get();
+
+        if(empty($data['id']))
+        {
+            return Utils::returnMsg(1, '缺少必要参数');
+        }
+
+        //$info = 
     }
 
     public function actionCreate()

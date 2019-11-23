@@ -52,4 +52,9 @@ class Ask extends \yii\db\ActiveRecord
             'ctime' => 'Ctime',
         ];
     }
+
+    public static info($id)
+    {
+        return self::find()->where(['id' => $id])->one()->toArray();
+    }
 }
