@@ -3,7 +3,8 @@
 namespace api\controllers;
 
 use Yii;
-use api\models\Question;
+use api\models\Ask;
+use common\helpers\Utils;
 
 class AskController extends BaseController
 {
