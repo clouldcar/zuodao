@@ -342,7 +342,7 @@ class TeamController extends BaseController
             return Utils::returnMsg(1, '非法操作，您不是此团队成员');
         }
 
-        $list = (new TeamUser())->membersList($data['team_id']);
+        $list = TeamUser::membersList($data['team_id']);
         
         return Utils::returnMsg(0, null, $list);
     }
