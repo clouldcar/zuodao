@@ -115,7 +115,7 @@ class TeamUser extends  \yii\db\ActiveRecord
 
         foreach($list as & $item)
         {
-            $item = array_merge($item, UserInfo::getInfoByUID($item['uid'], 1));
+            $item = array_merge($item, UserInfo::getInfoByUID($item['uid'], 1)->toArray());
         }
         
         return $list?$list:[];
