@@ -48,6 +48,11 @@ class AskController extends BaseController
             return Utils::returnMsg(1, '缺少必要参数');
         }
 
+        if(Ask::checkInfo($data['platform_id'], $data['phone']))
+        {
+            return Utils::returnMsg(1, '您已经填写过此问卷');
+        }
+
         $model = new Ask();
         $model->platform_id = $data['platform_id'];
         $model->name = $data['name'];

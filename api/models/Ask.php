@@ -53,8 +53,13 @@ class Ask extends \yii\db\ActiveRecord
         ];
     }
 
-    public static info($id)
+    public static function info($id)
     {
-        return self::find()->where(['id' => $id])->one()->toArray();
+        return self::findOne($id)->toArray();
+    }
+
+    public static function checkInfo($platform_id, $phone)
+    {
+        return self::find()->where(['platform_id' => $platform_id, 'phone' => $phone])->one();
     }
 }
