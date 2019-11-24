@@ -15,6 +15,18 @@ class WechartController extends BaseController
     private $accessTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token';
     private $userInfoUrl = 'https://api.weixin.qq.com/sns/userinfo';
 
+    //移动登录
+    public function actionLogin() {
+        parent::checkGet();
+        $data = Yii::$app->request->get();
+
+        $state = md5(uniqid(rand(), true));
+        Yii::$app->session->set('wx_state', $state);
+        $url = Yii::$app->params['baseUrl'] . 'wechart/auth?state=' . $state . 'code=';
+        
+        return $this->redirect($url);
+    }
+
     public function actionAuth() {
         parent::checkGet();
 

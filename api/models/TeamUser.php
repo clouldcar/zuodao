@@ -105,7 +105,7 @@ class TeamUser extends  \yii\db\ActiveRecord
             $list = $list->limit($limit);
         }
 
-        $list = $list->asArray()->all();
+        $list = $list->toArray()->all();
         
         return $list?$list:[];
     }
