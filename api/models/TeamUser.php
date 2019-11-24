@@ -93,11 +93,18 @@ class TeamUser extends  \yii\db\ActiveRecord
      * @name 展示团队下的成员信息
      */
     public static function membersList($teamId, $limit = null){
+        /*
         $list = self::find()
             ->from(self::tableName() . ' as t')
             ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
             ->select('u.uid, u.real_name, u.avatar, t.identity, t.create_time')
             ->where(['t.team_id'=>$teamId, 't.grade' => 6, 't.status' => 0, 'u.status' => 0]);
+        */
+        $list = self::find()
+            ->select('u.uid, u.real_name, u.avatar, t.identity, t.create_time')
+            ->from(self::tableName() . ' as t')
+            ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
+            ->where(['team_id'=>$teamId, 'grade' => 6, 'status' => 0, 'u.status' => 0]);
 
 
         if($limit)
