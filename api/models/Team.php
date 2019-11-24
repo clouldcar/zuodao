@@ -37,7 +37,7 @@ class Team extends  \yii\db\ActiveRecord
         if($team_ids)
         {
             //自己创建的
-            $select = 'id, uid, name, platform_name, logo, create_time';
+            $select = 'id, uid, name, platform_name, logo, ideal, create_time';
             $where = 'id in(' . implode(',', $team_ids) . ') and status = 0';
             $teamList =  $this->find()
                 ->select($select)
