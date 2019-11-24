@@ -102,7 +102,8 @@ class TeamUser extends  \yii\db\ActiveRecord
         */
         $list = self::find()
             ->select('uid,identity')
-            ->where(['team_id'=>$teamId, 'grade' => 6, 'status' => 0]);
+            ->where(['team_id'=>$teamId, 'grade' => 6, 'status' => 0])
+            ->asArray();
 
 
         if($limit)
