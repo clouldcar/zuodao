@@ -319,24 +319,30 @@ class TeamController extends BaseController
      * @return mixed
      */
     public function actionMemberList(){
-        $teamId = Yii::$app->request->get('team_id');
+        $data = Yii::$app->request->get();
 
-        if(!$teamId) {
-            //TODO 403处理
-            return Utils::redirectMsg('403');
-        }
-
-        //团队信息
-        $model = new Team();
-        $teamInfo = $model->teamInfo($teamId);
-        //TODO 管理员权限验证
-        if(!$this->isManager($teamInfo['uid']))
+        $uid = Yii::$app->user->id;
+        
+        if(empty($data['team_id']))
         {
-            //TODO 403处理
-            return Utils::redirectMsg('403');
+            return Utils::returnMsg('1', '缺少必要参数');
         }
 
-        $list = (new TeamUser())->membersList($teamId);
+        //团队表
+        $teamInfo = (new Team())->teamInfo($data['team_id']);
+        if(!$teamInfo)
+        {
+            //TODO 404处理
+            return Utils::redirectMsg('404');
+        }
+
+        //判断是否团队成员
+        if(!TeamUser::hasUser($data['team_id'], $uid))
+        {
+            return Utils::returnMsg(1, '非法操作，您不是此团队成员');
+        }
+
+        $list = (new TeamUser())->membersList($data['team_id']);
         
         return Utils::returnMsg(0, null, $list);
     }
