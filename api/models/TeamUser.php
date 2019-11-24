@@ -101,10 +101,8 @@ class TeamUser extends  \yii\db\ActiveRecord
             ->where(['t.team_id'=>$teamId, 't.grade' => 6, 't.status' => 0, 'u.status' => 0]);
         */
         $list = self::find()
-            ->select('u.uid, u.real_name, u.avatar, t.identity, t.create_time')
-            ->from(self::tableName() . ' as t')
-            ->leftJoin(UserInfo::tableName() . ' as u','u.uid=t.uid')
-            ->where(['team_id'=>$teamId, 'grade' => 6, 'status' => 0, 'u.status' => 0]);
+            ->select('uid,identity')
+            ->where(['team_id'=>$teamId, 'grade' => 6, 'status' => 0]);
 
 
         if($limit)
@@ -113,6 +111,11 @@ class TeamUser extends  \yii\db\ActiveRecord
         }
 
         $list = $list->all();
+
+        foreach($list as & $item)
+        {
+            $item = array_merge($item, UserInfo::getInfoByUID($item['uid'], 1));
+        }
         
         return $list?$list:[];
     }
