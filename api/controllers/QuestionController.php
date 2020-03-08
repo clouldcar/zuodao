@@ -35,7 +35,6 @@ class AskController extends BaseController
             return Utils::returnMsg(1, '缺少必要参数');
         }
 
-        //$info = 
     }
 
     public function actionCreate()
