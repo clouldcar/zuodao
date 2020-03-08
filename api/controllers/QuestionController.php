@@ -4,6 +4,7 @@ namespace api\controllers;
 
 use Yii;
 use api\models\Ask;
+use api\models\UserInfo;
 use common\helpers\Utils;
 
 class AskController extends BaseController
@@ -52,7 +53,13 @@ class AskController extends BaseController
             return Utils::returnMsg(1, '您已经填写过此问卷');
         }
 
+        //uid
+        $user = UserInfo::getInfoByPhone($data['phone']);
+
         $model = new Ask();
+        if($user) {
+            $model->uid = $user->uid;
+        }
         $model->platform_id = $data['platform_id'];
         $model->name = $data['name'];
         $model->phone = $data['phone'];
@@ -66,6 +73,7 @@ class AskController extends BaseController
         {
             return Utils::returnMsg(1, '创建失败，请重试');
         }
+
 
         return Utils::returnMsg(0, '创建成功');
     }

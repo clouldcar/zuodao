@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\data\Pagination;
+use common\helpers\Utils;
 
 /**
  * This is the model class for table "ask".
@@ -53,9 +55,35 @@ class Ask extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getList($platform, $page = 1, $page_size = 20)
+    {
+        $query = self::find()
+            ->where(['platform_id' => $platform_id])
+            ->orderBy('id desc');
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $page_size]);
+        $pages->setPage($page - 1);
+
+        $list = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->asArray()
+            ->all();
+
+        return array_merge(
+            ['list' => $list],
+            Utils::pagination($pages)
+        );
+    }
+
     public static function info($id)
     {
         return self::findOne($id)->toArray();
+    }
+
+    public static function getInfoByUid($platform, $uid)
+    {
+        return self::find()->where(['platform_id' => $platform_id, 'uid' => $uid])->one();
     }
 
     public static function checkInfo($platform_id, $phone)
